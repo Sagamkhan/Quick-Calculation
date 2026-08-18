@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Quick Calculator - 200+ Free Online Tools & Calculators",
+  "short_name": "QuickCalc",
+  "description": "Ultra-fast, zero-latency, offline-capable calculators, developer utilities, PDF compressors, and financial simulators.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#0f172a",
+  "background_color": "#020617",
+  "categories": ["utilities", "productivity", "finance", "developer"],
+  "dir": "ltr",
+  "lang": "en-US",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Financial & SIP Calculators",
+      "short_name": "Finance",
+      "description": "Calculate SIP returns, compound interest, and loan EMI",
+      "url": "/category/finance-investment-calculators",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Developer Toolbelt",
+      "short_name": "DevTools",
+      "description": "JSON formatters, regex testers, hash generators",
+      "url": "/category/developer-code-utilities",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "PDF Optimization Suite",
+      "short_name": "PDF Tools",
+      "description": "Client-side PDF compression, merging, and conversion",
+      "url": "/category/pdf-document-converter-suite",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "SEO & Web Audits",
+      "short_name": "SEO",
+      "description": "Meta tags generator, SERP preview, robots.txt analyzer",
+      "url": "/category/seo-web-traffic-tools",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    }
+  ]
+}

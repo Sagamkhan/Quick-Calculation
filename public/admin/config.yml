@@ -1,0 +1,107 @@
+backend:
+  name: github
+  repo: quick-calculator/quick-calculator
+  branch: main
+  base_url: https://quickcalculator.app
+  auth_endpoint: api/auth
+
+media_folder: "public/uploads/blog"
+public_folder: "/uploads/blog"
+
+display_url: https://quickcalculator.app
+logo_url: /icon.png
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "content/blogs"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    extension: "md"
+    format: "yaml-frontmatter"
+    editor:
+      preview: true
+    summary: "{{title}} ({{category}}) - {{publishedAt}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        required: true
+        hint: "Enter an engaging, SEO-optimized title for the article (50-65 characters recommended)."
+
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        hint: "URL slug (e.g. essential-financial-calculators-2026). Auto-generated from title."
+
+      - label: "Meta Description"
+        name: "metaDescription"
+        widget: "text"
+        required: true
+        pattern: ['^.{10,160}$', 'Meta description must be between 10 and 160 characters for optimal search snippets.']
+        hint: "Concise summary for search engine results pages (SERPs) and social previews (max 155 chars)."
+
+      - label: "Focus Keyword"
+        name: "focusKeyword"
+        widget: "string"
+        required: true
+        hint: "Target search term for SEO optimization (e.g. SIP investment calculator)."
+
+      - label: "Published Date"
+        name: "publishedAt"
+        widget: "datetime"
+        format: "YYYY-MM-DDTHH:mm:ssZ"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm"
+        required: true
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - "SEO Tools"
+          - "Finance Guides"
+          - "Developer Tips"
+          - "Tech News"
+
+      - label: "Cover Image"
+        name: "coverImage"
+        widget: "image"
+        choose_url: true
+        required: false
+        hint: "Hero image displayed in archives and social OpenGraph tags."
+
+      - label: "Cover Image Alt Text"
+        name: "coverImageAlt"
+        widget: "string"
+        required: false
+        hint: "Descriptive alt text for image accessibility and Google Image search ranking."
+
+      - label: "Featured Article"
+        name: "isFeatured"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "Pin this article as a hero highlight on the /blog index."
+
+      - label: "Author Name"
+        name: "author"
+        widget: "string"
+        default: "Shahroz Khan"
+        required: false
+
+      - label: "Author Role / Title"
+        name: "authorRole"
+        widget: "string"
+        default: "Founder & Lead Developer"
+        required: false
+
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        required: true
+        hint: "Write rich Markdown content with headers (H2, H3), code snippets, bullet points, and tables."

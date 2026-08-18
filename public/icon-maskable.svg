@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Solid Rectangle (must fill 100% of space without rounded corners for maskable icons) -->
+  <rect width="512" height="512" fill="url(#bg-grad)" />
+  
+  <!-- Outer Ring decorative pattern -->
+  <circle cx="256" cy="256" r="210" stroke="white" stroke-opacity="0.05" stroke-width="8" fill="none"/>
+  
+  <!-- Scaled down core content (by 0.9) to guarantee staying in the safe zone -->
+  <g transform="translate(25.6, 25.6) scale(0.9)" filter="url(#shadow)">
+    <!-- Main Calculator & Gauge Icon Body -->
+    <rect x="136" y="116" width="240" height="280" rx="24" fill="#0f172a" stroke="#ffffff" stroke-opacity="0.1" stroke-width="4"/>
+    
+    <!-- Display screen -->
+    <rect x="160" y="146" width="192" height="64" rx="12" fill="#1e293b" />
+    <text x="332" y="190" font-family="monospace" font-size="34" font-weight="900" fill="#34d399" text-anchor="end" letter-spacing="2">9,876</text>
+    
+    <!-- Grid of buttons -->
+    <!-- Row 1 -->
+    <rect x="160" y="234" width="40" height="40" rx="8" fill="url(#accent-grad)"/>
+    <rect x="210" y="234" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="260" y="234" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="310" y="234" width="40" height="40" rx="8" fill="#4f46e5"/>
+
+    <!-- Row 2 -->
+    <rect x="160" y="284" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="210" y="284" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="260" y="284" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="310" y="284" width="40" height="40" rx="8" fill="#4f46e5"/>
+
+    <!-- Row 3 -->
+    <rect x="160" y="334" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="210" y="334" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="260" y="334" width="40" height="40" rx="8" fill="#334155"/>
+    <rect x="310" y="334" width="40" height="40" rx="8" fill="url(#accent-grad)"/>
+  </g>
+</svg>

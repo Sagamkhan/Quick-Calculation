@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Poppins", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer utilities {
+  /* High Contrast Elevated Dark Card Surface */
+  .dark-card-surface {
+    background-color: #1A2130;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-card-surface-hover {
+    transition: all 0.2s ease-in-out;
+  }
+  .dark-card-surface-hover:hover {
+    background-color: #21293B;
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .bg-grid-pattern {
+    background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .bg-grid-pattern-dark {
+    background-image: radial-gradient(rgba(139, 92, 246, 0.15) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradientMove 6s ease infinite;
+  }
+
+  .animate-text-gradient {
+    background-size: 200% auto;
+    animation: textGradient 4s linear infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite;
+  }
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes textGradient {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Base styles and circular view transition */
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+.dark body,
+body.dark,
+html.dark body {
+  background-color: #121824;
+  color: #F8FAFC;
+}
+
+/* Print-friendly styles for calculator results and tool views */
+@media print {
+  header,
+  footer,
+  nav,
+  .no-print,
+  button:not(.print-visible),
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"] {
+    display: none !important;
+  }
+
+  body, html {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+  }
+
+  /* Transform dark cards and containers to clean high-contrast print layouts */
+  .printable-tool-container,
+  .dark-card-surface,
+  div[class*="bg-slate-"],
+  div[class*="bg-gray-"],
+  div[class*="bg-[#121824]"] {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    margin: 0 0 1rem 0 !important;
+    padding: 1rem !important;
+    overflow: visible !important;
+    border-radius: 8px !important;
+  }
+
+  /* Format form inputs, textareas, and selects as text-equivalent values */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="password"],
+  textarea,
+  select {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    border: 1px solid #94a3b8 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 4px !important;
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+
+  textarea {
+    resize: none !important;
+    min-height: auto !important;
+  }
+
+  /* Style buttons that remain visible as clean text-equivalent badges */
+  button.print-visible,
+  .print-text-only {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    padding: 4px 8px !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
+  }
+
+  /* Force print text contrast and prevent unwanted color inverted fills */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Headings & Text readability on paper */
+  h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important;
+    page-break-after: avoid !important;
+  }
+
+  p, span, div, td, th {
+    color: #1e293b !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 8px !important;
+    color: #0f172a !important;
+  }
+
+  th {
+    background-color: #f1f5f9 !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* View Transition for Circular Wipe Theme Switch */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+.dark::view-transition-old(root) {
+  z-index: 9999;
+}
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+
