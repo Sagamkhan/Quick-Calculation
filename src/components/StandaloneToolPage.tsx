@@ -25,7 +25,8 @@ import {
   Type, 
   Code2, 
   Bot, 
-  ArrowLeftRight
+  ArrowLeftRight,
+  BookOpen
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import { ToolItem, CATEGORIES, TOOLS_CATALOG } from '../data/categoriesAndTools';
@@ -38,9 +39,11 @@ import {
   injectMetaTagsToDOM 
 } from '../utils/autoMetaInjector';
 import Breadcrumbs from './Breadcrumbs';
+import ToolHowToUseSection from './ToolHowToUseSection';
 import ToolEditorialContent from './ToolEditorialContent';
 import AdSenseSlot from './AdSenseSlot';
 import ToolErrorBoundary from './ToolErrorBoundary';
+import InteractiveToolEngine from './InteractiveToolEngine';
 import DynamicToolEngine from './DynamicToolEngine';
 import FinanceToolEngine from './FinanceToolEngine';
 import { SeoToolEngine } from './SeoToolEngine';
@@ -485,6 +488,16 @@ export default function StandaloneToolPage({
                 <span className="hidden sm:inline">Download PDF</span>
               </button>
 
+              {/* How to Use Jump Button */}
+              <a
+                href="#how-to-use-section"
+                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                title="Jump to How to Use instructions"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden sm:inline">How to Use</span>
+              </a>
+
               {/* Print Button */}
               <button
                 type="button"
@@ -516,39 +529,21 @@ export default function StandaloneToolPage({
                 </span>
               </div>
 
-              {/* Mount Specialized Engine Component with ToolErrorBoundary protection */}
+              {/* Mount Universal Interactive Tool Engine with ToolErrorBoundary protection */}
               <ToolErrorBoundary tool={tool}>
-                {isUnitConverterTool ? (
-                  <UnitConverterComponent tool={tool} />
-                ) : isSeoTool ? (
-                  <SeoToolEngine tool={tool} />
-                ) : isFinanceTool ? (
-                  <FinanceToolEngine tool={tool} />
-                ) : isTextTool ? (
-                  <TextToolEngine tool={tool} />
-                ) : isDeveloperTool ? (
-                  <DeveloperToolEngine tool={tool} />
-                ) : isHealthTool ? (
-                  <HealthToolEngine tool={tool} />
-                ) : isImageTool ? (
-                  <ImageToolEngine tool={tool} />
-                ) : isPdfTool ? (
-                  <PdfToolEngine tool={tool} />
-                ) : isAiTool ? (
-                  <AiToolEngine tool={tool} />
-                ) : (
-                  /* Universal Dynamic Tool Engine (No Empty Tools) */
-                  <DynamicToolEngine
-                    tool={tool}
-                    onCopyMarkdown={handleCopyMarkdown}
-                    onDownloadPdf={handleDownloadPDF}
-                  />
-                )}
+                <InteractiveToolEngine
+                  tool={tool}
+                  onCopyMarkdown={handleCopyMarkdown}
+                  onDownloadPdf={handleDownloadPDF}
+                />
               </ToolErrorBoundary>
 
             </div>
 
-            {/* 4. COMPREHENSIVE EDITORIAL & TECHNICAL CONTENT (Eliminating Low-Value / Thin Content) */}
+            {/* 4. DYNAMIC 'HOW TO USE' SECTION (Automatically fetches instructions from tool metadata) */}
+            <ToolHowToUseSection tool={tool} />
+
+            {/* 5. COMPREHENSIVE EDITORIAL & TECHNICAL CONTENT (Eliminating Low-Value / Thin Content) */}
             <ToolEditorialContent tool={tool} onNavigate={onNavigate} />
 
           </div>

@@ -413,6 +413,18 @@ export default function App() {
     }
   };
 
+  const handleInternalNavigateTool = (tool: ToolItem) => {
+    setActiveTool(tool);
+    setActivePage('tool');
+    if (typeof window !== 'undefined' && window.history.pushState) {
+      window.history.pushState({}, '', getToolPath(tool));
+      trackPageView(getToolPath(tool), tool.name);
+    }
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // Check if current route is an isolated Admin / Dashboard route
   const isAdminRoute =
     activePage === 'admin' ||
@@ -490,6 +502,7 @@ export default function App() {
           onToggleSidebar={() => setIsSidebarOpen(true)}
           onOpenDonate={() => handleNavigatePage('donate')}
           onGoHome={() => handleNavigatePage('home')}
+          onSelectTool={handleInternalNavigateTool}
         />
 
         {/* Left Drawer Sidebar */}

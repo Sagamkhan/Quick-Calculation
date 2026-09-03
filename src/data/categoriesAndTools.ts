@@ -54,6 +54,10 @@ export interface ToolItem {
   rating?: number;
   useCount?: string;
   url?: string;
+  instructions?: string[] | string | { step?: number; title?: string; text: string; tip?: string }[];
+  howToUse?: string[] | string | { step?: number; title?: string; text: string; tip?: string }[];
+  steps?: string[] | string | { step?: number; title?: string; text: string; tip?: string }[];
+  tips?: string[];
 }
 
 export interface CategoryInfo {
@@ -266,7 +270,17 @@ export const TOOLS_CATALOG: ToolItem[] = [
     isPopular: true,
     tags: ['Word Counter', 'Character Count', 'Reading Time', 'SEO Writing'],
     rating: 4.9,
-    useCount: '185.2k'
+    useCount: '185.2k',
+    howToUse: [
+      'Paste or type your manuscript or content directly into the text workspace.',
+      'Review real-time live word, character, sentence, and paragraph counters instantly.',
+      'Check estimated speaking and silent reading duration based on 200 WPM.',
+      'Copy clean text or download the structured text metrics summary report.'
+    ],
+    tips: [
+      'For optimal SEO, keep meta titles under 60 characters and descriptions under 155 characters.',
+      'The tool processes everything locally in browser memory without sending text over the network.'
+    ]
   },
   {
     id: 'tool_case_converter',
@@ -311,7 +325,18 @@ export const TOOLS_CATALOG: ToolItem[] = [
     isTrending: true,
     tags: ['SIP Calculator', 'Mutual Funds', 'Investment', 'Compound Interest'],
     rating: 4.95,
-    useCount: '340.8k'
+    useCount: '340.8k',
+    instructions: [
+      'Enter your fixed monthly investment amount using the currency input field.',
+      'Specify the expected annual rate of return (e.g. 12% for equity mutual funds).',
+      'Adjust your target investment horizon in years using the synchronized slider.',
+      'Review your computed wealth breakdown: total invested principal vs. accumulated capital gains.',
+      'Export your full compounding investment schedule as a PDF or copy the summary markdown.'
+    ],
+    tips: [
+      'Increasing your monthly SIP contribution by 10% each year can nearly double your final wealth.',
+      'Maintain long-term discipline through market cycles to take full advantage of rupee cost averaging.'
+    ]
   },
   {
     id: 'tool_emi_loan_calculator',

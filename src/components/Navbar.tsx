@@ -13,8 +13,9 @@ import {
   Heart,
   Calculator
 } from 'lucide-react';
-import { CATEGORIES } from '../data/categoriesAndTools';
+import { CATEGORIES, ToolItem } from '../data/categoriesAndTools';
 import { getCategoryPath } from '../utils/permalinks';
+import OfflineStatusIndicator from './OfflineStatusIndicator';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -28,6 +29,7 @@ interface NavbarProps {
   onToggleSidebar: () => void;
   onOpenDonate?: () => void;
   onGoHome?: () => void;
+  onSelectTool?: (tool: ToolItem) => void;
 }
 
 export default function Navbar({
@@ -41,7 +43,8 @@ export default function Navbar({
   onOpenBookmarks,
   onToggleSidebar,
   onOpenDonate,
-  onGoHome
+  onGoHome,
+  onSelectTool
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -120,6 +123,12 @@ export default function Navbar({
           {/* Action Navigation Buttons */}
           <div className="flex items-center gap-2 sm:gap-3">
             
+            {/* Offline Status & Cached Tools Indicator */}
+            <OfflineStatusIndicator 
+              onSelectTool={onSelectTool} 
+              onGoHome={onGoHome} 
+            />
+
             {/* Prominent Donate Now Button */}
             <a
               href="/donate"

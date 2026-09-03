@@ -168,109 +168,151 @@ export function UnitConverterEngine({ tool }: UnitConverterEngineProps) {
         </div>
       </div>
 
-      {/* Main Interactive Controls Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-slate-900/80 p-5 rounded-2xl border border-pink-500/20">
+      {/* Main Interactive Controls Grid - 2-Part Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* Input Value */}
-        <div className="md:col-span-4 space-y-1.5">
-          <label className="text-xs font-medium text-slate-300">Input Value</label>
-          <input
-            type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(parseFloat(e.target.value) || 0)}
-            className="w-full h-11 px-3.5 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-base focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 outline-none transition-all"
-          />
-        </div>
-
-        {/* From Unit */}
-        <div className="md:col-span-3 space-y-1.5">
-          <label className="text-xs font-medium text-slate-300">From Unit</label>
-          <select
-            value={fromUnit}
-            onChange={(e) => setFromUnit(e.target.value)}
-            className="w-full h-11 px-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs font-medium focus:border-pink-500 outline-none cursor-pointer"
-          >
-            {spec.units.map(u => (
-              <option key={u.id} value={u.id}>
-                {u.name} ({u.symbol})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Swap Button */}
-        <div className="md:col-span-2 flex justify-center pb-0.5">
-          <button
-            type="button"
-            onClick={handleSwap}
-            className="p-3 rounded-xl bg-slate-800 hover:bg-pink-500/20 border border-slate-700 text-pink-400 hover:border-pink-500 transition-all cursor-pointer"
-            title="Swap From and To units"
-          >
-            <ArrowLeftRight className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* To Unit */}
-        <div className="md:col-span-3 space-y-1.5">
-          <label className="text-xs font-medium text-slate-300">To Unit</label>
-          <select
-            value={toUnit}
-            onChange={(e) => setToUnit(e.target.value)}
-            className="w-full h-11 px-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs font-medium focus:border-pink-500 outline-none cursor-pointer"
-          >
-            {spec.units.map(u => (
-              <option key={u.id} value={u.id}>
-                {u.name} ({u.symbol})
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Hero Result Banner */}
-      <div className="p-6 rounded-2xl bg-gradient-to-r from-pink-950/50 via-slate-900 to-rose-950/40 border border-pink-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="text-xs font-mono uppercase tracking-wider text-pink-400 font-bold flex items-center gap-1.5">
-            <Zap className="w-4 h-4" />
-            <span>Instant Calculated Equivalent</span>
+        {/* Left/Top: Input Controls Canvas */}
+        <div className="lg:col-span-5 p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-700 space-y-4 shadow-xl">
+          <div className="flex items-center justify-between pb-2.5 border-b border-slate-700/60">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-pink-400 flex items-center gap-1.5">
+              <Scale className="w-4 h-4" />
+              <span>Input Canvas</span>
+            </span>
+            <span className="text-[11px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+              Live Real-Time
+            </span>
           </div>
-          <div className="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">
-            {conversionResult.result.toLocaleString()}{' '}
-            <span className="text-pink-400 text-2xl font-bold">{conversionResult.toSymbol}</span>
+
+          {/* Input Value */}
+          <div className="space-y-1.5 p-3 rounded-xl bg-slate-950/80 border border-slate-700">
+            <label className="text-xs font-semibold text-slate-300">Input Numerical Value</label>
+            <input
+              type="number"
+              value={inputValue === 0 ? '' : inputValue}
+              onChange={(e) => setInputValue(parseFloat(e.target.value) || 0)}
+              className="w-full h-11 px-3.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono font-bold focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 outline-none transition-all"
+              style={{ fontSize: '16px' }}
+            />
           </div>
-          <p className="text-xs text-slate-400 font-mono">
-            Ratio Formula: {conversionResult.formula}
-          </p>
+
+          {/* From Unit */}
+          <div className="space-y-1.5 p-3 rounded-xl bg-slate-950/80 border border-slate-700">
+            <label className="text-xs font-semibold text-slate-300">From Unit</label>
+            <select
+              value={fromUnit}
+              onChange={(e) => setFromUnit(e.target.value)}
+              className="w-full h-11 px-3 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono font-bold focus:border-pink-500 outline-none cursor-pointer"
+              style={{ fontSize: '16px' }}
+            >
+              {spec.units.map(u => (
+                <option key={u.id} value={u.id}>
+                  {u.name} ({u.symbol})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Swap Button */}
+          <div className="flex justify-center">
+            <button
+              type="button"
+              onClick={handleSwap}
+              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-pink-500/20 border border-slate-700 text-pink-400 hover:border-pink-500 transition-all cursor-pointer flex items-center gap-2 text-xs font-mono font-bold"
+              title="Swap From and To units"
+            >
+              <ArrowLeftRight className="w-4 h-4" />
+              <span>Swap Direction</span>
+            </button>
+          </div>
+
+          {/* To Unit */}
+          <div className="space-y-1.5 p-3 rounded-xl bg-slate-950/80 border border-slate-700">
+            <label className="text-xs font-semibold text-slate-300">To Target Unit</label>
+            <select
+              value={toUnit}
+              onChange={(e) => setToUnit(e.target.value)}
+              className="w-full h-11 px-3 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono font-bold focus:border-pink-500 outline-none cursor-pointer"
+              style={{ fontSize: '16px' }}
+            >
+              {spec.units.map(u => (
+                <option key={u.id} value={u.id}>
+                  {u.name} ({u.symbol})
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          <button
-            type="button"
-            onClick={() => handleCopyResult(`${conversionResult.result} ${conversionResult.toSymbol}`, 'main')}
-            className="px-4 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-pink-600/30 transition-all cursor-pointer"
-          >
-            {copiedKey === 'main' ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4" />}
-            <span>{copiedKey === 'main' ? 'Copied!' : 'Copy Result'}</span>
-          </button>
+        {/* Right/Bottom: Live Output Dashboard */}
+        <div className="lg:col-span-7 space-y-4">
+          {/* Hero Result Banner */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-pink-950/40 via-slate-900 to-rose-950/30 border border-pink-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+            <div className="space-y-1">
+              <div className="text-xs font-mono uppercase tracking-wider text-pink-400 font-bold flex items-center gap-1.5">
+                <Zap className="w-4 h-4" />
+                <span>Instant Calculated Equivalent</span>
+              </div>
+              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">
+                {conversionResult.result.toLocaleString()}{' '}
+                <span className="text-pink-400 text-2xl font-bold">{conversionResult.toSymbol}</span>
+              </div>
+              <p className="text-xs text-slate-400 font-mono">
+                Formula: {conversionResult.formula}
+              </p>
+            </div>
 
-          <button
-            type="button"
-            onClick={handleDownloadPDF}
-            className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-1.5 transition-all cursor-pointer"
-          >
-            <Download className="w-4 h-4 text-blue-400" />
-            <span>PDF</span>
-          </button>
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={() => handleCopyResult(`${conversionResult.result} ${conversionResult.toSymbol}`, 'main')}
+                className="px-4 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-pink-600/30 transition-all cursor-pointer font-mono"
+              >
+                {copiedKey === 'main' ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4" />}
+                <span>{copiedKey === 'main' ? 'Copied!' : 'Copy Result'}</span>
+              </button>
 
-          <button
-            type="button"
-            onClick={handleReset}
-            className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 font-medium text-xs flex items-center gap-1.5 transition-all cursor-pointer"
-          >
-            <RefreshCw className="w-4 h-4" />
-            <span>Reset</span>
-          </button>
+              <button
+                type="button"
+                onClick={handleDownloadPDF}
+                className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-1.5 transition-all cursor-pointer font-mono"
+              >
+                <Download className="w-4 h-4 text-cyan-400" />
+                <span>PDF</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleReset}
+                className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 font-medium text-xs flex items-center gap-1.5 transition-all cursor-pointer font-mono"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>Reset</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Metric Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-1">
+              <span className="text-[11px] font-mono text-slate-400 font-semibold block uppercase tracking-wider">
+                Source Value
+              </span>
+              <div className="text-xl font-mono font-bold text-slate-100">
+                {inputValue} {conversionResult.fromSymbol}
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-1">
+              <span className="text-[11px] font-mono text-slate-400 font-semibold block uppercase tracking-wider">
+                Converted Target
+              </span>
+              <div className="text-xl font-mono font-bold text-pink-400">
+                {conversionResult.result} {conversionResult.toSymbol}
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
 
       {/* Itemized Conversion Matrix Table for ALL units in category */}
