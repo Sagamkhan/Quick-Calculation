@@ -14,7 +14,6 @@ import {
   Calculator
 } from 'lucide-react';
 import { CATEGORIES, ToolItem } from '../data/categoriesAndTools';
-import { getCategoryPath } from '../utils/permalinks';
 import OfflineStatusIndicator from './OfflineStatusIndicator';
 
 interface NavbarProps {
@@ -28,8 +27,10 @@ interface NavbarProps {
   onOpenBookmarks: () => void;
   onToggleSidebar: () => void;
   onOpenDonate?: () => void;
+  onOpenAiStudio?: () => void;
   onGoHome?: () => void;
   onSelectTool?: (tool: ToolItem) => void;
+  isToolPage?: boolean;
 }
 
 export default function Navbar({
@@ -43,8 +44,10 @@ export default function Navbar({
   onOpenBookmarks,
   onToggleSidebar,
   onOpenDonate,
+  onOpenAiStudio,
   onGoHome,
-  onSelectTool
+  onSelectTool,
+  isToolPage = false
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -129,24 +132,37 @@ export default function Navbar({
               onGoHome={onGoHome} 
             />
 
-            {/* Prominent Donate Now Button */}
+            {/* AI Creative Studio Button */}
+            {onOpenAiStudio && (
+              <button
+                type="button"
+                onClick={onOpenAiStudio}
+                className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-bold shadow-sm shadow-indigo-600/20 shrink-0"
+                title="Open AI Creative & Voice Studio (Veo 3, Gemini Live, Image Studio)"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" style={{ animationDuration: '4s' }} />
+                <span>AI Studio</span>
+              </button>
+            )}
+
+            {/* Prominent Donate Now Button - Cleanly displayed on desktop, available in mobile drawer */}
             <a
               href="/donate"
               onClick={(e) => {
                 e.preventDefault();
                 if (onOpenDonate) onOpenDonate();
               }}
-              className="relative px-3 sm:px-4 py-2 rounded-2xl bg-gradient-to-r from-rose-600 via-purple-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-bold shadow-md shadow-rose-500/20 hover:shadow-lg hover:shadow-rose-500/30 group shrink-0"
+              className="hidden lg:flex relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 via-purple-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white transition-all cursor-pointer items-center gap-1.5 text-xs font-mono font-bold shadow-xs hover:shadow-sm shrink-0"
               title="Donate Now & Support Quick Calculator"
             >
-              <Heart className="w-4 h-4 fill-white text-white group-hover:scale-110 transition-transform" />
-              <span className="font-extrabold tracking-tight">Donate Now</span>
+              <Heart className="w-3.5 h-3.5 fill-white text-white" />
+              <span>Donate</span>
             </a>
 
             {/* Bookmarks Counter Button */}
             <button
               onClick={onOpenBookmarks}
-              className="relative p-2.5 rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:border-amber-500/30 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-semibold"
+              className="relative p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:border-amber-500/30 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-semibold"
               title="View Bookmarked Tools"
             >
               <Bookmark className={`w-4 h-4 ${bookmarkedCount > 0 ? 'text-amber-500 fill-amber-500' : ''}`} />
@@ -161,7 +177,7 @@ export default function Navbar({
             {/* Dark Mode Circular Wipe Toggle */}
             <button
               onClick={onToggleDarkMode}
-              className="relative p-2.5 rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer"
+              className="relative p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer"
               title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {darkMode ? (
@@ -174,52 +190,13 @@ export default function Navbar({
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer"
+              className="md:hidden p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
-        {/* Category Pills Sub-Bar */}
-        <div className="py-2 overflow-x-auto no-scrollbar flex items-center gap-2 border-t border-neutral-100 dark:border-neutral-900">
-          <a
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              if (onGoHome) onGoHome();
-              onSelectCategory(null);
-            }}
-            className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
-              activeCategory === null
-                ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 font-semibold'
-                : 'bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
-            }`}
-          >
-            All Categories
-          </a>
-          {CATEGORIES.map((cat) => {
-            const isActive = activeCategory === cat.id;
-            return (
-              <a
-                key={cat.id}
-                href={getCategoryPath(cat.id)}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSelectCategory(isActive ? null : cat.id);
-                }}
-                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
-                  isActive
-                    ? cat.pillActiveBg + ' font-bold shadow-sm'
-                    : 'bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white border border-transparent hover:border-neutral-200 dark:hover:border-neutral-800'
-                }`}
-              >
-                <span>{cat.shortName}</span>
-                <span className="opacity-60 text-[10px] font-mono">({cat.count})</span>
-              </a>
-            );
-          })}
-        </div>
       </div>
 
       {/* Mobile Collapsible Navigation Menu */}

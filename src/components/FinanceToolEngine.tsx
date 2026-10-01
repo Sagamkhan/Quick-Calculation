@@ -242,7 +242,7 @@ function ResponsiveBreakdownTable({ headers, rows, maxHeight = 'max-h-96' }: Res
       </div>
 
       {/* Table Container with Edge Fade */}
-      <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-hidden">
+      <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-x-auto overflow-y-visible">
         {/* Left Fade */}
         <div
           className={`pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-slate-950 to-transparent z-20 transition-opacity duration-300 ${
@@ -1739,7 +1739,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
             {computation.summaryMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-1.5 shadow-lg relative overflow-hidden"
+                className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-1.5 shadow-lg relative overflow-visible"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block truncate">
@@ -1869,7 +1869,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
             </div>
           ) : (
             /* Full Detailed Schedule Table */
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-3 shadow-lg overflow-hidden">
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-3 shadow-lg overflow-visible">
               <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-800 flex-wrap">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
                   <FileSpreadsheet className="w-4 h-4 text-cyan-400" />
@@ -1898,3 +1898,5 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
     </div>
   );
 }
+
+export { FinanceToolEngine };

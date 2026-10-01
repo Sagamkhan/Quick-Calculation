@@ -1223,3 +1223,6 @@ export default function DynamicToolEngine({
     </div>
   );
 }
+
+export { DynamicToolEngine };
+

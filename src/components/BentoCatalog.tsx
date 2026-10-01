@@ -503,19 +503,18 @@ function BentoCategoryCard({
                     </span>
                   )}
 
-                  {/* Open in New Tab / Window Button */}
-                  <a
-                    href={getToolPath(tool)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  {/* Launch Tool Button */}
+                  <button
+                    type="button"
                     onClick={(e) => {
                       e.stopPropagation();
+                      onSelectTool(tool);
                     }}
                     className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-all cursor-pointer"
-                    title="Open in new window / tab"
+                    title="Launch Tool"
                   >
                     <ExternalLink className="w-4 h-4" />
-                  </a>
+                  </button>
 
                   {/* Compare Tool Button */}
                   {onOpenCompare && (
@@ -566,13 +565,10 @@ function BentoCategoryCard({
               </div>
 
               {/* Tool Name & Click Action */}
-              <a
-                href={getToolPath(tool)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <div
                 onClick={(e) => {
-                  // Standard anchor tag navigation handles opening in new tab; stop bubbling to card
                   e.stopPropagation();
+                  onSelectTool(tool);
                 }}
                 className="block w-full text-left space-y-1.5 cursor-pointer"
               >
@@ -590,7 +586,7 @@ function BentoCategoryCard({
                 <p className="text-[0.95rem] text-slate-600 dark:text-[#D1D5DB] font-sans leading-[1.6] line-clamp-2">
                   {tool.description}
                 </p>
-              </a>
+              </div>
 
               {/* Bottom Row: Free Alternative & Read Time */}
               <div className="mt-3 pt-2.5 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between text-[13px] font-mono text-slate-500 dark:text-slate-300">
@@ -611,14 +607,11 @@ function BentoCategoryCard({
       {/* Prominent Action Button: View All Category Tools */}
       {isMultiCategoryView && (
         <div className="p-4 sm:px-5 sm:pb-5 pt-0 mt-auto border-t border-slate-100 dark:border-white/10">
-          <a
-            href={getCategoryPath(category.id)}
-            onClick={(e) => {
-              if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
-                e.preventDefault();
-                if (onSelectCategory) {
-                  onSelectCategory(category.id);
-                }
+          <button
+            type="button"
+            onClick={() => {
+              if (onSelectCategory) {
+                onSelectCategory(category.id);
               }
             }}
             className="group/btn w-full py-3.5 px-4 rounded-2xl bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-white/5 dark:hover:bg-indigo-600 dark:hover:text-white border border-slate-200/80 dark:border-white/10 text-slate-800 dark:text-slate-100 font-display font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-xs hover:shadow-lg cursor-pointer"
@@ -631,7 +624,7 @@ function BentoCategoryCard({
             {category.id !== 'seo-website-tools' && (
               <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1.5 text-indigo-500 group-hover/btn:text-white" />
             )}
-          </a>
+          </button>
         </div>
       )}
     </motion.div>

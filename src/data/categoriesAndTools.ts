@@ -1,6 +1,7 @@
 import { UNIT_CONVERTER_TOOLS } from './unitConverters';
 import { SEO_CATALOG_TOOLS } from './seoToolsRegistry';
 import { AI_CATALOG_TOOLS } from './aiToolsRegistry';
+import { ADDITIONAL_CATALOG_TOOLS } from './allToolsCatalog250';
 
 export interface ToolItem {
   id: string;
@@ -1910,5 +1911,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
   },
   // SEO & WEBSITE INTELLIGENCE TOOLS
   // 12. WEBSITE SEO TOOLS (25 Tools)
-  ...SEO_CATALOG_TOOLS
+  ...SEO_CATALOG_TOOLS,
+
+  // 13. COMPREHENSIVE SUITE EXPANSION (80 Production Tools to reach 250 Total)
+  ...ADDITIONAL_CATALOG_TOOLS
 ];

@@ -292,16 +292,17 @@ export default function CompareModal({
                       </p>
                     </div>
 
-                    <a
-                      href={getToolPath(tool1)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onSelectToolToLaunch(tool1);
+                        onClose();
+                      }}
                       className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
                     >
                       <Zap className="w-4 h-4 text-amber-300" />
-                      <span>Launch {tool1.name} in New Tab</span>
-                      <ExternalLink className="w-3.5 h-3.5 ml-1 opacity-80" />
-                    </a>
+                      <span>Open {tool1.name}</span>
+                    </button>
                   </div>
 
                   {/* Tool 2 Card */}
@@ -326,16 +327,17 @@ export default function CompareModal({
                       </p>
                     </div>
 
-                    <a
-                      href={getToolPath(tool2)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onSelectToolToLaunch(tool2);
+                        onClose();
+                      }}
                       className="w-full py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-display font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
                     >
                       <Zap className="w-4 h-4 text-amber-300" />
-                      <span>Launch {tool2.name} in New Tab</span>
-                      <ExternalLink className="w-3.5 h-3.5 ml-1 opacity-80" />
-                    </a>
+                      <span>Open {tool2.name}</span>
+                    </button>
                   </div>
                 </div>
 

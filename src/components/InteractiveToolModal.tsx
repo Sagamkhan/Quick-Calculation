@@ -424,7 +424,7 @@ export default function InteractiveToolModal({
       <Breadcrumbs tool={tool} onNavigate={() => onClose()} />
 
       {/* Tool Container */}
-      <div className="printable-tool-container relative z-10 w-full bg-white dark:bg-[#1A2130] border border-slate-200 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden font-sans">
+      <div className="printable-tool-container relative z-10 w-full bg-white dark:bg-[#1A2130] border border-slate-200 dark:border-white/10 rounded-3xl shadow-2xl overflow-visible font-sans">
         {/* Header Bar */}
         <div className={`h-2.5 bg-gradient-to-r ${category.gradientHeader} w-full`} />
 

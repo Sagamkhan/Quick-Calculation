@@ -1,0 +1,67 @@
+export * from './registry.tsx';
+export { default } from './registry.tsx';
+
+// Direct named exports for the precision calculators
+export { default as PpfCalculatorIndia2026 } from './PpfCalculatorIndia2026';
+export { default as NpsCalculator } from './NpsCalculator';
+export { default as GstCalculatorIndia } from './GstCalculatorIndia';
+export { default as HomeLoanEmiPrepayment } from './HomeLoanEmiPrepayment';
+export { default as IncomeTaxCalculator2026 } from './IncomeTaxCalculator2026';
+export { default as FdCalculator } from './FdCalculator';
+export { default as RdCalculator } from './RdCalculator';
+export { default as BmrCalculator } from './BmrCalculator';
+export { default as BodyFatPercentage } from './BodyFatPercentage';
+export { default as DailyWaterIntake } from './DailyWaterIntake';
+export { default as IdealWeightIndianChart } from './IdealWeightIndianChart';
+export { default as AgeCalculatorDob } from './AgeCalculatorDob';
+export { default as PregnancyDueDateLmp } from './PregnancyDueDateLmp';
+export { default as CalorieBurned } from './CalorieBurned';
+export { default as SalaryToHourlyIndia } from './SalaryToHourlyIndia';
+export { default as SipStepUpInflation } from './SipStepUpInflation';
+export { default as PersonalLoanEmi } from './PersonalLoanEmi';
+export { default as CarLoanEmiIndia } from './CarLoanEmiIndia';
+export { default as NetWorthCalculator } from './NetWorthCalculator';
+export { default as CompoundInterestChart } from './CompoundInterestChart';
+
+// Next 20 Developer & SEO Tools
+export { default as MetaTitleLengthChecker } from './MetaTitleLengthChecker';
+export { default as MetaDescriptionChecker } from './MetaDescriptionChecker';
+export { default as SerpPreviewMobile } from './SerpPreviewMobile';
+export { default as KeywordDensityChecker } from './KeywordDensityChecker';
+export { default as JsonFormatterValidatorTreeView } from './JsonFormatterValidatorTreeView';
+export { default as Base64EncodeDecode } from './Base64EncodeDecode';
+export { default as UrlEncoderDecoderBulk } from './UrlEncoderDecoderBulk';
+export { default as RegexTesterCheatSheet } from './RegexTesterCheatSheet';
+export { default as JwtDecoderClientSide } from './JwtDecoderClientSide';
+export { default as CssMinifierStats } from './CssMinifierStats';
+export { default as HtmlMinifier } from './HtmlMinifier';
+export { default as ColorContrastCheckerWcag } from './ColorContrastCheckerWcag';
+export { default as HexToRgbConverter } from './HexToRgbConverter';
+export { default as PasswordStrengthMeter } from './PasswordStrengthMeter';
+export { default as QrCodeGeneratorCanvas } from './QrCodeGeneratorCanvas';
+export { default as UuidGeneratorBulk } from './UuidGeneratorBulk';
+export { default as TimestampConverterIst } from './TimestampConverterIst';
+export { default as JsMinifierSafe } from './JsMinifierSafe';
+export { default as OpenGraphPreview } from './OpenGraphPreview';
+export { default as RobotsTxtGenerator } from './RobotsTxtGenerator';
+// Final Batch: 20 Utilities & Calculators
+export { default as PercentageCalculatorSteps } from './PercentageCalculatorSteps';
+export { default as DiscountCalculatorGst } from './DiscountCalculatorGst';
+export { default as NumberToWordsIndian } from './NumberToWordsIndian';
+export { default as DateDifferenceCalculator } from './DateDifferenceCalculator';
+export { default as WorkingDaysCounterIndia } from './WorkingDaysCounterIndia';
+export { default as UnitConverterMulti } from './UnitConverterMulti';
+export { default as RandomPasswordGenerator } from './RandomPasswordGenerator';
+export { default as StopwatchWithLaps } from './StopwatchWithLaps';
+export { default as WorldClockIstUtc } from './WorldClockIstUtc';
+export { default as TipCalculatorIndia } from './TipCalculatorIndia';
+export { default as FuelCostPerKmIndia } from './FuelCostPerKmIndia';
+export { default as ElectricityBillCalculatorIndia } from './ElectricityBillCalculatorIndia';
+export { default as AgeDaysHoursMinutes } from './AgeDaysHoursMinutes';
+export { default as SiVsCiComparison } from './SiVsCiComparison';
+export { default as MeanMedianModeCalculator } from './MeanMedianModeCalculator';
+export { default as CaseConverterTool } from './CaseConverterTool';
+export { default as InvoiceGeneratorGst } from './InvoiceGeneratorGst';
+export { default as EmiInAdvanceCalculator } from './EmiInAdvanceCalculator';
+export { default as LoanPrepaymentSavings } from './LoanPrepaymentSavings';
+export { default as DailyExpenseSplitter } from './DailyExpenseSplitter';

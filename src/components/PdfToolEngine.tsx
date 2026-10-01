@@ -1471,3 +1471,5 @@ export function PdfToolEngine({ tool }: PdfToolEngineProps) {
     </div>
   );
 }
+
+export default PdfToolEngine;

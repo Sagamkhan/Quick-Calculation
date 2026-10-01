@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Sparkles, 
@@ -15,6 +15,7 @@ import {
   HelpCircle, 
   CheckCircle2, 
   ArrowRight, 
+  ArrowLeft,
   Info, 
   Zap, 
   FileText, 
@@ -39,7 +40,6 @@ import {
   injectMetaTagsToDOM 
 } from '../utils/autoMetaInjector';
 import Breadcrumbs from './Breadcrumbs';
-import ToolHowToUseSection from './ToolHowToUseSection';
 import ToolEditorialContent from './ToolEditorialContent';
 import AdSenseSlot from './AdSenseSlot';
 import ToolErrorBoundary from './ToolErrorBoundary';
@@ -59,6 +59,7 @@ import VoiceInputButton from './VoiceInputButton';
 import { triggerConfetti } from '../utils/confetti';
 import { recordToolUsage } from '../utils/usageTracker';
 import { useToolEngine } from '../hooks/useToolEngine';
+import { getToolComponent } from '../tools/registry';
 import {
   generatePlainTextReport,
   generateMarkdownReport,
@@ -73,6 +74,8 @@ interface StandaloneToolPageProps {
   onToggleBookmark: (tool: ToolItem) => void;
   onNavigate: (href: string) => void;
   onOpenCompare?: (tool: ToolItem) => void;
+  onBack?: () => void;
+  onSelectTool?: (tool: ToolItem) => void;
 }
 
 export default function StandaloneToolPage({
@@ -80,7 +83,9 @@ export default function StandaloneToolPage({
   bookmarkedIds,
   onToggleBookmark,
   onNavigate,
-  onOpenCompare
+  onOpenCompare,
+  onBack,
+  onSelectTool
 }: StandaloneToolPageProps) {
   const isBookmarked = bookmarkedIds.includes(tool.id);
   const toolInfo = useMemo(() => getToolInfoContent(tool), [tool]);
@@ -340,7 +345,7 @@ export default function StandaloneToolPage({
   return (
     <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans pb-24">
       {/* Container Grid - Streamlined spacing for prominent above-the-fold workspace */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-5 space-y-4 sm:space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3.5 space-y-3 sm:space-y-4">
         
         {/* 1. Breadcrumb Navigation */}
         <Breadcrumbs
@@ -348,11 +353,8 @@ export default function StandaloneToolPage({
           onNavigate={(href) => onNavigate(href)}
         />
 
-        {/* 1.5 Header Leaderboard AdSense Slot (Non-blocking, zero CLS) */}
-        <AdSenseSlot id={`header-leaderboard-${tool.id}`} format="leaderboard" />
-
         {/* 2. Standalone Tool Header - Clean & Compact */}
-        <div className="p-4 sm:p-6 rounded-2xl bg-slate-800/80 dark:bg-[#1A2130] border border-slate-700/60 dark:border-white/10 shadow-xl space-y-4">
+        <div className="p-4 sm:p-5 rounded-2xl bg-slate-800/80 dark:bg-[#1A2130] border border-slate-700/60 dark:border-white/10 shadow-xl space-y-3">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-2 max-w-3xl">
               <div className="flex items-center gap-2 flex-wrap">
@@ -415,17 +417,16 @@ export default function StandaloneToolPage({
 
             {/* Header Action Buttons */}
             <div className="flex items-center gap-2 shrink-0 flex-wrap">
-              {/* Open in New Tab / Window Button */}
-              <a
-                href={getToolPath(tool)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 hover:text-cyan-400 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
-                title="Open this tool in a new window / tab with dedicated permalink"
+              {/* Back to Tools Button */}
+              <button
+                type="button"
+                onClick={onBack || (() => onNavigate('home'))}
+                className="p-2.5 px-3.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold font-mono shadow-sm"
+                title="Return to Tools Directory"
               >
-                <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="hidden sm:inline">New Window</span>
-              </a>
+                <ArrowLeft className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Back to Tools</span>
+              </button>
 
               {/* Bookmark Button */}
               <button
@@ -529,21 +530,21 @@ export default function StandaloneToolPage({
                 </span>
               </div>
 
-              {/* Mount Universal Interactive Tool Engine with ToolErrorBoundary protection */}
-              <ToolErrorBoundary tool={tool}>
-                <InteractiveToolEngine
-                  tool={tool}
-                  onCopyMarkdown={handleCopyMarkdown}
-                  onDownloadPdf={handleDownloadPDF}
-                />
+              {/* Mount Registered Tool Engine with ToolErrorBoundary and Suspense protection */}
+              <ToolErrorBoundary tool={tool} onGoHome={onBack}>
+                <Suspense fallback={<div className="p-8 text-center text-cyan-400 font-mono text-xs animate-pulse">Loading {tool.name}...</div>}>
+                  {React.createElement(getToolComponent(tool.id), {
+                    tool,
+                    onBack,
+                    onCopyMarkdown: handleCopyMarkdown,
+                    onDownloadPdf: handleDownloadPDF
+                  })}
+                </Suspense>
               </ToolErrorBoundary>
 
             </div>
 
-            {/* 4. DYNAMIC 'HOW TO USE' SECTION (Automatically fetches instructions from tool metadata) */}
-            <ToolHowToUseSection tool={tool} />
-
-            {/* 5. COMPREHENSIVE EDITORIAL & TECHNICAL CONTENT (Eliminating Low-Value / Thin Content) */}
+            {/* Clean 3-Step Guide and Max 2 FAQs */}
             <ToolEditorialContent tool={tool} onNavigate={onNavigate} />
 
           </div>
@@ -565,17 +566,23 @@ export default function StandaloneToolPage({
 
               <div className="space-y-3">
                 {relatedTools.map((relTool) => (
-                  <a
+                  <button
                     key={relTool.id}
-                    href={getToolPath(relTool)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block p-3.5 rounded-2xl bg-slate-900/70 hover:bg-slate-900 border border-slate-700/60 hover:border-cyan-500/50 transition-all cursor-pointer"
+                    type="button"
+                    onClick={() => {
+                      if (onSelectTool) {
+                        onSelectTool(relTool);
+                      } else {
+                        onNavigate(getToolPath(relTool));
+                      }
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="group block w-full text-left p-3.5 rounded-2xl bg-slate-900/70 hover:bg-slate-900 border border-slate-700/60 hover:border-cyan-500/50 transition-all cursor-pointer"
                   >
                     <div className="flex items-center justify-between gap-2">
                       <h4 className="text-xs font-bold font-display text-slate-200 group-hover:text-cyan-300 transition-colors flex items-center gap-1.5">
                         <span>{relTool.name}</span>
-                        <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                        <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
                       </h4>
                       <span className="text-[10px] font-mono text-slate-400 px-1.5 py-0.5 rounded bg-slate-800">
                         #{relTool.number}
@@ -584,18 +591,19 @@ export default function StandaloneToolPage({
                     <p className="text-[11px] text-slate-400 line-clamp-2 mt-1">
                       {relTool.description}
                     </p>
-                  </a>
+                  </button>
                 ))}
               </div>
 
               <div className="pt-2">
-                <a
-                  href={getCategoryPath(tool.category)}
+                <button
+                  type="button"
+                  onClick={() => onNavigate('category')}
                   className="w-full py-2.5 px-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-bold font-mono flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                 >
                   <span>Explore All {categoryInfo?.name || 'Category'} Tools</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                </button>
               </div>
             </div>
           </div>

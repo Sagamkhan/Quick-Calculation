@@ -136,6 +136,20 @@ export default function Sidebar({
                     <span>Home</span>
                   </button>
 
+                  {/* AI Creative & Voice Studio */}
+                  <button
+                    onClick={() => handleNavClick('ai-studio')}
+                    className={`w-full px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2.5 transition-all cursor-pointer ${
+                      activePage === 'ai-studio'
+                        ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-600 text-white shadow-md'
+                        : 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500/20'
+                    }`}
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                    <span className="flex-1 text-left">AI Creative & Voice Studio</span>
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-indigo-500/20 text-indigo-300 font-bold">5 Tools</span>
+                  </button>
+
                   {/* All Tools */}
                   <button
                     onClick={() => handleCategoryNavClick(null)}

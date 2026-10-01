@@ -1265,7 +1265,7 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
             </button>
           </div>
 
-          <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-hidden">
+          <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-x-auto overflow-y-visible">
             {/* Scroll indicators */}
             <div
               className={`pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-slate-950 to-transparent z-20 transition-opacity ${
@@ -1387,3 +1387,6 @@ export default function InteractiveToolEngine({
     </div>
   );
 }
+
+export { InteractiveToolEngine };
+

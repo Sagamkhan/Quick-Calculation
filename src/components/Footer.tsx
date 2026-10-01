@@ -13,8 +13,7 @@ import {
   User,
   Heart,
   TrendingUp,
-  Sparkles,
-  Lock
+  Sparkles
 } from 'lucide-react';
 
 interface FooterProps {
@@ -210,15 +209,6 @@ export default function Footer({ onSelectCategory, onNavigatePage }: FooterProps
                 >
                   <Heart className="w-3 h-3 fill-rose-500 text-rose-500" />
                   <span>Support / Donate</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleLinkClick('admin')}
-                  className="hover:text-cyan-400 text-slate-500 transition-colors cursor-pointer text-left flex items-center gap-2 group text-[11px] pt-1"
-                >
-                  <Lock className="w-3 h-3 text-slate-600 group-hover:text-cyan-400" />
-                  <span>Admin CMS Gateway</span>
                 </button>
               </li>
             </ul>

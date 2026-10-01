@@ -49,8 +49,6 @@ export class ToolErrorBoundary extends Component<ToolErrorBoundaryProps, ToolErr
     this.setState({ hasError: false, error: null, errorInfo: null });
     if (this.props.onGoHome) {
       this.props.onGoHome();
-    } else if (typeof window !== 'undefined') {
-      window.location.href = '/';
     }
   }
 
@@ -147,7 +145,7 @@ export class ToolErrorBoundary extends Component<ToolErrorBoundaryProps, ToolErr
               className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs flex items-center gap-2 transition-colors cursor-pointer"
             >
               <Home className="w-4 h-4 text-cyan-400" />
-              <span>Explore All Tools</span>
+              <span>Back to Tools</span>
             </button>
           </div>
         </div>

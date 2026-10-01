@@ -249,4 +249,52 @@ html.dark body {
   z-index: 1;
 }
 
+/* ==========================================================================
+   Universal Tool & Calculator Result Area Layout (Zero Cut-Off Results)
+   ========================================================================== */
+.printable-tool-container {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+.result-card,
+[data-result-card="true"],
+.tool-result-area,
+.calculation-result,
+.tool-output-panel {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+/* Responsive Table Horizontal Scrolling with Sticky Headers */
+.table-responsive,
+.overflow-x-auto {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .overflow-x-auto {
+    display: block;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .overflow-x-auto table {
+    min-width: 520px;
+    width: 100%;
+  }
+  .overflow-x-auto thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+}
+
 

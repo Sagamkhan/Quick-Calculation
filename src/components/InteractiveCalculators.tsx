@@ -1409,7 +1409,7 @@ export default function InteractiveCalculators({
                   </h3>
 
                   {/* Results Display Panel */}
-                  <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 text-white space-y-4 shadow-inner relative overflow-hidden transition-all duration-300">
+                  <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 text-white space-y-4 shadow-inner relative overflow-visible transition-all duration-300">
                     
                     {/* Glowing Accent background lines */}
                     <div className="absolute top-0 right-0 h-28 w-28 rounded-full bg-indigo-500/10 blur-xl pointer-events-none" />

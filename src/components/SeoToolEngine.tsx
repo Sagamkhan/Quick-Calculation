@@ -185,3 +185,6 @@ export function SeoToolEngine({ tool }: SeoToolEngineProps) {
     </div>
   );
 }
+
+export default SeoToolEngine;
+

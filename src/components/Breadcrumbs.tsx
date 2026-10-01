@@ -182,15 +182,15 @@ export default function Breadcrumbs({ category, tool, currentRoute, onNavigate }
                     <span>{segment.label}</span>
                   </motion.span>
                 ) : (
-                  <a
+                  <button
+                    type="button"
                     id={segment.id}
-                    href={segment.href}
                     onClick={(e) => handleSegmentClick(e, segment.href)}
                     className="flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors py-1 px-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-900 rounded-md cursor-pointer font-medium"
                   >
                     {SegmentIcon && <SegmentIcon className="h-3.5 w-3.5 text-neutral-400 dark:text-neutral-500" />}
                     <span>{segment.label}</span>
-                  </a>
+                  </button>
                 )}
               </div>
             </React.Fragment>

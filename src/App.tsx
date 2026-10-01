@@ -28,7 +28,7 @@ const LegalPages = lazy(() => import('./components/LegalPages'));
 const BlogGuides = lazy(() => import('./components/BlogGuides'));
 const DonationSection = lazy(() => import('./components/DonationSection'));
 const CompareModal = lazy(() => import('./components/CompareModal'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AiStudioHub = lazy(() => import('./components/ai/AiStudioHub'));
 
 /**
  * Universal Self-Healing Tool Synthesizer
@@ -121,56 +121,19 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedComplexity, setSelectedComplexity] = useState<string | null>(null);
   const [selectedFilterBadge, setSelectedFilterBadge] = useState<string | null>(null);
-  const [activePage, setActivePage] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const path = window.location.pathname;
-        if (path.startsWith('/admin') || path.startsWith('/dashboard')) {
-          return 'admin';
-        }
-        if (path.startsWith('/tools/')) {
-          return 'tool';
-        }
-        const pathParts = path.split('/').filter(Boolean);
-        if (pathParts.length === 2 && !['category', 'tools', 'blog', 'blogs', 'admin', 'dashboard'].includes(pathParts[0])) {
-          return 'tool';
-        }
-        if (new URLSearchParams(window.location.search).get('tool')) {
-          return 'tool';
-        }
-      } catch (e) {
-        console.warn('[App] Initial activePage detection fallback:', e);
-      }
-    }
-    return 'home';
-  });
+  const [activePage, setActivePage] = useState<string>('home');
   const [blogSlug, setBlogSlug] = useState<string | null>(null);
 
-  // Tool State
-  const [activeTool, setActiveTool] = useState<ToolItem | null>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const path = window.location.pathname;
-        const searchParams = new URLSearchParams(window.location.search);
-        const toolQuery = searchParams.get('tool');
-        if (toolQuery) {
-          return findToolBySlugOrId('tools', toolQuery, TOOLS_CATALOG) || synthesizeToolFromSlug(toolQuery);
-        }
-        if (path.startsWith('/tools/')) {
-          const slug = path.replace('/tools/', '').split('/')[0];
-          return findToolBySlugOrId('tools', slug, TOOLS_CATALOG) || synthesizeToolFromSlug(slug);
-        }
-        const pathParts = path.split('/').filter(Boolean);
-        if (pathParts.length === 2 && !['category', 'tools', 'blog', 'blogs', 'admin', 'dashboard'].includes(pathParts[0])) {
-          const [catSlug, toolSlug] = pathParts;
-          return findToolBySlugOrId(catSlug, toolSlug, TOOLS_CATALOG) || synthesizeToolFromSlug(toolSlug);
-        }
-      } catch (err) {
-        console.warn('[App] Initial activeTool calculation safe fallback:', err);
-      }
-    }
-    return null;
-  });
+  // Single-Page State Navigation: activeToolId controls the active tool
+  const [activeToolId, setActiveToolId] = useState<string | null>(null);
+
+  const activeTool = useMemo(() => {
+    if (!activeToolId) return null;
+    return (
+      mergedCatalog.find((t) => t.id === activeToolId || t.slug === activeToolId) ||
+      synthesizeToolFromSlug(activeToolId)
+    );
+  }, [activeToolId, mergedCatalog]);
   const [isFavoritesOpen, setIsFavoritesOpen] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
@@ -242,246 +205,47 @@ export default function App() {
     return CATEGORIES.find((c) => c.id === activeCategory) || null;
   }, [activeCategory]);
 
-  // Sync URL route parsing for tool permalinks, category permalinks, query parameters, and sitemap
-  useEffect(() => {
-    const handleUrlRoute = () => {
-      if (typeof window === 'undefined') return;
-      try {
-        const path = window.location.pathname;
-        const searchParams = new URLSearchParams(window.location.search);
-        const toolQuery = searchParams.get('tool');
+  // Pure Client-Only Single-Page State Navigation Handlers (No URL change, zero window.open)
+  const handleSelectTool = (tool: ToolItem) => {
+    setActiveToolId(tool.id);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
-        if (path === '/sitemap.xml') {
-          setActivePage('sitemap');
-          setActiveTool(null);
-          trackPageView(path, 'Dynamic XML Sitemap');
-          return;
-        }
-
-        // Query param deep-linking support: ?tool=word-counter
-        if (toolQuery) {
-          const matched = findToolBySlugOrId('tools', toolQuery, mergedCatalog) || synthesizeToolFromSlug(toolQuery);
-          setActiveTool(matched);
-          setActivePage('tool');
-          trackPageView(path, matched.name);
-          return;
-        }
-
-        // 1. Tool route matching /tools/[tool-slug]
-        if (path.startsWith('/tools/')) {
-          const slug = path.replace('/tools/', '').split('/')[0];
-          const matched = findToolBySlugOrId('tools', slug, mergedCatalog) || synthesizeToolFromSlug(slug);
-          setActiveTool(matched);
-          setActivePage('tool');
-          trackPageView(path, matched.name);
-          return;
-        }
-
-        // 2. Two-level tool route matching /[category-slug]/[tool-slug]
-        const pathParts = path.split('/').filter(Boolean);
-        if (pathParts.length === 2 && !['category', 'tools', 'blog', 'blogs', 'admin', 'dashboard'].includes(pathParts[0])) {
-          const [catSlug, toolSlug] = pathParts;
-          const matched = findToolBySlugOrId(catSlug, toolSlug, mergedCatalog) || synthesizeToolFromSlug(toolSlug);
-          setActiveTool(matched);
-          setActivePage('tool');
-          trackPageView(path, matched.name);
-          return;
-        }
-
-        // If user navigated away from a tool path, clear tool
-        setActiveTool(null);
-
-        // 3. Category route matching /category/[category-slug]
-        if (path.startsWith('/category/')) {
-          const catSlug = path.replace('/category/', '').split('/')[0];
-          const matchedCat = CATEGORIES.find(
-            (c) => c.id === catSlug || c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === catSlug
-          );
-          if (matchedCat) {
-            setActiveCategory(matchedCat.id);
-            setActivePage('category');
-            trackPageView(path, `${matchedCat.name} Tools`);
-            return;
-          }
-        }
-
-        // 4. Blog route matching /blog, /blogs, /blog/[slug], /blogs/[slug]
-        if (path.startsWith('/blog/') || path.startsWith('/blogs/')) {
-          const slug = path.replace(/^\/blogs?\//, '').split('/')[0];
-          setBlogSlug(slug || null);
-          setActivePage('blog');
-          trackPageView(path, `Blog Guide: ${slug}`);
-          return;
-        }
-        if (path === '/blog' || path === '/blogs') {
-          setBlogSlug(null);
-          setActivePage('blog');
-          trackPageView(path, 'Blog Guides & Calculation Tutorials');
-          return;
-        }
-
-        // 5. Admin & Dashboard routes
-        if (path === '/admin' || path === '/dashboard' || path.startsWith('/admin/') || path.startsWith('/dashboard/')) {
-          setActivePage('admin');
-          return;
-        }
-
-        // 6. Standalone legal & main pages
-        if (['donate', 'blog', 'blogs', 'admin', 'dashboard', 'privacy-policy', 'terms-of-service', 'disclaimer', 'about-us', 'contact-us', 'editorial-guidelines'].includes(path.replace('/', ''))) {
-          setBlogSlug(null);
-          const pName = path.replace('/', '') === 'blogs' ? 'blog' : path.replace('/', '');
-          setActivePage(pName);
-          trackPageView(path, pName);
-          return;
-        }
-
-        // Fallback: Default Homepage
-        if (path === '/' || path === '') {
-          setActivePage('home');
-          trackPageView('/', 'Quick Calculator - Free Online Calculators');
-          return;
-        }
-      } catch (routeErr) {
-        console.warn('[App] URL route parsing error handled:', routeErr);
-      }
-    };
-
-    handleUrlRoute();
-
-    window.addEventListener('popstate', handleUrlRoute);
-    return () => window.removeEventListener('popstate', handleUrlRoute);
-  }, [mergedCatalog]);
+  const handleBackToTools = () => {
+    setActiveToolId(null);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleSelectCategory = (categoryId: string | null) => {
     setActiveCategory(categoryId);
     setSearchQuery('');
-    setActiveTool(null);
+    setActiveToolId(null);
     setBlogSlug(null);
-
-    if (categoryId) {
-      setActivePage('category');
-      if (typeof window !== 'undefined' && window.history.pushState) {
-        window.history.pushState({}, '', getCategoryPath(categoryId));
-        trackPageView(getCategoryPath(categoryId), `${categoryId} Category`);
-      }
-    } else {
-      setActivePage('home');
-      if (typeof window !== 'undefined' && window.history.pushState) {
-        window.history.pushState({}, '', '/');
-        trackPageView('/', 'Homepage');
-      }
-    }
-
+    setActivePage(categoryId ? 'category' : 'home');
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleNavigatePage = (pageId: string) => {
+    setActiveToolId(null);
     setActivePage(pageId);
-    setActiveTool(null);
     setBlogSlug(null);
-
-    if (typeof window !== 'undefined' && window.history.pushState) {
-      if (pageId === 'home') {
-        window.history.pushState({}, '', '/');
-        setActiveCategory(null);
-        trackPageView('/', 'Homepage');
-      } else if (pageId === 'donate') {
-        window.history.pushState({}, '', '/donate');
-        trackPageView('/donate', 'Donate to QuickCalc');
-      } else if (pageId === 'blog') {
-        window.history.pushState({}, '', '/blog');
-        trackPageView('/blog', 'Blog Guides');
-      } else if (pageId === 'admin') {
-        window.history.pushState({}, '', '/admin');
-      } else {
-        window.history.pushState({}, '', `/${pageId}`);
-        trackPageView(`/${pageId}`, pageId);
-      }
-    }
-
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  const handleSelectTool = (tool: ToolItem) => {
-    if (typeof window !== 'undefined') {
-      const toolPath = getToolPath(tool);
-      window.open(toolPath, '_blank', 'noopener,noreferrer');
-    }
-  };
-
-  const handleInternalNavigateTool = (tool: ToolItem) => {
-    setActiveTool(tool);
-    setActivePage('tool');
-    if (typeof window !== 'undefined' && window.history.pushState) {
-      window.history.pushState({}, '', getToolPath(tool));
-      trackPageView(getToolPath(tool), tool.name);
+    if (pageId === 'home') {
+      setActiveCategory(null);
     }
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-
-  // Check if current route is an isolated Admin / Dashboard route
-  const isAdminRoute =
-    activePage === 'admin' ||
-    activePage === 'dashboard' ||
-    (typeof window !== 'undefined' &&
-      (window.location.pathname.startsWith('/admin') ||
-        window.location.pathname.startsWith('/dashboard')));
-
-  // ISOLATED ADMIN DASHBOARD VIEWPORT (Zero public navbar, zero footer, zero sidebar, zero UI bleed)
-  if (isAdminRoute) {
-    return (
-      <ToolErrorBoundary isAppRoot onGoHome={() => handleNavigatePage('home')}>
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row antialiased font-sans select-text">
-          <Helmet
-            title="⚡ QuickCalc Control Panel | Admin Dashboard"
-            description="Isolated Admin Dashboard & Dynamic Tool Engine for Quick Calculator."
-            canonicalUrl="https://quickcalc.in/admin"
-            robots="noindex, nofollow"
-          />
-          <Suspense
-            fallback={
-              <div className="w-screen h-screen flex items-center justify-center bg-slate-950 text-cyan-400 font-mono text-xs">
-                Loading QuickCalc Control Panel...
-              </div>
-            }
-          >
-            <AdminDashboard
-              onGoHome={() => handleNavigatePage('home')}
-              onNavigateBlog={(slug) => {
-                if (slug) {
-                  setBlogSlug(slug);
-                  setActivePage('blog');
-                  if (typeof window !== 'undefined' && window.history.pushState) {
-                    window.history.pushState({}, '', `/blog/${slug}`);
-                  }
-                } else {
-                  handleNavigatePage('blog');
-                }
-              }}
-              onNavigateTool={(slug) => {
-                const matched = mergedCatalog.find((t) => t.slug === slug || t.id === slug);
-                if (matched) {
-                  handleSelectTool(matched);
-                } else {
-                  window.open(`/tools/${slug}`, '_blank');
-                }
-              }}
-            />
-          </Suspense>
-        </div>
-      </ToolErrorBoundary>
-    );
-  }
 
   return (
-    <ToolErrorBoundary isAppRoot onGoHome={() => handleNavigatePage('home')}>
-      <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
+
         
         {/* Helmet Metadata */}
         <Helmet
@@ -501,8 +265,13 @@ export default function App() {
           onOpenBookmarks={() => setIsFavoritesOpen(true)}
           onToggleSidebar={() => setIsSidebarOpen(true)}
           onOpenDonate={() => handleNavigatePage('donate')}
-          onGoHome={() => handleNavigatePage('home')}
-          onSelectTool={handleInternalNavigateTool}
+          onOpenAiStudio={() => handleNavigatePage('ai-studio')}
+          onGoHome={() => {
+            handleBackToTools();
+            handleNavigatePage('home');
+          }}
+          onSelectTool={handleSelectTool}
+          isToolPage={Boolean(activeToolId && activeTool)}
         />
 
         {/* Left Drawer Sidebar */}
@@ -531,27 +300,61 @@ export default function App() {
 
         {/* Main Page Content */}
         <main className="w-full">
-          {activePage === 'sitemap' ? (
+          {activeToolId && activeTool ? (
+            /* Standalone Dedicated Tool Page Route View with Single-Page State Navigation */
+            <ToolErrorBoundary
+              tool={activeTool}
+              onGoHome={handleBackToTools}
+              fallback={
+                <div className="max-w-4xl mx-auto p-8 rounded-3xl bg-slate-900 border border-amber-500/30 text-center space-y-4 my-8">
+                  <h3 className="text-xl font-bold text-white font-display">Something went wrong loading this tool</h3>
+                  <p className="text-xs text-slate-400">The calculator encountered an unexpected parameter error.</p>
+                  <button
+                    type="button"
+                    onClick={handleBackToTools}
+                    className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all cursor-pointer"
+                  >
+                    ← Back to Tools
+                  </button>
+                </div>
+              }
+            >
+              <Suspense fallback={<ToolLoadingSkeleton message={`Loading ${activeTool.name}...`} />}>
+                <StandaloneToolPage
+                  tool={activeTool}
+                  onBack={handleBackToTools}
+                  onSelectTool={handleSelectTool}
+                  bookmarkedIds={bookmarkedIds}
+                  onToggleBookmark={handleToggleBookmark}
+                  onNavigate={(page) => {
+                    if (page === 'home' || page === '/') {
+                      handleBackToTools();
+                    } else if (page.startsWith('/category/') || page === 'category') {
+                      setActiveToolId(null);
+                      const catId = page.replace('/category/', '');
+                      handleSelectCategory(catId || null);
+                    } else {
+                      handleNavigatePage(page);
+                    }
+                  }}
+                  onOpenCompare={handleOpenCompare}
+                />
+              </Suspense>
+            </ToolErrorBoundary>
+          ) : activePage === 'sitemap' ? (
             <div className="max-w-7xl mx-auto px-4 py-12 space-y-6">
               <h1 className="text-2xl font-bold font-display text-white">Dynamic XML Sitemap</h1>
               <pre className="p-6 rounded-2xl bg-slate-950 text-cyan-300 font-mono text-xs overflow-x-auto whitespace-pre-wrap border border-slate-800">
                 {generateSitemapXml()}
               </pre>
             </div>
-          ) : activePage === 'tool' ? (
-            /* Standalone Dedicated Tool Page Route View with Self-Healing Fallback */
-            <Suspense fallback={<ToolLoadingSkeleton message="Loading Interactive Calculator Engine..." />}>
-              <StandaloneToolPage
-                tool={activeTool || synthesizeToolFromSlug('dynamic-calculator')}
-                bookmarkedIds={bookmarkedIds}
-                onToggleBookmark={handleToggleBookmark}
-                onNavigate={handleNavigatePage}
-                onOpenCompare={handleOpenCompare}
-              />
-            </Suspense>
           ) : activePage === 'donate' ? (
             <Suspense fallback={<ToolLoadingSkeleton message="Loading Donation Portal..." />}>
               <DonationSection isStandalonePage={true} />
+            </Suspense>
+          ) : activePage === 'ai-studio' ? (
+            <Suspense fallback={<ToolLoadingSkeleton message="Loading AI Creative & Voice Studio..." />}>
+              <AiStudioHub onGoHome={() => handleNavigatePage('home')} />
             </Suspense>
           ) : activePage === 'blog' ? (
             <Suspense fallback={<ToolLoadingSkeleton message="Loading Blog Guides..." />}>
@@ -659,6 +462,5 @@ export default function App() {
         )}
 
       </div>
-    </ToolErrorBoundary>
   );
 }

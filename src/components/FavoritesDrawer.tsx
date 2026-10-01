@@ -82,11 +82,13 @@ export default function FavoritesDrawer({
                     key={tool.id}
                     className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-3 group hover:border-indigo-500 transition-all"
                   >
-                    <a
-                      href={getToolPath(tool)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 cursor-pointer block"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onSelectTool(tool);
+                        onClose();
+                      }}
+                      className="flex-1 cursor-pointer block text-left"
                     >
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-xs font-bold text-indigo-500">#{tool.number}</span>
@@ -97,18 +99,20 @@ export default function FavoritesDrawer({
                       <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5">
                         {tool.description}
                       </p>
-                    </a>
+                    </button>
 
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <a
-                        href={getToolPath(tool)}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onSelectTool(tool);
+                          onClose();
+                        }}
                         className="p-2 rounded-xl text-neutral-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-all cursor-pointer"
-                        title="Open in new window / tab"
+                        title="Open calculator"
                       >
                         <ExternalLink className="w-4 h-4" />
-                      </a>
+                      </button>
                       <button
                         onClick={() => onRemoveBookmark(tool)}
                         className="p-2 rounded-xl text-neutral-400 hover:text-rose-500 hover:bg-rose-500/10 transition-all cursor-pointer"

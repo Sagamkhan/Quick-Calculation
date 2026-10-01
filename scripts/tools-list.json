@@ -1,0 +1,1137 @@
+[
+  {
+    "id": "tool_plagiarism_checker",
+    "name": "Free Plagiarism Checker Online",
+    "category": "text-ai-tools",
+    "slug": "plagiarism-checker"
+  },
+  {
+    "id": "tool_word_character_counter",
+    "name": "Online Word & Character Counter Tool",
+    "category": "text-ai-tools",
+    "slug": "word-character-counter"
+  },
+  {
+    "id": "tool_case_converter",
+    "name": "Upper & Lower Case Converter Online",
+    "category": "text-ai-tools",
+    "slug": "case-converter"
+  },
+  {
+    "id": "tool_article_rewriter_paraphraser",
+    "name": "AI Article Rewriter & Sentence Paraphraser",
+    "category": "text-ai-tools",
+    "slug": "article-rewriter-paraphraser"
+  },
+  {
+    "id": "tool_sip_calculator",
+    "name": "SIP Mutual Fund Return Calculator",
+    "category": "finance-calculators",
+    "slug": "sip-calculator"
+  },
+  {
+    "id": "tool_emi_loan_calculator",
+    "name": "Home & Personal Loan EMI Calculator",
+    "category": "finance-calculators",
+    "slug": "emi-loan-calculator"
+  },
+  {
+    "id": "tool_gst_tax_calculator",
+    "name": "GST Tax Calculator Online",
+    "category": "finance-calculators",
+    "slug": "gst-tax-calculator"
+  },
+  {
+    "id": "tool_compound_interest_calculator",
+    "name": "Daily & Monthly Compound Interest Calculator",
+    "category": "finance-calculators",
+    "slug": "compound-interest-calculator"
+  },
+  {
+    "id": "tool_pdf_merger_combiner",
+    "name": "Merge PDF Files Online Free",
+    "category": "pdf-tools",
+    "slug": "pdf-merger-combiner"
+  },
+  {
+    "id": "tool_pdf_file_compressor",
+    "name": "PDF File Size Compressor",
+    "category": "pdf-tools",
+    "slug": "pdf-file-compressor"
+  },
+  {
+    "id": "tool_image_to_pdf_converter",
+    "name": "Image (JPG/PNG) to PDF Converter Online",
+    "category": "pdf-tools",
+    "slug": "image-to-pdf-converter"
+  },
+  {
+    "id": "tool_json_formatter_validator",
+    "name": "JSON Viewer, Formatter & Validator",
+    "category": "developer-tools",
+    "slug": "json-formatter-validator"
+  },
+  {
+    "id": "tool_base64_encoder_decoder",
+    "name": "Base64 Encoder & Decoder Online",
+    "category": "developer-tools",
+    "slug": "base64-encoder-decoder"
+  },
+  {
+    "id": "tool_css_js_code_minifier",
+    "name": "CSS & JavaScript Code Minifier",
+    "category": "developer-tools",
+    "slug": "css-js-code-minifier"
+  },
+  {
+    "id": "tool_image_compressor_resizer",
+    "name": "Image Compressor & Target KB Resizer",
+    "category": "image-tools",
+    "slug": "image-compressor-target-kb-resizer",
+    "interactiveType": "image-compressor"
+  },
+  {
+    "id": "tool_jpg_to_png_converter",
+    "name": "JPG to PNG Converter",
+    "category": "image-tools",
+    "slug": "jpg-to-png-converter",
+    "interactiveType": "image-converter"
+  },
+  {
+    "id": "tool_png_to_jpg_converter",
+    "name": "PNG to JPG Converter",
+    "category": "image-tools",
+    "slug": "png-to-jpg-converter",
+    "interactiveType": "image-converter"
+  },
+  {
+    "id": "tool_webp_to_jpg_converter",
+    "name": "WebP to JPG & PNG Converter",
+    "category": "image-tools",
+    "slug": "webp-to-jpg-png-converter",
+    "interactiveType": "image-converter"
+  },
+  {
+    "id": "tool_jpg_png_to_webp",
+    "name": "JPG & PNG to WebP Converter",
+    "category": "image-tools",
+    "slug": "jpg-png-to-webp-converter",
+    "interactiveType": "image-converter"
+  },
+  {
+    "id": "tool_heic_to_jpg_png",
+    "name": "HEIC to JPG & PNG Converter",
+    "category": "image-tools",
+    "slug": "heic-to-jpg-png-converter",
+    "interactiveType": "image-converter"
+  },
+  {
+    "id": "tool_svg_to_png_jpg",
+    "name": "SVG to PNG & High-Res JPG Converter",
+    "category": "image-tools",
+    "slug": "svg-to-png-high-res-jpg-converter",
+    "interactiveType": "svg-converter"
+  },
+  {
+    "id": "tool_png_jpg_to_svg",
+    "name": "PNG / JPG to SVG Vectorizer",
+    "category": "image-tools",
+    "slug": "png-jpg-to-svg-vectorizer",
+    "interactiveType": "vectorizer"
+  },
+  {
+    "id": "tool_png_to_ico_favicon",
+    "name": "PNG to ICO & Favicon Studio",
+    "category": "image-tools",
+    "slug": "png-to-ico-favicon-studio",
+    "interactiveType": "favicon-studio"
+  },
+  {
+    "id": "tool_bulk_image_resizer",
+    "name": "Bulk Image Resizer & Dimension Scaler",
+    "category": "image-tools",
+    "slug": "bulk-image-resizer-dimension-scaler",
+    "interactiveType": "image-resizer"
+  },
+  {
+    "id": "tool_smart_image_crop",
+    "name": "Smart Image Crop, Rotate & Flip Studio",
+    "category": "image-tools",
+    "slug": "smart-image-crop-rotate-flip-studio",
+    "interactiveType": "image-crop"
+  },
+  {
+    "id": "tool_color_palette_extractor",
+    "name": "Color Palette & Dominant Color Extractor",
+    "category": "image-tools",
+    "slug": "color-palette-dominant-color-extractor",
+    "interactiveType": "color-palette"
+  },
+  {
+    "id": "tool_exif_metadata_inspector",
+    "name": "EXIF Metadata Inspector & Privacy Stripper",
+    "category": "image-tools",
+    "slug": "exif-metadata-inspector-privacy-stripper",
+    "interactiveType": "exif-stripper"
+  },
+  {
+    "id": "tool_image_watermark_overlay",
+    "name": "Image Watermark & Copyright Overlay",
+    "category": "image-tools",
+    "slug": "image-watermark-copyright-overlay",
+    "interactiveType": "watermark"
+  },
+  {
+    "id": "tool_blur_pixelate_redact",
+    "name": "Blur, Pixelate & Redact Privacy Tool",
+    "category": "image-tools",
+    "slug": "blur-pixelate-redact-privacy-tool",
+    "interactiveType": "blur-redact"
+  },
+  {
+    "id": "tool_base64_image_encoder",
+    "name": "Base64 to Image & Image to Base64 Encoder",
+    "category": "image-tools",
+    "slug": "base64-to-image-encoder-decoder",
+    "interactiveType": "base64-image"
+  },
+  {
+    "id": "tool_bw_grayscale_duotone_filters",
+    "name": "Black & White, Grayscale & Duotone Filters",
+    "category": "image-tools",
+    "slug": "bw-grayscale-duotone-filters",
+    "interactiveType": "image-filter"
+  },
+  {
+    "id": "tool_image_dpi_print_calculator",
+    "name": "Image DPI & Print Resolution Calculator",
+    "category": "image-tools",
+    "slug": "image-dpi-print-resolution-calculator",
+    "interactiveType": "dpi-calculator"
+  },
+  {
+    "id": "tool_aspect_ratio_calculator",
+    "name": "Aspect Ratio Calculator & Dimension Matcher",
+    "category": "image-tools",
+    "slug": "aspect-ratio-calculator-dimension-matcher",
+    "interactiveType": "aspect-ratio"
+  },
+  {
+    "id": "tool_gif_frame_splitter",
+    "name": "GIF Frame Splitter & Extractor",
+    "category": "image-tools",
+    "slug": "gif-frame-splitter-extractor",
+    "interactiveType": "gif-splitter"
+  },
+  {
+    "id": "tool_meme_generator_studio",
+    "name": "Meme Generator & Text Overlay Engine",
+    "category": "image-tools",
+    "slug": "meme-generator-text-overlay-engine",
+    "interactiveType": "meme-generator"
+  },
+  {
+    "id": "tool_brightness_contrast_tuner",
+    "name": "Brightness, Contrast & Saturation Tuner",
+    "category": "image-tools",
+    "slug": "brightness-contrast-saturation-tuner",
+    "interactiveType": "color-grade"
+  },
+  {
+    "id": "tool_background_inverter_keyer",
+    "name": "Background Inverter & Transparent Color Keyer",
+    "category": "image-tools",
+    "slug": "background-inverter-transparent-color-keyer",
+    "interactiveType": "color-keyer"
+  },
+  {
+    "id": "tool_social_media_resizer",
+    "name": "Social Media Post Resizer & Canvas Fit",
+    "category": "image-tools",
+    "slug": "social-media-post-resizer-canvas-fit",
+    "interactiveType": "social-resizer"
+  },
+  {
+    "id": "tool_image_diff_slider",
+    "name": "Side-by-Side Image Diff & Comparison Slider",
+    "category": "image-tools",
+    "slug": "side-by-side-image-diff-comparison-slider",
+    "interactiveType": "image-diff"
+  },
+  {
+    "id": "ai-1",
+    "name": "AI Prompt Optimizer & Studio",
+    "category": "ai-tools",
+    "slug": "ai-prompt-optimizer-studio",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-2",
+    "name": "ChatGPT Free Assistant Interface",
+    "category": "ai-tools",
+    "slug": "chatgpt-free-assistant-interface",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-3",
+    "name": "Claude 3.5 Sonnet Playground",
+    "category": "ai-tools",
+    "slug": "claude-3-5-sonnet-playground",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-4",
+    "name": "Google Gemini Workspace AI",
+    "category": "ai-tools",
+    "slug": "google-gemini-workspace-ai",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-5",
+    "name": "OpenSource HuggingChat Assistant",
+    "category": "ai-tools",
+    "slug": "opensource-huggingchat-assistant",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-6",
+    "name": "Flux & Stable Diffusion Canvas Studio",
+    "category": "ai-tools",
+    "slug": "flux-stable-diffusion-canvas-studio",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-7",
+    "name": "AI Text Humanizer & Detector Bypass",
+    "category": "ai-tools",
+    "slug": "ai-text-humanizer-detector-bypass",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-8",
+    "name": "AI Viral Headline & Hook Generator",
+    "category": "ai-tools",
+    "slug": "ai-viral-headline-hook-generator",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-9",
+    "name": "AI Cold Email & Outreach Copywriter",
+    "category": "ai-tools",
+    "slug": "ai-cold-email-outreach-copywriter",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-10",
+    "name": "AI Code Explainer & Bug Fixer",
+    "category": "ai-tools",
+    "slug": "ai-code-explainer-bug-fixer",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-11",
+    "name": "YouTube Video Script & Hook Generator",
+    "category": "ai-tools",
+    "slug": "youtube-video-script-hook-generator",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-12",
+    "name": "Midjourney Parameter & Style Builder",
+    "category": "ai-tools",
+    "slug": "midjourney-parameter-style-builder",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-13",
+    "name": "AI Grammar Fixer & Tone Polisher",
+    "category": "ai-tools",
+    "slug": "ai-grammar-fixer-tone-polisher",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-14",
+    "name": "AI Product Description Writer",
+    "category": "ai-tools",
+    "slug": "ai-product-description-writer",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-15",
+    "name": "AI Bio & Social Profile Generator",
+    "category": "ai-tools",
+    "slug": "ai-bio-social-profile-generator",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-16",
+    "name": "AI Resume Bullet & Action Verb Enhancer",
+    "category": "ai-tools",
+    "slug": "ai-resume-bullet-action-verb-enhancer",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-17",
+    "name": "AI Article Outline & Content Brief Architect",
+    "category": "ai-tools",
+    "slug": "ai-article-outline-content-brief-architect",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-18",
+    "name": "AI FAQ & Knowledge Base Generator",
+    "category": "ai-tools",
+    "slug": "ai-faq-knowledge-base-generator",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-19",
+    "name": "AI Story & Creative Plot Generator",
+    "category": "ai-tools",
+    "slug": "ai-story-creative-plot-generator",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-20",
+    "name": "AI TL;DR Summarizer & Key Takeaways Extractor",
+    "category": "ai-tools",
+    "slug": "ai-tl-dr-summarizer-key-takeaways-extractor",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-21",
+    "name": "AI Paraphraser & Vocabulary Booster",
+    "category": "ai-tools",
+    "slug": "ai-paraphraser-vocabulary-booster",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-22",
+    "name": "AI Ad Copy & Creative Variations Studio",
+    "category": "ai-tools",
+    "slug": "ai-ad-copy-creative-variations-studio",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-23",
+    "name": "AI Regex & SQL Query Builder",
+    "category": "ai-tools",
+    "slug": "ai-regex-sql-query-builder",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-24",
+    "name": "AI Token Counter & API Cost Estimator",
+    "category": "ai-tools",
+    "slug": "ai-token-counter-api-cost-estimator",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "ai-25",
+    "name": "AI System Prompt & Persona Architect",
+    "category": "ai-tools",
+    "slug": "ai-system-prompt-persona-architect",
+    "interactiveType": "ai-prompt"
+  },
+  {
+    "id": "alt-1",
+    "name": "Photopea Online Editor",
+    "category": "free-alternatives"
+  },
+  {
+    "id": "alt-2",
+    "name": "Figma Free Starter Studio",
+    "category": "free-alternatives"
+  },
+  {
+    "id": "alt-3",
+    "name": "DaVinci Resolve Studio",
+    "category": "free-alternatives"
+  },
+  {
+    "id": "alt-4",
+    "name": "OBS Studio Recorder",
+    "category": "free-alternatives"
+  },
+  {
+    "id": "alt-5",
+    "name": "GIMP Image Manipulator",
+    "category": "free-alternatives"
+  },
+  {
+    "id": "alt-6",
+    "name": "Excalidraw Virtual Whiteboard",
+    "category": "free-alternatives"
+  },
+  {
+    "id": "pdf-1",
+    "name": "PDF Merger & Combiner",
+    "category": "pdf-tools",
+    "slug": "pdf-merger-combiner",
+    "interactiveType": "pdf-merger"
+  },
+  {
+    "id": "pdf-2",
+    "name": "PDF File Size Compressor & Optimizer",
+    "category": "pdf-tools",
+    "slug": "pdf-compressor-optimizer",
+    "interactiveType": "pdf-compressor"
+  },
+  {
+    "id": "pdf-3",
+    "name": "PDF to High-Res JPG & PNG Converter",
+    "category": "pdf-tools",
+    "slug": "pdf-to-jpg-png",
+    "interactiveType": "pdf-to-image"
+  },
+  {
+    "id": "pdf-4",
+    "name": "Image (JPG/PNG/WebP) to PDF Converter",
+    "category": "pdf-tools",
+    "slug": "image-to-pdf-converter",
+    "interactiveType": "image-to-pdf"
+  },
+  {
+    "id": "pdf-5",
+    "name": "PDF to Word & Clean Text Extractor",
+    "category": "pdf-tools",
+    "slug": "pdf-to-word-text",
+    "interactiveType": "pdf-text-extractor"
+  },
+  {
+    "id": "pdf-6",
+    "name": "PDF Splitter & Page Range Extractor",
+    "category": "pdf-tools",
+    "slug": "pdf-splitter-range",
+    "interactiveType": "pdf-splitter"
+  },
+  {
+    "id": "pdf-7",
+    "name": "PDF Password Protector & Encryptor",
+    "category": "pdf-tools",
+    "slug": "pdf-password-protector",
+    "interactiveType": "pdf-protect"
+  },
+  {
+    "id": "pdf-8",
+    "name": "PDF Password Remover & Unlocker",
+    "category": "pdf-tools",
+    "slug": "pdf-password-remover",
+    "interactiveType": "pdf-unlock"
+  },
+  {
+    "id": "pdf-9",
+    "name": "PDF Page Rotator & Reorder Studio",
+    "category": "pdf-tools",
+    "slug": "pdf-rotator-reorder",
+    "interactiveType": "pdf-rotator"
+  },
+  {
+    "id": "pdf-10",
+    "name": "PDF Page Number & Header/Footer Adder",
+    "category": "pdf-tools",
+    "slug": "pdf-page-number-bates",
+    "interactiveType": "pdf-numbering"
+  },
+  {
+    "id": "pdf-11",
+    "name": "PDF Watermark & Copyright Stamp Adder",
+    "category": "pdf-tools",
+    "slug": "pdf-watermark-stamp",
+    "interactiveType": "pdf-watermark"
+  },
+  {
+    "id": "pdf-12",
+    "name": "PDF Metadata Editor & Privacy Stripper",
+    "category": "pdf-tools",
+    "slug": "pdf-metadata-editor",
+    "interactiveType": "pdf-metadata"
+  },
+  {
+    "id": "pdf-13",
+    "name": "PDF Grayscale & Monochrome Converter",
+    "category": "pdf-tools",
+    "slug": "pdf-grayscale-monochrome",
+    "interactiveType": "pdf-grayscale"
+  },
+  {
+    "id": "pdf-14",
+    "name": "PDF Page Cropper & Margin Trimmer",
+    "category": "pdf-tools",
+    "slug": "pdf-page-cropper",
+    "interactiveType": "pdf-cropper"
+  },
+  {
+    "id": "pdf-15",
+    "name": "PDF to Clean Markdown Converter",
+    "category": "pdf-tools",
+    "slug": "pdf-to-markdown-converter",
+    "interactiveType": "pdf-to-markdown"
+  },
+  {
+    "id": "pdf-16",
+    "name": "PDF Form Data Extractor (FDF/XFDF)",
+    "category": "pdf-tools",
+    "slug": "pdf-form-data-extractor",
+    "interactiveType": "pdf-form-extractor"
+  },
+  {
+    "id": "pdf-17",
+    "name": "Extract Images from PDF Studio",
+    "category": "pdf-tools",
+    "slug": "extract-images-from-pdf",
+    "interactiveType": "pdf-extract-images"
+  },
+  {
+    "id": "pdf-18",
+    "name": "PDF Digital Signature & Sign Drawer",
+    "category": "pdf-tools",
+    "slug": "pdf-digital-signature",
+    "interactiveType": "pdf-signature"
+  },
+  {
+    "id": "pdf-19",
+    "name": "PDF N-Up & Booklet Layout Generator",
+    "category": "pdf-tools",
+    "slug": "pdf-n-up-booklet",
+    "interactiveType": "pdf-n-up"
+  },
+  {
+    "id": "pdf-20",
+    "name": "HTML & Rich Text to PDF Generator",
+    "category": "pdf-tools",
+    "slug": "html-to-pdf-generator",
+    "interactiveType": "html-to-pdf"
+  },
+  {
+    "id": "pdf-21",
+    "name": "PDF Redaction & Blackout Censor Tool",
+    "category": "pdf-tools",
+    "slug": "pdf-redaction-blackout",
+    "interactiveType": "pdf-redact"
+  },
+  {
+    "id": "pdf-22",
+    "name": "OCR Text Extractor from Scanned PDF",
+    "category": "pdf-tools",
+    "slug": "ocr-text-extractor-pdf",
+    "interactiveType": "pdf-ocr"
+  },
+  {
+    "id": "pdf-23",
+    "name": "PDF File Repair & Syntax Cleaner",
+    "category": "pdf-tools",
+    "slug": "pdf-file-repair",
+    "interactiveType": "pdf-repair"
+  },
+  {
+    "id": "pdf-24",
+    "name": "PDF Flatten & Annotation Merger",
+    "category": "pdf-tools",
+    "slug": "pdf-flatten-annotations",
+    "interactiveType": "pdf-flatten"
+  },
+  {
+    "id": "pdf-25",
+    "name": "PDF Page Count & Document Metric Inspector",
+    "category": "pdf-tools",
+    "slug": "pdf-metric-inspector",
+    "interactiveType": "pdf-inspector"
+  },
+  {
+    "id": "fin-1",
+    "name": "SIP & Compound Growth Calculator",
+    "category": "math-finance",
+    "interactiveType": "sip-calc"
+  },
+  {
+    "id": "fin-2",
+    "name": "Mortgage & EMI Amortization Planner",
+    "category": "math-finance",
+    "interactiveType": "sip-calc"
+  },
+  {
+    "id": "fin-3",
+    "name": "SaaS Burn Rate & Runway Calculator",
+    "category": "math-finance"
+  },
+  {
+    "id": "fin-4",
+    "name": "Freelance Rate & Value Matrix",
+    "category": "math-finance"
+  },
+  {
+    "id": "fin-5",
+    "name": "Crypto & Forex Profit Estimator",
+    "category": "math-finance"
+  },
+  {
+    "id": "finance-sip",
+    "name": "SIP Calculator (Systematic Investment Plan)",
+    "category": "finance",
+    "slug": "finance/sip-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-emi",
+    "name": "EMI Loan Calculator",
+    "category": "finance",
+    "slug": "finance/loan-emi-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-compound",
+    "name": "Compound Interest Calculator",
+    "category": "finance",
+    "slug": "finance/compound-interest-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-retirement",
+    "name": "Retirement Planning Calculator",
+    "category": "finance",
+    "slug": "finance/retirement-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-gst-tax",
+    "name": "GST & Tax Calculator",
+    "category": "finance",
+    "slug": "finance/gst-tax-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-inflation",
+    "name": "Inflation Calculator",
+    "category": "finance",
+    "slug": "finance/inflation-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-ppf",
+    "name": "PPF / EPF Return Calculator",
+    "category": "finance",
+    "slug": "finance/ppf-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-simple-interest",
+    "name": "Simple Interest Calculator",
+    "category": "finance",
+    "slug": "finance/simple-interest-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-fd-rd",
+    "name": "Fixed Deposit (FD) & RD Calculator",
+    "category": "finance",
+    "slug": "finance/fd-rd-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-net-worth",
+    "name": "Net Worth Calculator",
+    "category": "finance",
+    "slug": "finance/net-worth-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-currency",
+    "name": "Currency Converter & Exchange Estimator",
+    "category": "finance",
+    "slug": "finance/currency-converter",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-salary",
+    "name": "Salary / Take-Home Pay Calculator",
+    "category": "finance",
+    "slug": "finance/salary-take-home-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-dti",
+    "name": "Debt-to-Income (DTI) Ratio Calculator",
+    "category": "finance",
+    "slug": "finance/debt-to-income-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-emergency-fund",
+    "name": "Emergency Fund Calculator",
+    "category": "finance",
+    "slug": "finance/emergency-fund-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "finance-brokerage",
+    "name": "Brokerage & Trading Fee Calculator",
+    "category": "finance",
+    "slug": "finance/brokerage-calculator",
+    "interactiveType": "finance-tool"
+  },
+  {
+    "id": "txt-1",
+    "name": "Word Counter & Readability Inspector",
+    "category": "text-writing",
+    "interactiveType": "word-counter"
+  },
+  {
+    "id": "txt-2",
+    "name": "Markdown Live Visual Editor",
+    "category": "text-writing",
+    "interactiveType": "markdown-preview"
+  },
+  {
+    "id": "txt-3",
+    "name": "Sentence Rephraser & Tone Matcher",
+    "category": "text-writing"
+  },
+  {
+    "id": "txt-4",
+    "name": "Case Converter & Format Utility",
+    "category": "text-writing"
+  },
+  {
+    "id": "txt-5",
+    "name": "Lorem Ipsum Custom Generator",
+    "category": "text-writing"
+  },
+  {
+    "id": "dev-1",
+    "name": "JSON Formatter & Schema Inspector",
+    "category": "developer-coding",
+    "interactiveType": "json-formatter"
+  },
+  {
+    "id": "dev-2",
+    "name": "Regex Tester & Match Explainer",
+    "category": "developer-coding",
+    "interactiveType": "regex-tester"
+  },
+  {
+    "id": "dev-3",
+    "name": "Secure Password & Hash Generator",
+    "category": "developer-coding",
+    "interactiveType": "password-gen"
+  },
+  {
+    "id": "dev-4",
+    "name": "QR Code Generator Studio",
+    "category": "developer-coding",
+    "interactiveType": "qr-generator"
+  },
+  {
+    "id": "dev-5",
+    "name": "WCAG Color Contrast Analyzer",
+    "category": "developer-coding",
+    "interactiveType": "color-contrast"
+  },
+  {
+    "id": "dev-6",
+    "name": "Base64 & URL Encoder/Decoder",
+    "category": "developer-coding"
+  },
+  {
+    "id": "tool_unit_length",
+    "name": "Length & Distance Unit Converter",
+    "category": "unit-converter",
+    "slug": "length-unit-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_mass",
+    "name": "Weight & Mass Unit Converter",
+    "category": "unit-converter",
+    "slug": "weight-mass-unit-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_area",
+    "name": "Area & Land Measurement Converter",
+    "category": "unit-converter",
+    "slug": "area-unit-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_volume",
+    "name": "Volume & Liquid Capacity Converter",
+    "category": "unit-converter",
+    "slug": "volume-liquid-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_data_storage",
+    "name": "Data Storage & Digital Bandwidth Converter",
+    "category": "unit-converter",
+    "slug": "data-storage-bandwidth-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_speed",
+    "name": "Speed & Velocity Unit Converter",
+    "category": "unit-converter",
+    "slug": "speed-velocity-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_temperature",
+    "name": "Temperature Scale Converter",
+    "category": "unit-converter",
+    "slug": "temperature-unit-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_pressure",
+    "name": "Pressure & Mechanical Stress Converter",
+    "category": "unit-converter",
+    "slug": "pressure-stress-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_time",
+    "name": "Time & Duration Unit Converter",
+    "category": "unit-converter",
+    "slug": "time-duration-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_energy",
+    "name": "Energy & Mechanical Work Converter",
+    "category": "unit-converter",
+    "slug": "energy-work-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_power",
+    "name": "Power & Engine Wattage Converter",
+    "category": "unit-converter",
+    "slug": "power-wattage-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_force",
+    "name": "Force & Mechanical Load Converter",
+    "category": "unit-converter",
+    "slug": "force-load-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_density",
+    "name": "Mass Density Unit Converter",
+    "category": "unit-converter",
+    "slug": "mass-density-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_angle",
+    "name": "Angle & Geometry Plane Converter",
+    "category": "unit-converter",
+    "slug": "angle-plane-angle-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "tool_unit_frequency",
+    "name": "Frequency & Oscillation Converter",
+    "category": "unit-converter",
+    "slug": "frequency-wavelength-converter",
+    "interactiveType": "unit-converter"
+  },
+  {
+    "id": "hf-1",
+    "name": "BMI & Body Fat Matrix Calculator",
+    "category": "health-fitness",
+    "interactiveType": "bmi-calc"
+  },
+  {
+    "id": "hf-2",
+    "name": "TDEE & Daily Calorie Planner",
+    "category": "health-fitness",
+    "interactiveType": "bmi-calc"
+  },
+  {
+    "id": "hf-3",
+    "name": "Macro Splitter & Meal Ratio Planner",
+    "category": "health-fitness"
+  },
+  {
+    "id": "hf-4",
+    "name": "Daily Hydration & Water Goal Tool",
+    "category": "health-fitness"
+  },
+  {
+    "id": "seo-1",
+    "name": "SERP Snippet & Google Preview Simulator",
+    "category": "seo-website-tools",
+    "slug": "serp-snippet-google-preview-simulator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-2",
+    "name": "Long-Tail Keyword Generator & LSI Idea Finder",
+    "category": "seo-website-tools",
+    "slug": "long-tail-keyword-generator-lsi-idea-finder",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-3",
+    "name": "Keyword Density & N-Gram Frequency Analyzer",
+    "category": "seo-website-tools",
+    "slug": "keyword-density-n-gram-frequency-analyzer",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-4",
+    "name": "Robots.txt Directive Builder & Syntax Tester",
+    "category": "seo-website-tools",
+    "slug": "robots-txt-directive-builder-syntax-tester",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-5",
+    "name": "XML Sitemap URL Generator & Validator",
+    "category": "seo-website-tools",
+    "slug": "xml-sitemap-url-generator-validator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-6",
+    "name": "Meta Tag & OpenGraph Live Studio",
+    "category": "seo-website-tools",
+    "slug": "meta-tag-opengraph-live-studio",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-7",
+    "name": "JSON-LD Schema Markup Generator",
+    "category": "seo-website-tools",
+    "slug": "json-ld-schema-markup-generator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-8",
+    "name": "Heading Hierarchy (H1-H6) & Outline Inspector",
+    "category": "seo-website-tools",
+    "slug": "heading-hierarchy-h1-h6-outline-inspector",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-9",
+    "name": "Canonical Link & Hreflang Tag Generator",
+    "category": "seo-website-tools",
+    "slug": "canonical-link-hreflang-tag-generator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-10",
+    "name": "Redirect Rule Generator (.htaccess & Nginx)",
+    "category": "seo-website-tools",
+    "slug": "redirect-rule-generator-htaccess-nginx",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-11",
+    "name": "UTM Campaign URL Builder & Tracker",
+    "category": "seo-website-tools",
+    "slug": "utm-campaign-url-builder-tracker",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-12",
+    "name": "HTTP Status Code & Header Explainer",
+    "category": "seo-website-tools",
+    "slug": "http-status-code-header-explainer",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-13",
+    "name": "Slug & SEO Permalink Sanitizer",
+    "category": "seo-website-tools",
+    "slug": "slug-seo-permalink-sanitizer",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-14",
+    "name": "Content Readability & Flesch-Kincaid Score Inspector",
+    "category": "seo-website-tools",
+    "slug": "content-readability-flesch-kincaid-score-inspector",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-15",
+    "name": "Alt Text & Image SEO Optimization Helper",
+    "category": "seo-website-tools",
+    "slug": "alt-text-image-seo-optimization-helper",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-16",
+    "name": "FAQ Schema & Accordion HTML Generator",
+    "category": "seo-website-tools",
+    "slug": "faq-schema-accordion-html-generator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-17",
+    "name": "Link Anchor Text & Internal Linking Matrix",
+    "category": "seo-website-tools",
+    "slug": "link-anchor-text-internal-linking-matrix",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-18",
+    "name": "Page Title & Pixel Width Calculator",
+    "category": "seo-website-tools",
+    "slug": "page-title-pixel-width-calculator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-19",
+    "name": "Stop Words Filter & Keyword Stripper",
+    "category": "seo-website-tools",
+    "slug": "stop-words-filter-keyword-stripper",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-20",
+    "name": "Search Intent Classifier & Query Analyzer",
+    "category": "seo-website-tools",
+    "slug": "search-intent-classifier-query-analyzer",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-21",
+    "name": "HTML to Clean Text & SEO Content Stripper",
+    "category": "seo-website-tools",
+    "slug": "html-to-clean-text-seo-content-stripper",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-22",
+    "name": "Disavow File Generator for Backlinks",
+    "category": "seo-website-tools",
+    "slug": "disavow-file-generator-for-backlinks",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-23",
+    "name": "Keyword Typo & Misspelling Generator",
+    "category": "seo-website-tools",
+    "slug": "keyword-typo-misspelling-generator",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-24",
+    "name": "Social Sharing Preview Debugger",
+    "category": "seo-website-tools",
+    "slug": "social-sharing-preview-debugger",
+    "interactiveType": "seo-tool"
+  },
+  {
+    "id": "seo-25",
+    "name": "Google Indexing Checklist & On-Page Audit Matrix",
+    "category": "seo-website-tools",
+    "slug": "google-indexing-checklist-on-page-audit-matrix",
+    "interactiveType": "seo-tool"
+  }
+]

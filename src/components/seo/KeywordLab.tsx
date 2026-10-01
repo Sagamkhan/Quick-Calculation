@@ -235,7 +235,7 @@ export function KeywordLab({ mode }: KeywordLabProps) {
           </div>
 
           {/* Results Table */}
-          <div className="p-5 rounded-2xl bg-slate-950 border border-cyan-500/30 space-y-3">
+          <div className="result-card p-5 rounded-2xl bg-slate-950 border border-cyan-500/30 space-y-3 w-full h-auto overflow-visible">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-cyan-300">
                 Generated Long-Tail Keywords ({generateLongTail().length})
