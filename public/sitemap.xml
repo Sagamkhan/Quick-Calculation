@@ -3,25 +3,25 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://quickcalculator.app/</loc>
+    <loc>https://www.quickcalc.in/</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/about-us</loc>
+    <loc>https://www.quickcalc.in/about-us</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/contact-us</loc>
+    <loc>https://www.quickcalc.in/contact-us</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/privacy-policy</loc>
+    <loc>https://www.quickcalc.in/privacy-policy</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -33,73 +33,73 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/disclaimer</loc>
+    <loc>https://www.quickcalc.in/disclaimer</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/editorial-guidelines</loc>
+    <loc>https://www.quickcalc.in/editorial-guidelines</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/blog</loc>
+    <loc>https://www.quickcalc.in/blog</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/donate</loc>
+    <loc>https://www.quickcalc.in/donate</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/text-writing</loc>
+    <loc>https://www.quickcalc.in/category/text-writing</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/finance</loc>
+    <loc>https://www.quickcalc.in/category/finance</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/developer-coding</loc>
+    <loc>https://www.quickcalc.in/category/developer-coding</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/seo-website-tools</loc>
+    <loc>https://www.quickcalc.in/category/seo-website-tools</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/unit-converter</loc>
+    <loc>https://www.quickcalc.in/category/unit-converter</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/pdf-tools</loc>
+    <loc>https://www.quickcalc.in/category/pdf-tools</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/image-tools</loc>
+    <loc>https://www.quickcalc.in/category/image-tools</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/category/ai-tools</loc>
+    <loc>https://www.quickcalc.in/category/ai-tools</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -417,85 +417,85 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/midjourney-parameter-style-builder</loc>
+    <loc>https://www.quickcalc.in/tools/midjourney-parameter-style-builder</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-grammar-fixer-tone-polisher</loc>
+    <loc>https://www.quickcalc.in/tools/ai-grammar-fixer-tone-polisher</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-product-description-writer</loc>
+    <loc>https://www.quickcalc.in/tools/ai-product-description-writer</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-bio-social-profile-generator</loc>
+    <loc>https://www.quickcalc.in/tools/ai-bio-social-profile-generator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-resume-bullet-action-verb-enhancer</loc>
+    <loc>https://www.quickcalc.in/tools/ai-resume-bullet-action-verb-enhancer</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-article-outline-content-brief-architect</loc>
+    <loc>https://www.quickcalc.in/tools/ai-article-outline-content-brief-architect</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-faq-knowledge-base-generator</loc>
+    <loc>https://www.quickcalc.in/tools/ai-faq-knowledge-base-generator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-story-creative-plot-generator</loc>
+    <loc>https://www.quickcalc.in/tools/ai-story-creative-plot-generator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-tl-dr-summarizer-key-takeaways-extractor</loc>
+    <loc>https://www.quickcalc.in/tools/ai-tl-dr-summarizer-key-takeaways-extractor</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-paraphraser-vocabulary-booster</loc>
+    <loc>https://www.quickcalc.in/tools/ai-paraphraser-vocabulary-booster</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-ad-copy-creative-variations-studio</loc>
+    <loc>https://www.quickcalc.in/tools/ai-ad-copy-creative-variations-studio</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-regex-sql-query-builder</loc>
+    <loc>https://www.quickcalc.in/tools/ai-regex-sql-query-builder</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-token-counter-api-cost-estimator</loc>
+    <loc>https://www.quickcalc.in/tools/ai-token-counter-api-cost-estimator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/ai-system-prompt-persona-architect</loc>
+    <loc>https://www.quickcalc.in/tools/ai-system-prompt-persona-architect</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -753,37 +753,37 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/finance/ppf-calculator</loc>
+    <loc>https://www.quickcalc.in/tools/finance/ppf-calculator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/finance/simple-interest-calculator</loc>
+    <loc>https://www.quickcalc.in/tools/finance/simple-interest-calculator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/finance/fd-rd-calculator</loc>
+    <loc>https://www.quickcalc.in/tools/finance/fd-rd-calculator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/finance/net-worth-calculator</loc>
+    <loc>https://www.quickcalc.in/tools/finance/net-worth-calculator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/finance/currency-converter</loc>
+    <loc>https://www.quickcalc.in/tools/finance/currency-converter</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/finance/salary-take-home-calculator</loc>
+    <loc>https://www.quickcalc.in/tools/finance/salary-take-home-calculator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -993,67 +993,67 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/long-tail-keyword-generator-lsi-idea-finder</loc>
+    <loc>https://www.quickcalc.in/tools/long-tail-keyword-generator-lsi-idea-finder</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/keyword-density-n-gram-frequency-analyzer</loc>
+    <loc>https://www.quickcalc.in/tools/keyword-density-n-gram-frequency-analyzer</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/robots-txt-directive-builder-syntax-tester</loc>
+    <loc>https://www.quickcalc.in/tools/robots-txt-directive-builder-syntax-tester</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/xml-sitemap-url-generator-validator</loc>
+    <loc>https://www.quickcalc.in/tools/xml-sitemap-url-generator-validator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/meta-tag-opengraph-live-studio</loc>
+    <loc>https://www.quickcalc.in/tools/meta-tag-opengraph-live-studio</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/json-ld-schema-markup-generator</loc>
+    <loc>https://www.quickcalc.in/tools/json-ld-schema-markup-generator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/heading-hierarchy-h1-h6-outline-inspector</loc>
+    <loc>https://www.quickcalc.in/tools/heading-hierarchy-h1-h6-outline-inspector</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/canonical-link-hreflang-tag-generator</loc>
+    <loc>https://www.quickcalc.in/tools/canonical-link-hreflang-tag-generator</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/redirect-rule-generator-htaccess-nginx</loc>
+    <loc>https://www.quickcalc.in/tools/redirect-rule-generator-htaccess-nginx</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/utm-campaign-url-builder-tracker</loc>
+    <loc>https://www.quickcalc.in/tools/utm-campaign-url-builder-tracker</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quickcalculator.app/tools/http-status-code-header-explainer</loc>
+    <loc>https://www.quickcalc.in/tools/http-status-code-header-explainer</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
