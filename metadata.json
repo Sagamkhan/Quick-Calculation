@@ -1,6 +1,6 @@
 {
   "name": "Quick Calculator",
-  "description": "Quick Calculator Platform by Shahroz Khan - 250+ All-in-One Online Calculators, Financial Engines, AI Tools, Developer Converters, & SEO Hub.",
+  "description": "Quick Calculator Platform - 250+ All-in-One Online Calculators, Financial Engines, Scientific Math, Developer Formatters, and Unit Converters with 100% In-Browser Privacy.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

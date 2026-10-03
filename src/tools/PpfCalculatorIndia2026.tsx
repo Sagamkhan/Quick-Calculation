@@ -195,28 +195,31 @@ Maturity Amount: ₹${results.maturityAmount.toLocaleString('en-IN')}`;
           </div>
 
           {/* Growth Schedule Table */}
-          <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div className="w-full max-w-full box-border p-3 sm:p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2 overflow-visible">
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
               <span>PPF Yearly Growth Amortization Schedule</span>
             </h4>
-            <div className="overflow-x-auto max-h-56 overflow-y-auto">
-              <table className="w-full text-left text-xs font-mono">
-                <thead className="bg-slate-950 text-slate-400 sticky top-0 border-b border-slate-800">
+            <div
+              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="w-full max-w-full block overflow-x-auto overflow-y-auto max-h-[380px] sm:max-h-[500px] cyan-scrollbar touch-pan-x touch-pan-y"
+            >
+              <table className="w-full text-left text-xs font-mono min-w-[650px] border-collapse breakdown-table whitespace-nowrap">
+                <thead className="bg-slate-950 text-slate-400 sticky top-0 z-20 border-b border-slate-800 shadow-sm">
                   <tr>
-                    <th className="py-2 px-3">Year</th>
-                    <th className="py-2 px-3">Deposit</th>
-                    <th className="py-2 px-3">Interest Earned</th>
-                    <th className="py-2 px-3 text-right">Closing Balance</th>
+                    <th className="py-2.5 px-3 bg-slate-950 font-bold">Year</th>
+                    <th className="py-2.5 px-3 bg-slate-950 font-bold">Deposit</th>
+                    <th className="py-2.5 px-3 bg-slate-950 font-bold text-emerald-400">Interest Earned</th>
+                    <th className="py-2.5 px-3 bg-slate-950 font-bold text-right text-white">Closing Balance</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60 text-slate-300">
                   {results.schedule.map((row) => (
                     <tr key={row.year} className="hover:bg-slate-800/40">
-                      <td className="py-1.5 px-3 font-semibold text-slate-400">Year {row.year}</td>
-                      <td className="py-1.5 px-3">₹{row.deposit.toLocaleString('en-IN')}</td>
-                      <td className="py-1.5 px-3 text-emerald-400">₹{row.interest.toLocaleString('en-IN')}</td>
-                      <td className="py-1.5 px-3 text-right font-bold text-white">₹{row.closingBalance.toLocaleString('en-IN')}</td>
+                      <td className="py-2 px-3 font-semibold text-slate-400">Year {row.year}</td>
+                      <td className="py-2 px-3">₹{row.deposit.toLocaleString('en-IN')}</td>
+                      <td className="py-2 px-3 text-emerald-400 font-semibold">₹{row.interest.toLocaleString('en-IN')}</td>
+                      <td className="py-2 px-3 text-right font-bold text-white">₹{row.closingBalance.toLocaleString('en-IN')}</td>
                     </tr>
                   ))}
                 </tbody>

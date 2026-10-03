@@ -157,7 +157,8 @@ function SynchronizedInputSlider({
 }
 
 // ----------------------------------------------------
-// RESPONSIVE BREAKDOWN TABLE WITH EDGE FADE & COLUMN PRIORITIZATION
+// ----------------------------------------------------
+// RESPONSIVE BREAKDOWN TABLE WITH EDGE FADE & HORIZONTAL SCROLL
 // ----------------------------------------------------
 interface ResponsiveBreakdownTableProps {
   headers: string[];
@@ -165,11 +166,10 @@ interface ResponsiveBreakdownTableProps {
   maxHeight?: string;
 }
 
-function ResponsiveBreakdownTable({ headers, rows, maxHeight = 'max-h-96' }: ResponsiveBreakdownTableProps) {
+function ResponsiveBreakdownTable({ headers, rows, maxHeight = 'max-h-[380px] sm:max-h-[500px]' }: ResponsiveBreakdownTableProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const [showAllColumnsMobile, setShowAllColumnsMobile] = useState(false);
 
   const checkScroll = useCallback(() => {
     const el = scrollContainerRef.current;
@@ -187,71 +187,32 @@ function ResponsiveBreakdownTable({ headers, rows, maxHeight = 'max-h-96' }: Res
     return () => window.removeEventListener('resize', handleResize);
   }, [checkScroll, headers, rows]);
 
-  const getColumnVisibilityClass = (header: string, index: number, totalCols: number) => {
-    if (showAllColumnsMobile) return 'table-cell';
-
-    const h = header.toLowerCase();
-
-    // First column always visible
-    if (index === 0) return 'table-cell font-bold text-slate-100';
-
-    // Last column always visible & highlighted
-    if (index === totalCols - 1) return 'table-cell font-bold text-emerald-400 text-right';
-
-    // High Priority Key Metrics
-    if (
-      h.includes('interest') ||
-      h.includes('repaid') ||
-      h.includes('balance') ||
-      h.includes('total') ||
-      h.includes('growth') ||
-      h.includes('tax')
-    ) {
-      return 'table-cell font-semibold text-slate-200';
-    }
-
-    // Intermediate columns hidden on smaller screens
-    return 'hidden sm:table-cell text-slate-400';
-  };
-
   return (
-    <div className="space-y-2">
-      {/* Scroll indicator & Mobile Toggle */}
+    <div className="space-y-2 w-full max-w-full box-border overflow-visible">
+      {/* Scroll indicator & Column counter */}
       <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-slate-400">
         <div className="flex items-center gap-1.5">
-          {canScrollLeft || canScrollRight ? (
-            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 font-semibold text-[10px] uppercase tracking-wider animate-pulse">
-              <MoveHorizontal className="w-3 h-3" />
-              <span>Scroll horizontally for all columns</span>
-            </span>
-          ) : (
-            <span className="text-[10px] uppercase tracking-wider text-slate-500 font-medium">
-              Schedule Active
-            </span>
-          )}
+          <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 font-semibold text-[10px] uppercase tracking-wider animate-pulse">
+            <MoveHorizontal className="w-3 h-3" />
+            <span>Scroll horizontally for all columns</span>
+          </span>
         </div>
-
-        <button
-          type="button"
-          onClick={() => setShowAllColumnsMobile(!showAllColumnsMobile)}
-          className="sm:hidden text-[11px] font-semibold text-cyan-400 hover:underline cursor-pointer flex items-center gap-1 shrink-0"
-        >
-          <SlidersHorizontal className="w-3 h-3" />
-          <span>{showAllColumnsMobile ? 'Compact View' : 'Show All Columns'}</span>
-        </button>
+        <span className="text-[10px] font-mono text-slate-500 hidden sm:inline">
+          {rows.length} Periods • Swipe for all metrics
+        </span>
       </div>
 
       {/* Table Container with Edge Fade */}
-      <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-x-auto overflow-y-visible">
+      <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-hidden w-full max-w-full">
         {/* Left Fade */}
         <div
-          className={`pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-slate-950 to-transparent z-20 transition-opacity duration-300 ${
+          className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-slate-950 to-transparent z-30 transition-opacity duration-300 ${
             canScrollLeft ? 'opacity-100' : 'opacity-0'
           }`}
         />
         {/* Right Fade */}
         <div
-          className={`pointer-events-none absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-slate-950 to-transparent z-20 transition-opacity duration-300 ${
+          className={`pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-950 to-transparent z-30 transition-opacity duration-300 ${
             canScrollRight ? 'opacity-100' : 'opacity-0'
           }`}
         />
@@ -260,19 +221,26 @@ function ResponsiveBreakdownTable({ headers, rows, maxHeight = 'max-h-96' }: Res
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
-          className={`${maxHeight} overflow-y-auto overflow-x-auto touch-pan-x scrollbar-thin scrollbar-thumb-slate-700`}
+          style={{ WebkitOverflowScrolling: 'touch' }}
+          className={`w-full max-w-full block ${maxHeight} overflow-y-auto overflow-x-auto touch-pan-x touch-pan-y cyan-scrollbar`}
         >
-          <table className="w-full text-left text-xs font-mono whitespace-nowrap">
-            <thead className="bg-slate-900 text-slate-200 sticky top-0 z-10 border-b border-slate-800">
+          <table className="w-full text-left text-xs font-mono whitespace-nowrap min-w-[800px] border-collapse breakdown-table">
+            <thead className="bg-slate-900 text-slate-200 sticky top-0 z-20 border-b border-slate-800 shadow-sm">
               <tr>
-                {headers.map((h, i) => {
-                  const visClass = getColumnVisibilityClass(h, i, headers.length);
-                  return (
-                    <th key={i} className={`p-3 font-bold tracking-tight ${visClass}`}>
-                      {h}
-                    </th>
-                  );
-                })}
+                {headers.map((h, i) => (
+                  <th
+                    key={i}
+                    className={`p-3 font-bold tracking-tight bg-slate-900 whitespace-nowrap ${
+                      i === 0
+                        ? 'text-slate-100'
+                        : i === headers.length - 1
+                        ? 'text-emerald-400 text-right'
+                        : 'text-slate-200'
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 text-slate-300">
@@ -283,15 +251,20 @@ function ResponsiveBreakdownTable({ headers, rows, maxHeight = 'max-h-96' }: Res
                     rIdx % 2 === 0 ? 'bg-transparent' : 'bg-slate-900/30'
                   }`}
                 >
-                  {row.map((cell, cIdx) => {
-                    const headerName = headers[cIdx] || '';
-                    const visClass = getColumnVisibilityClass(headerName, cIdx, headers.length);
-                    return (
-                      <td key={cIdx} className={`p-3 ${visClass}`}>
-                        {cell}
-                      </td>
-                    );
-                  })}
+                  {row.map((cell, cIdx) => (
+                    <td
+                      key={cIdx}
+                      className={`p-3 whitespace-nowrap ${
+                        cIdx === 0
+                          ? 'font-bold text-slate-100'
+                          : cIdx === row.length - 1
+                          ? 'font-semibold text-emerald-400 text-right'
+                          : 'text-slate-300'
+                      }`}
+                    >
+                      {cell}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
@@ -409,6 +382,10 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
     const isEmergency = toolSlug.includes('emergency') || toolName.includes('emergency fund');
     const isBrokerage = toolSlug.includes('brokerage') || toolName.includes('brokerage') || toolName.includes('stock profit');
     const isCagr = toolSlug.includes('cagr') || toolSlug.includes('roi') || toolName.includes('cagr') || toolName.includes('roi');
+    const isSaasBurn = toolSlug.includes('burn') || toolSlug.includes('runway') || toolName.includes('burn') || toolName.includes('runway') || tool.id === 'fin-3';
+    const isFreelanceRate = toolSlug.includes('freelance') || toolSlug.includes('hourly') || toolName.includes('freelance') || toolName.includes('billing rate') || tool.id === 'fin-4';
+    const isCryptoProfit = toolSlug.includes('crypto') || toolSlug.includes('forex') || toolSlug.includes('leverage') || toolName.includes('crypto') || toolName.includes('forex') || tool.id === 'fin-5';
+    const isCurrencyConverter = toolSlug.includes('currency') || toolSlug.includes('exchange-rate') || toolName.includes('currency') || toolName.includes('fx exchange') || tool.id === 'finance-currency';
 
     let summaryMetrics: Array<{ label: string; value: string; accent?: string }> = [];
     let ratioBreakdown: { labelA: string; valA: number; labelB: string; valB: number } | null = null;
@@ -880,7 +857,168 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
         ]);
       }
     }
-    // 14. SIMPLE INTEREST & GENERIC FALLBACK
+    // 14. SAAS BURN RATE & RUNWAY (fin-3)
+    else if (isSaasBurn) {
+      const cashBalance = amount > 1000 ? amount : 250000;
+      const monthlyBurn = monthlyIncome > 1000 ? monthlyIncome : 25000;
+      const mrr = buyPrice > 0 ? buyPrice * 20 : 10000;
+      const netMonthlyBurn = Math.max(0, monthlyBurn - mrr);
+      const runwayMonths = netMonthlyBurn > 0 ? (cashBalance / netMonthlyBurn).toFixed(1) : '99+';
+      const breakEvenGap = Math.max(0, monthlyBurn - mrr);
+
+      summaryMetrics = [
+        { label: 'Current Cash Balance', value: formatCurrency(cashBalance), accent: '#06B6D4' },
+        { label: 'Net Monthly Cash Burn', value: formatCurrency(netMonthlyBurn), accent: netMonthlyBurn > 0 ? '#F43F5E' : '#10B981' },
+        { label: 'Total Cash Runway', value: `${runwayMonths} Months`, accent: '#F59E0B' },
+        { label: 'Break-Even Revenue Gap', value: formatCurrency(breakEvenGap), accent: '#6366F1' }
+      ];
+
+      ratioBreakdown = {
+        labelA: 'Monthly Revenue (MRR)',
+        valA: mrr,
+        labelB: 'Net Cash Burn',
+        valB: netMonthlyBurn
+      };
+
+      breakdownHeaders = ['Month', 'Starting Cash', 'MRR Revenue', 'Operating Cost', 'Ending Runway'];
+      let rollingCash = cashBalance;
+      for (let m = 1; m <= 12; m++) {
+        const startCash = rollingCash;
+        rollingCash = Math.max(0, rollingCash - netMonthlyBurn);
+        breakdownRows.push([
+          `Month ${m}`,
+          formatCurrency(startCash),
+          formatCurrency(mrr),
+          formatCurrency(monthlyBurn),
+          formatCurrency(rollingCash)
+        ]);
+      }
+    }
+    // 15. FREELANCE RATE & VALUE MATRIX (fin-4)
+    else if (isFreelanceRate) {
+      const targetAnnualIncome = amount > 1000 ? amount : 100000;
+      const annualOverhead = essentialExpense > 0 ? essentialExpense : 12000;
+      const billableHoursPerWeek = rate > 0 ? rate : 25;
+      const workingWeeks = years > 0 && years <= 52 ? years : 48;
+      const taxRatePct = gstRate > 0 ? gstRate : 20;
+
+      const totalBillableHours = billableHoursPerWeek * workingWeeks;
+      const grossNeeded = (targetAnnualIncome + annualOverhead) / (1 - (taxRatePct / 100));
+      const hourlyRate = totalBillableHours > 0 ? grossNeeded / totalBillableHours : 0;
+      const dayRate = hourlyRate * 8;
+
+      summaryMetrics = [
+        { label: 'Recommended Hourly Rate', value: formatCurrency(hourlyRate), accent: '#10B981' },
+        { label: 'Recommended Day Rate (8h)', value: formatCurrency(dayRate), accent: '#00A49F' },
+        { label: 'Weekly Billable Target', value: formatCurrency(hourlyRate * billableHoursPerWeek), accent: '#06B6D4' },
+        { label: 'Annual Gross Target', value: formatCurrency(grossNeeded), accent: '#6366F1' }
+      ];
+
+      ratioBreakdown = {
+        labelA: 'Net Personal Income',
+        valA: targetAnnualIncome,
+        labelB: 'Overhead & Taxes',
+        valB: grossNeeded - targetAnnualIncome
+      };
+
+      breakdownHeaders = ['Billing Tier', 'Rate Formula', 'Standard Units', 'Gross Revenue'];
+      breakdownRows = [
+        ['Hourly Rate', `${billableHoursPerWeek} hrs/wk benchmark`, '1 Hour', formatCurrency(hourlyRate)],
+        ['Half-Day Rate', '4 Billable Hours', '4 Hours', formatCurrency(hourlyRate * 4)],
+        ['Full Day Rate', '8 Billable Hours', '1 Day', formatCurrency(dayRate)],
+        ['Weekly Retainer', `${billableHoursPerWeek} Billable Hours`, '1 Week', formatCurrency(hourlyRate * billableHoursPerWeek)],
+        ['Monthly Retainer', `${Math.round(totalBillableHours / 12)} Billable Hours`, '1 Month', formatCurrency((hourlyRate * totalBillableHours) / 12)],
+        ['Annual Contract', `${totalBillableHours} Total Hours`, `${workingWeeks} Weeks`, formatCurrency(grossNeeded)]
+      ];
+    }
+    // 16. CRYPTO & FOREX PROFIT (fin-5)
+    else if (isCryptoProfit) {
+      const entry = buyPrice > 0 ? buyPrice : 500;
+      const exit = sellPrice > 0 ? sellPrice : 625;
+      const qty = quantity > 0 ? quantity : 5;
+      const leverage = rate > 0 && rate <= 100 ? rate : 1;
+      const feePct = 0.1;
+
+      const initialMargin = (entry * qty) / leverage;
+      const grossPnl = (exit - entry) * qty * leverage;
+      const totalFees = ((entry * qty) + (exit * qty)) * (feePct / 100);
+      const netPnl = grossPnl - totalFees;
+      const roiPct = initialMargin > 0 ? (netPnl / initialMargin) * 100 : 0;
+      const liquidationPrice = leverage > 1 ? entry * (1 - (1 / leverage) + 0.005) : 0;
+
+      summaryMetrics = [
+        { label: 'Net Profit / Loss', value: formatCurrency(netPnl), accent: netPnl >= 0 ? '#10B981' : '#F43F5E' },
+        { label: 'Return on Equity (ROE)', value: `${roiPct.toFixed(2)}%`, accent: roiPct >= 0 ? '#00A49F' : '#F43F5E' },
+        { label: 'Initial Margin Required', value: formatCurrency(initialMargin), accent: '#06B6D4' },
+        { label: leverage > 1 ? 'Estimated Liquidation' : 'Break-Even Exit', value: leverage > 1 ? formatCurrency(liquidationPrice) : formatCurrency(entry * 1.002), accent: '#F59E0B' }
+      ];
+
+      ratioBreakdown = {
+        labelA: 'Initial Margin Collateral',
+        valA: initialMargin,
+        labelB: 'Realized Net Gain',
+        valB: Math.max(0, netPnl)
+      };
+
+      breakdownHeaders = ['Target Price Level', 'Price Change (%)', 'Gross Trade Gain', 'Net Return (After Fees)'];
+      const priceSteps = [-0.10, -0.05, 0, 0.05, 0.10, 0.20, 0.30];
+      breakdownRows = priceSteps.map(step => {
+        const targetP = entry * (1 + step);
+        const gGain = (targetP - entry) * qty * leverage;
+        const nGain = gGain - totalFees;
+        return [
+          formatCurrency(targetP),
+          `${(step * 100).toFixed(1)}%`,
+          formatCurrency(gGain),
+          formatCurrency(nGain)
+        ];
+      });
+    }
+    // 17. CURRENCY CONVERTER ONLINE (finance-currency)
+    else if (isCurrencyConverter) {
+      const baseAmount = amount > 0 ? amount : 1000;
+      const rates: Record<string, number> = {
+        'USD': 1.0,
+        'INR': 86.85,
+        'EUR': 0.95,
+        'GBP': 0.79,
+        'JPY': 153.20,
+        'CAD': 1.42,
+        'AUD': 1.58,
+        'AED': 3.67,
+        'SGD': 1.34
+      };
+
+      const baseRate = currencySymbol === '₹' ? rates.INR : currencySymbol === '$' ? rates.USD : currencySymbol === '€' ? rates.EUR : rates.GBP;
+      const inUSD = baseAmount / baseRate;
+
+      summaryMetrics = [
+        { label: 'Base Input Amount', value: `${currencySymbol}${baseAmount.toLocaleString()}`, accent: '#06B6D4' },
+        { label: 'Equivalent in USD ($)', value: `$${(inUSD).toFixed(2)}`, accent: '#10B981' },
+        { label: 'Equivalent in INR (₹)', value: `₹${Math.round(inUSD * rates.INR).toLocaleString()}`, accent: '#00A49F' },
+        { label: 'Equivalent in EUR (€)', value: `€${(inUSD * rates.EUR).toFixed(2)}`, accent: '#6366F1' }
+      ];
+
+      ratioBreakdown = {
+        labelA: 'Base Currency Value',
+        valA: baseAmount,
+        labelB: 'Bank Fee Spread (0.5%)',
+        valB: baseAmount * 0.005
+      };
+
+      breakdownHeaders = ['Target Currency', 'ISO Code', 'Interbank Mid-Rate', 'Converted Equivalent Amount'];
+      breakdownRows = Object.entries(rates).map(([code, r]) => {
+        const converted = inUSD * r;
+        const symbol = code === 'INR' ? '₹' : code === 'EUR' ? '€' : code === 'GBP' ? '£' : code === 'JPY' ? '¥' : '$';
+        return [
+          code,
+          code,
+          `1 USD = ${r} ${code}`,
+          `${symbol}${Math.round(converted).toLocaleString()}`
+        ];
+      });
+    }
+    // 18. SIMPLE INTEREST & GENERIC FALLBACK
     else {
       const p = amount;
       const r = rate / 100;
@@ -918,6 +1056,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
       isSip, isEmi, isCompound, isRetirement, isGst, isInflation, isPpf,
       isSimpleInterest, isFdRd, isPercentage, isDiscount, isSalary,
       isNetWorth, isDti, isEmergency, isBrokerage, isCagr,
+      isSaasBurn, isFreelanceRate, isCryptoProfit, isCurrencyConverter,
       summaryMetrics, ratioBreakdown, breakdownHeaders, breakdownRows
     };
   }, [
@@ -1682,6 +1821,150 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
             </>
           )}
 
+          {/* SAAS BURN INPUTS */}
+          {computation.isSaasBurn && (
+            <>
+              <SynchronizedInputSlider
+                label="Current Cash in Bank"
+                value={amount}
+                onChange={setAmount}
+                min={10000}
+                max={5000000}
+                step={10000}
+                prefix={currencySymbol}
+                accentColor="cyan"
+              />
+              <SynchronizedInputSlider
+                label="Monthly Operating Expenses (Gross Burn)"
+                value={monthlyIncome}
+                onChange={setMonthlyIncome}
+                min={2000}
+                max={500000}
+                step={2500}
+                prefix={currencySymbol}
+                accentColor="amber"
+              />
+              <SynchronizedInputSlider
+                label="Monthly Recurring Revenue (MRR)"
+                value={buyPrice * 20}
+                onChange={(val) => setBuyPrice(Math.round(val / 20))}
+                min={0}
+                max={300000}
+                step={1000}
+                prefix={currencySymbol}
+                accentColor="emerald"
+              />
+            </>
+          )}
+
+          {/* FREELANCE RATE INPUTS */}
+          {computation.isFreelanceRate && (
+            <>
+              <SynchronizedInputSlider
+                label="Target Annual Net Take-Home"
+                value={amount}
+                onChange={setAmount}
+                min={20000}
+                max={500000}
+                step={5000}
+                prefix={currencySymbol}
+                accentColor="emerald"
+              />
+              <SynchronizedInputSlider
+                label="Annual Business Overhead & Software"
+                value={essentialExpense}
+                onChange={setEssentialExpense}
+                min={0}
+                max={100000}
+                step={1000}
+                prefix={currencySymbol}
+                accentColor="amber"
+              />
+              <SynchronizedInputSlider
+                label="Billable Hours per Week"
+                value={rate}
+                onChange={setRate}
+                min={5}
+                max={50}
+                step={1}
+                suffix="hrs/wk"
+                accentColor="indigo"
+              />
+              <SynchronizedInputSlider
+                label="Working Weeks per Year"
+                value={years}
+                onChange={setYears}
+                min={20}
+                max={52}
+                step={1}
+                suffix="wks"
+                accentColor="indigo"
+              />
+            </>
+          )}
+
+          {/* CRYPTO & FOREX PROFIT INPUTS */}
+          {computation.isCryptoProfit && (
+            <>
+              <SynchronizedInputSlider
+                label="Entry / Buy Price"
+                value={buyPrice}
+                onChange={setBuyPrice}
+                min={0.01}
+                max={100000}
+                step={5}
+                prefix={currencySymbol}
+                accentColor="emerald"
+              />
+              <SynchronizedInputSlider
+                label="Exit / Target Price"
+                value={sellPrice}
+                onChange={setSellPrice}
+                min={0.01}
+                max={150000}
+                step={5}
+                prefix={currencySymbol}
+                accentColor="emerald"
+              />
+              <SynchronizedInputSlider
+                label="Position Size / Units"
+                value={quantity}
+                onChange={setQuantity}
+                min={1}
+                max={1000}
+                step={1}
+                suffix="Units"
+                accentColor="indigo"
+              />
+              <SynchronizedInputSlider
+                label="Leverage Multiplier"
+                value={rate}
+                onChange={setRate}
+                min={1}
+                max={50}
+                step={1}
+                suffix="x"
+                accentColor="amber"
+              />
+            </>
+          )}
+
+          {/* CURRENCY CONVERTER INPUTS */}
+          {computation.isCurrencyConverter && (
+            <>
+              <SynchronizedInputSlider
+                label="Base Amount to Convert"
+                value={amount}
+                onChange={setAmount}
+                min={1}
+                max={1000000}
+                step={50}
+                prefix={currencySymbol}
+                accentColor="emerald"
+              />
+            </>
+          )}
+
           {/* GENERIC FALLBACK INPUTS */}
           {!computation.isSip &&
             !computation.isEmi &&
@@ -1695,7 +1978,11 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
             !computation.isNetWorth &&
             !computation.isDti &&
             !computation.isEmergency &&
-            !computation.isBrokerage && (
+            !computation.isBrokerage &&
+            !computation.isSaasBurn &&
+            !computation.isFreelanceRate &&
+            !computation.isCryptoProfit &&
+            !computation.isCurrencyConverter && (
               <>
                 <SynchronizedInputSlider
                   label="Primary Calculation Amount / Principal"
@@ -1732,23 +2019,23 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
         </div>
 
         {/* PART B: LIVE OUTPUT DASHBOARD */}
-        <div className="lg:col-span-7 space-y-5">
+        <div className="lg:col-span-7 space-y-5 w-full max-w-full box-border p-3 sm:p-4 mx-auto overflow-y-auto overflow-x-hidden min-h-auto">
           
-          {/* Dynamic Metric Cards Grid (3 or 4 prominent cards with 24px-32px bold numbers in accent colors) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {/* Dynamic Metric Cards Grid (3 or 4 prominent cards with bold numbers in accent colors) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-full box-border">
             {computation.summaryMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-1.5 shadow-lg relative overflow-visible"
+                className="w-full max-w-full shrink-0 box-border p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-1 shadow-lg relative overflow-visible"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block truncate">
+                  <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block truncate">
                     {metric.label}
                   </span>
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: metric.accent || '#00A49F' }} />
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: metric.accent || '#00A49F' }} />
                 </div>
                 <div
-                  className="text-2xl sm:text-3xl font-mono font-extrabold tracking-tight truncate"
+                  className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-mono font-extrabold tracking-tight truncate"
                   style={{ color: metric.accent || '#00A49F' }}
                 >
                   {metric.value}
@@ -1759,7 +2046,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
 
           {/* Visual Ratio Breakdown Segmented Bar */}
           {computation.ratioBreakdown && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-3 shadow-lg">
+            <div className="w-full max-w-full shrink-0 box-border p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-3 shadow-lg overflow-visible">
               <div className="flex items-center justify-between text-xs font-mono font-bold">
                 <span className="text-slate-300 flex items-center gap-1.5">
                   <PieIcon className="w-4 h-4 text-emerald-400" />
@@ -1791,14 +2078,14 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
 
                     <div className="flex items-center justify-between text-xs font-mono pt-1">
                       <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
-                        <span className="text-slate-300 font-medium">
+                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0" />
+                        <span className="text-slate-300 font-medium truncate">
                           {computation.ratioBreakdown.labelA}: <strong className="text-cyan-400">{pctA}%</strong>
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                        <span className="text-slate-300 font-medium">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0" />
+                        <span className="text-slate-300 font-medium truncate">
                           {computation.ratioBreakdown.labelB}: <strong className="text-emerald-400">{pctB}%</strong>
                         </span>
                       </div>
@@ -1810,7 +2097,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
           )}
 
           {/* Toggle View Tabs: Summary Insights vs Full Schedule Table */}
-          <div className="flex items-center justify-between gap-2 p-1.5 rounded-xl bg-slate-950 border border-slate-800">
+          <div className="flex items-center justify-between gap-2 p-1.5 rounded-xl bg-slate-950 border border-slate-800 w-full max-w-full box-border">
             <button
               type="button"
               onClick={() => setActiveTab('summary')}
@@ -1839,7 +2126,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
 
           {/* Active Tab Panel Content */}
           {activeTab === 'summary' ? (
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-4 shadow-lg">
+            <div className="w-full max-w-full shrink-0 box-border p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-4 shadow-lg overflow-visible">
               <div className="flex items-center justify-between pb-2 border-b border-slate-800">
                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-emerald-400" />
@@ -1869,7 +2156,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
             </div>
           ) : (
             /* Full Detailed Schedule Table */
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-3 shadow-lg overflow-visible">
+            <div className="w-full max-w-full shrink-0 box-border p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 dark:bg-slate-900 border border-slate-700 space-y-3 shadow-lg overflow-visible">
               <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-800 flex-wrap">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
                   <FileSpreadsheet className="w-4 h-4 text-cyan-400" />
@@ -1888,7 +2175,7 @@ export default function FinanceToolEngine({ tool }: FinanceToolEngineProps) {
               <ResponsiveBreakdownTable
                 headers={computation.breakdownHeaders}
                 rows={computation.breakdownRows}
-                maxHeight="max-h-96"
+                maxHeight="max-h-[380px] sm:max-h-[500px]"
               />
             </div>
           )}

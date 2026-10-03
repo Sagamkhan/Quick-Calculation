@@ -242,13 +242,55 @@ export function generateRobotsTxt(baseUrl?: string): string {
   return `User-agent: *
 Allow: /
 
+# Search Engine Crawlers
 User-agent: Googlebot
 Allow: /
 
-User-agent: Mediapartners-Google
+User-agent: Bingbot
 Allow: /
 
-User-agent: Bingbot
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI Crawlers & Citation Engines
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Social Share Crawlers
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
 Allow: /
 
 Sitemap: ${base}/sitemap.xml

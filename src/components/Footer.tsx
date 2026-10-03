@@ -8,20 +8,19 @@ import {
   FileCode2,
   Shield,
   FileText,
-  HelpCircle,
   Mail,
   User,
   Heart,
-  TrendingUp,
-  Sparkles
+  TrendingUp
 } from 'lucide-react';
 
 interface FooterProps {
   onSelectCategory: (id: string | null) => void;
   onNavigatePage?: (pageId: string) => void;
+  onSearchQuery?: (query: string) => void;
 }
 
-export default function Footer({ onSelectCategory, onNavigatePage }: FooterProps) {
+export default function Footer({ onSelectCategory, onNavigatePage, onSearchQuery }: FooterProps) {
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -270,6 +269,8 @@ export default function Footer({ onSelectCategory, onNavigatePage }: FooterProps
           </div>
 
         </div>
+
+
 
         {/* Bottom Bar with Copyright and Back to Top */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">

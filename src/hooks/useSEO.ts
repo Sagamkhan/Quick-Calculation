@@ -72,7 +72,7 @@ export function useSEO(options: UseSEOOptions = {}) {
     const fallbackMeta: AutoMetaResult = {
       title: finalTitle,
       description,
-      keywords: 'online calculator, free tools, web utilities, financial calculators, developer formatters, Shahroz Khan',
+      keywords: 'calculator, online calculator, free calculator, sip calculator, emi calculator, gst calculator, loan calculator, scientific calculator, compound interest calculator, percentage calculator, age calculator, bmi calculator, unit converter, ppf calculator, fd calculator, rd calculator, cagr calculator, income tax calculator, calorie calculator, word counter, case converter, json formatter, qr code generator, password generator, free online calculator no login required, step up sip calculator with annual increase, home loan emi calculator with prepayment schedule, accurate body mass index bmi calculator, Shahroz Khan',
       canonicalUrl: currentUrl,
       robots,
       googlebot: robots,

@@ -35,7 +35,6 @@ import {
   getAllBlogCategories,
   BlogPost 
 } from '../data/blogPosts';
-import AdSenseSlot from './AdSenseSlot';
 
 interface BlogGuidesProps {
   initialSlug?: string | null;
@@ -407,16 +406,10 @@ export default function BlogGuides({ initialSlug, onGoHome, onNavigateSlug }: Bl
                   </div>
                 )}
 
-                {/* In-Content Non-Intrusive Ad Banner */}
-                <AdSenseSlot format="horizontal" className="my-6" />
-
                 {/* Markdown Rendered Content */}
                 <div className="blog-markdown-content space-y-6 text-slate-300 font-sans text-base leading-relaxed">
                   <MarkdownRenderer content={currentPost.body} />
                 </div>
-
-                {/* Bottom Ad Unit */}
-                <AdSenseSlot format="rectangle" className="my-8" />
 
                 {/* Author E-E-A-T Bio Card */}
                 <div className="p-6 sm:p-8 rounded-3xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row items-start gap-5 shadow-xl">
@@ -774,9 +767,6 @@ export default function BlogGuides({ initialSlug, onGoHome, onNavigateSlug }: Bl
                 )}
               </>
             )}
-
-            {/* Bottom Ad Unit */}
-            <AdSenseSlot format="horizontal" className="pt-4" />
 
           </motion.div>
         )}

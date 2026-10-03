@@ -52,8 +52,14 @@ export function DeveloperToolEngine({ tool }: DeveloperToolEngineProps) {
     if (toolSlug.includes('hash')) {
       return `Quick Calculator High Precision Suite`;
     }
+    if (toolSlug.includes('base64')) {
+      return `Quick Calculator: Enterprise-Grade High-Precision Web Utilities`;
+    }
     return ``;
   });
+
+  // Base64 Mode
+  const [base64Mode, setBase64Mode] = useState<'encode' | 'decode'>('encode');
 
   // 1. JSON Tool Settings
   const [jsonIndent, setJsonIndent] = useState<2 | 4 | 'minify'>(2);
@@ -201,6 +207,22 @@ export function DeveloperToolEngine({ tool }: DeveloperToolEngineProps) {
       reduction: raw.length > 0 ? (((raw.length - minified.length) / raw.length) * 100).toFixed(1) : '0'
     };
   }, [inputText]);
+
+  // Base64 Engine
+  const base64Analysis = useMemo(() => {
+    if (!inputText) return { output: '', error: null, byteLength: 0 };
+    try {
+      if (base64Mode === 'encode') {
+        const encoded = btoa(unescape(encodeURIComponent(inputText)));
+        return { output: encoded, error: null, byteLength: new Blob([encoded]).size };
+      } else {
+        const decoded = decodeURIComponent(escape(atob(inputText.trim())));
+        return { output: decoded, error: null, byteLength: new Blob([decoded]).size };
+      }
+    } catch (err: any) {
+      return { output: '', error: err?.message || 'Invalid Base64 string payload', byteLength: 0 };
+    }
+  }, [inputText, base64Mode]);
 
   // 4. UUID Generator
   const generateUUIDs = () => {
@@ -476,6 +498,7 @@ export function DeveloperToolEngine({ tool }: DeveloperToolEngineProps) {
       : toolSlug.includes('css') ? cssAnalysis.minified
       : toolSlug.includes('uuid') ? uuidGeneratedList.join('\n')
       : toolSlug.includes('password') ? `Generated Password: ${generatedPassword}\nEntropy: ${passwordEntropy.entropy} bits (${passwordEntropy.strength})`
+      : toolSlug.includes('base64') ? base64Analysis.output
       : toolSlug.includes('age') ? `Age: ${ageResult.years} Years, ${ageResult.months} Months, ${ageResult.days} Days`
       : inputText;
 
@@ -635,6 +658,85 @@ export function DeveloperToolEngine({ tool }: DeveloperToolEngineProps) {
                 readOnly
                 value={cssAnalysis.minified}
                 className="w-full p-4 rounded-xl bg-slate-950 text-indigo-300 font-mono text-xs sm:text-sm leading-relaxed border border-slate-800"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ------------------------------------------------------------------ */}
+      {/* BASE64 ENCODER / DECODER WORKSPACE */}
+      {/* ------------------------------------------------------------------ */}
+      {toolSlug.includes('base64') && (
+        <div className="space-y-5">
+          <div className="flex items-center gap-3 p-1.5 bg-slate-900 rounded-xl border border-slate-800 w-fit">
+            <button
+              type="button"
+              onClick={() => setBase64Mode('encode')}
+              className={`px-4 py-2 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer ${
+                base64Mode === 'encode'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              Encode (Text → Base64)
+            </button>
+            <button
+              type="button"
+              onClick={() => setBase64Mode('decode')}
+              className={`px-4 py-2 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer ${
+                base64Mode === 'decode'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              Decode (Base64 → Text)
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
+                  {base64Mode === 'encode' ? 'Source Text Input:' : 'Base64 Encoded Input:'}
+                </label>
+                <span className="text-xs font-mono text-slate-500">
+                  {inputText.length} Chars
+                </span>
+              </div>
+              <textarea
+                rows={9}
+                value={inputText}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder={base64Mode === 'encode' ? 'Enter text to encode...' : 'Paste Base64 string to decode...'}
+                className="w-full p-4 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 font-mono text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none leading-relaxed"
+                style={{ fontSize: '16px' }}
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
+                  {base64Mode === 'encode' ? 'Base64 Output:' : 'Decoded Plaintext:'}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(base64Analysis.output)}
+                  className="text-xs font-mono text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer font-bold"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied!' : 'Copy Result'}</span>
+                </button>
+              </div>
+              <textarea
+                rows={9}
+                readOnly
+                value={base64Analysis.error ? `Error: ${base64Analysis.error}` : base64Analysis.output}
+                className={`w-full p-4 rounded-xl font-mono text-xs sm:text-sm leading-relaxed border ${
+                  base64Analysis.error
+                    ? 'bg-rose-950/40 text-rose-300 border-rose-800/60'
+                    : 'bg-slate-950 text-indigo-300 border-slate-800'
+                }`}
               />
             </div>
           </div>
@@ -1155,6 +1257,56 @@ export function DeveloperToolEngine({ tool }: DeveloperToolEngineProps) {
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Universal Fallback Workspace for unhandled developer tools */}
+      {(!toolSlug.includes('json') &&
+        !toolSlug.includes('base64') &&
+        !toolSlug.includes('css') &&
+        !toolSlug.includes('minifi') &&
+        !toolSlug.includes('uuid') &&
+        !toolSlug.includes('hash') &&
+        !toolSlug.includes('contrast') &&
+        !toolSlug.includes('regex') &&
+        !toolSlug.includes('timestamp') &&
+        !toolSlug.includes('password')) && (
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                Source Code / Developer Input:
+              </label>
+              <span className="text-xs font-mono text-slate-400">
+                {inputText.length} bytes
+              </span>
+            </div>
+            <textarea
+              rows={8}
+              value={inputText}
+              onChange={(e) => setTextInput(e.target.value)}
+              placeholder="Paste code, payload, or parameters here..."
+              className="w-full p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-mono text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all leading-relaxed"
+              style={{ fontSize: '16px' }}
+            />
+          </div>
+
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Execution Output:</span>
+              <button
+                type="button"
+                onClick={() => handleCopy(inputText)}
+                className="text-xs font-mono text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copied ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
+            <div className="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 max-h-40 overflow-y-auto whitespace-pre-wrap select-all">
+              {inputText || '// Ready for developer computation'}
             </div>
           </div>
         </div>

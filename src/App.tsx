@@ -28,7 +28,6 @@ const LegalPages = lazy(() => import('./components/LegalPages'));
 const BlogGuides = lazy(() => import('./components/BlogGuides'));
 const DonationSection = lazy(() => import('./components/DonationSection'));
 const CompareModal = lazy(() => import('./components/CompareModal'));
-const AiStudioHub = lazy(() => import('./components/ai/AiStudioHub'));
 
 /**
  * Universal Self-Healing Tool Synthesizer
@@ -231,8 +230,19 @@ export default function App() {
     }
   };
 
+  const [redirectNotice, setRedirectNotice] = useState<string | null>(null);
+
   const handleNavigatePage = (pageId: string) => {
     setActiveToolId(null);
+    if (pageId === 'ai-studio' || pageId.includes('veo') || pageId.includes('video')) {
+      setActivePage('home');
+      setActiveCategory(null);
+      setRedirectNotice('Notice: The AI Creative Studio has been retired to keep Quick Calculator 100% free, instantaneous, and private with zero login required. Explore our 250+ precision calculators below!');
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
     setActivePage(pageId);
     setBlogSlug(null);
     if (pageId === 'home') {
@@ -247,11 +257,15 @@ export default function App() {
     <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
 
         
-        {/* Helmet Metadata */}
-        <Helmet
-          title="Quick Calculator - 250+ All-in-One Online Calculators & AI Utilities"
-          description="Access over 250+ free online calculators, AI prompt builders, PDF tools, SIP financial engines, developer formatters, and unit converters with 100% in-browser privacy."
-        />
+        {/* Dynamic SEO Head Management (Title Tag & Meta Description in document.head) */}
+        {!activeToolId && currentCategoryInfo ? (
+          <Helmet categoryObj={currentCategoryInfo} />
+        ) : !activeToolId ? (
+          <Helmet
+            title="Quick Calculator - Free Online Calculators, Financial Engines & Converters"
+            description="Access 250+ free online calculators and tools with no login required. Instant SIP investments, loan EMI, GST, compound interest, scientific calculations, and unit conversions with 100% in-browser privacy."
+          />
+        ) : null}
 
         {/* Top Header / Navigation */}
         <Navbar
@@ -265,7 +279,6 @@ export default function App() {
           onOpenBookmarks={() => setIsFavoritesOpen(true)}
           onToggleSidebar={() => setIsSidebarOpen(true)}
           onOpenDonate={() => handleNavigatePage('donate')}
-          onOpenAiStudio={() => handleNavigatePage('ai-studio')}
           onGoHome={() => {
             handleBackToTools();
             handleNavigatePage('home');
@@ -273,6 +286,26 @@ export default function App() {
           onSelectTool={handleSelectTool}
           isToolPage={Boolean(activeToolId && activeTool)}
         />
+
+        {/* Redirect / Notice Banner for retired AI Studio */}
+        {redirectNotice && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between gap-3 shadow-lg">
+              <div className="flex items-center gap-2">
+                <span className="font-bold font-mono">⚡</span>
+                <span>{redirectNotice}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setRedirectNotice(null)}
+                className="p-1 hover:bg-amber-500/20 rounded-lg text-amber-200 transition-colors cursor-pointer text-xs font-bold"
+                aria-label="Dismiss banner"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Left Drawer Sidebar */}
         <Sidebar
@@ -352,10 +385,7 @@ export default function App() {
             <Suspense fallback={<ToolLoadingSkeleton message="Loading Donation Portal..." />}>
               <DonationSection isStandalonePage={true} />
             </Suspense>
-          ) : activePage === 'ai-studio' ? (
-            <Suspense fallback={<ToolLoadingSkeleton message="Loading AI Creative & Voice Studio..." />}>
-              <AiStudioHub onGoHome={() => handleNavigatePage('home')} />
-            </Suspense>
+
           ) : activePage === 'blog' ? (
             <Suspense fallback={<ToolLoadingSkeleton message="Loading Blog Guides..." />}>
               <BlogGuides
@@ -438,10 +468,19 @@ export default function App() {
           )}
         </main>
 
-        {/* Footer */}
+        {/* Footer with Crawlable High-Ranking Search Index */}
         <Footer
           onSelectCategory={handleSelectCategory}
           onNavigatePage={handleNavigatePage}
+          onSearchQuery={(q) => {
+            setSearchQuery(q);
+            setActiveToolId(null);
+            setActiveCategory(null);
+            setActivePage('home');
+            if (typeof window !== 'undefined') {
+              window.scrollTo({ top: 350, behavior: 'smooth' });
+            }
+          }}
         />
 
         {/* Cookie Consent & Performance HUD */}

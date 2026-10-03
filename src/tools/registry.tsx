@@ -3,91 +3,88 @@
 // Mapped 100% in-browser with zero API calls, zero fetch, and zero undefined components
 // ============================================================================
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, lazy } from 'react';
 import { ToolItem, TOOLS_CATALOG } from '../data/categoriesAndTools';
-import FinanceToolEngine from '../components/FinanceToolEngine';
-import TextToolEngine from '../components/TextToolEngine';
-import DeveloperToolEngine from '../components/DeveloperToolEngine';
-import { SeoToolEngine } from '../components/SeoToolEngine';
-import { PdfToolEngine } from '../components/PdfToolEngine';
-import ImageToolEngine from '../components/ImageToolEngine';
-import AiToolEngine from '../components/AiToolEngine';
-import HealthToolEngine from '../components/HealthToolEngine';
-import { UnitConverterEngine } from '../components/UnitConverterEngine';
-import InteractiveToolEngine from '../components/InteractiveToolEngine';
 import { triggerConfetti } from '../utils/confetti';
 
-// 20 Dedicated High-Precision Tools
-import VeoTextToVideo from '../components/ai/VeoTextToVideo';
-import AudioTranscriber from '../components/ai/AudioTranscriber';
-import ImageStudio from '../components/ai/ImageStudio';
-import VeoImageToVideo from '../components/ai/VeoImageToVideo';
-import LiveVoiceAssistant from '../components/ai/LiveVoiceAssistant';
+// Lazy-loaded Core Engines
+const FinanceToolEngine = lazy(() => import('../components/FinanceToolEngine'));
+const TextToolEngine = lazy(() => import('../components/TextToolEngine'));
+const DeveloperToolEngine = lazy(() => import('../components/DeveloperToolEngine'));
+const SeoToolEngine = lazy(() => import('../components/SeoToolEngine').then(m => ({ default: m.SeoToolEngine })));
+const PdfToolEngine = lazy(() => import('../components/PdfToolEngine').then(m => ({ default: m.PdfToolEngine })));
+const ImageToolEngine = lazy(() => import('../components/ImageToolEngine'));
+const AiToolEngine = lazy(() => import('../components/AiToolEngine'));
+const HealthToolEngine = lazy(() => import('../components/HealthToolEngine'));
+const UnitConverterEngine = lazy(() => import('../components/UnitConverterEngine').then(m => ({ default: m.UnitConverterEngine })));
+const InteractiveToolEngine = lazy(() => import('../components/InteractiveToolEngine'));
 
-import PpfCalculatorIndia2026 from './PpfCalculatorIndia2026';
-import NpsCalculator from './NpsCalculator';
-import GstCalculatorIndia from './GstCalculatorIndia';
-import HomeLoanEmiPrepayment from './HomeLoanEmiPrepayment';
-import IncomeTaxCalculator2026 from './IncomeTaxCalculator2026';
-import FdCalculator from './FdCalculator';
-import RdCalculator from './RdCalculator';
-import BmrCalculator from './BmrCalculator';
-import BodyFatPercentage from './BodyFatPercentage';
-import DailyWaterIntake from './DailyWaterIntake';
-import IdealWeightIndianChart from './IdealWeightIndianChart';
-import AgeCalculatorDob from './AgeCalculatorDob';
-import PregnancyDueDateLmp from './PregnancyDueDateLmp';
-import CalorieBurned from './CalorieBurned';
-import SalaryToHourlyIndia from './SalaryToHourlyIndia';
-import SipStepUpInflation from './SipStepUpInflation';
-import PersonalLoanEmi from './PersonalLoanEmi';
-import CarLoanEmiIndia from './CarLoanEmiIndia';
-import NetWorthCalculator from './NetWorthCalculator';
-import CompoundInterestChart from './CompoundInterestChart';
 
-// Next 20 Developer & SEO High-Performance Tools
-import MetaTitleLengthChecker from './MetaTitleLengthChecker';
-import MetaDescriptionChecker from './MetaDescriptionChecker';
-import SerpPreviewMobile from './SerpPreviewMobile';
-import KeywordDensityChecker from './KeywordDensityChecker';
-import JsonFormatterValidatorTreeView from './JsonFormatterValidatorTreeView';
-import Base64EncodeDecode from './Base64EncodeDecode';
-import UrlEncoderDecoderBulk from './UrlEncoderDecoderBulk';
-import RegexTesterCheatSheet from './RegexTesterCheatSheet';
-import JwtDecoderClientSide from './JwtDecoderClientSide';
-import CssMinifierStats from './CssMinifierStats';
-import HtmlMinifier from './HtmlMinifier';
-import ColorContrastCheckerWcag from './ColorContrastCheckerWcag';
-import HexToRgbConverter from './HexToRgbConverter';
-import PasswordStrengthMeter from './PasswordStrengthMeter';
-import QrCodeGeneratorCanvas from './QrCodeGeneratorCanvas';
-import UuidGeneratorBulk from './UuidGeneratorBulk';
-import TimestampConverterIst from './TimestampConverterIst';
-import JsMinifierSafe from './JsMinifierSafe';
-import OpenGraphPreview from './OpenGraphPreview';
-import RobotsTxtGenerator from './RobotsTxtGenerator';
+// Lazy-loaded 20 Precision Calculators
+const PpfCalculatorIndia2026 = lazy(() => import('./PpfCalculatorIndia2026'));
+const NpsCalculator = lazy(() => import('./NpsCalculator'));
+const GstCalculatorIndia = lazy(() => import('./GstCalculatorIndia'));
+const HomeLoanEmiPrepayment = lazy(() => import('./HomeLoanEmiPrepayment'));
+const IncomeTaxCalculator2026 = lazy(() => import('./IncomeTaxCalculator2026'));
+const FdCalculator = lazy(() => import('./FdCalculator'));
+const RdCalculator = lazy(() => import('./RdCalculator'));
+const BmrCalculator = lazy(() => import('./BmrCalculator'));
+const BodyFatPercentage = lazy(() => import('./BodyFatPercentage'));
+const DailyWaterIntake = lazy(() => import('./DailyWaterIntake'));
+const IdealWeightIndianChart = lazy(() => import('./IdealWeightIndianChart'));
+const AgeCalculatorDob = lazy(() => import('./AgeCalculatorDob'));
+const PregnancyDueDateLmp = lazy(() => import('./PregnancyDueDateLmp'));
+const CalorieBurned = lazy(() => import('./CalorieBurned'));
+const SalaryToHourlyIndia = lazy(() => import('./SalaryToHourlyIndia'));
+const SipStepUpInflation = lazy(() => import('./SipStepUpInflation'));
+const PersonalLoanEmi = lazy(() => import('./PersonalLoanEmi'));
+const CarLoanEmiIndia = lazy(() => import('./CarLoanEmiIndia'));
+const NetWorthCalculator = lazy(() => import('./NetWorthCalculator'));
+const CompoundInterestChart = lazy(() => import('./CompoundInterestChart'));
 
-// Final Batch of 20 Precision Utilities
-import PercentageCalculatorSteps from './PercentageCalculatorSteps';
-import DiscountCalculatorGst from './DiscountCalculatorGst';
-import NumberToWordsIndian from './NumberToWordsIndian';
-import DateDifferenceCalculator from './DateDifferenceCalculator';
-import WorkingDaysCounterIndia from './WorkingDaysCounterIndia';
-import UnitConverterMulti from './UnitConverterMulti';
-import RandomPasswordGenerator from './RandomPasswordGenerator';
-import StopwatchWithLaps from './StopwatchWithLaps';
-import WorldClockIstUtc from './WorldClockIstUtc';
-import TipCalculatorIndia from './TipCalculatorIndia';
-import FuelCostPerKmIndia from './FuelCostPerKmIndia';
-import ElectricityBillCalculatorIndia from './ElectricityBillCalculatorIndia';
-import AgeDaysHoursMinutes from './AgeDaysHoursMinutes';
-import SiVsCiComparison from './SiVsCiComparison';
-import MeanMedianModeCalculator from './MeanMedianModeCalculator';
-import CaseConverterTool from './CaseConverterTool';
-import InvoiceGeneratorGst from './InvoiceGeneratorGst';
-import EmiInAdvanceCalculator from './EmiInAdvanceCalculator';
-import LoanPrepaymentSavings from './LoanPrepaymentSavings';
-import DailyExpenseSplitter from './DailyExpenseSplitter';
+// Lazy-loaded 20 Developer & SEO High-Performance Tools
+const MetaTitleLengthChecker = lazy(() => import('./MetaTitleLengthChecker'));
+const MetaDescriptionChecker = lazy(() => import('./MetaDescriptionChecker'));
+const SerpPreviewMobile = lazy(() => import('./SerpPreviewMobile'));
+const KeywordDensityChecker = lazy(() => import('./KeywordDensityChecker'));
+const JsonFormatterValidatorTreeView = lazy(() => import('./JsonFormatterValidatorTreeView'));
+const Base64EncodeDecode = lazy(() => import('./Base64EncodeDecode'));
+const UrlEncoderDecoderBulk = lazy(() => import('./UrlEncoderDecoderBulk'));
+const RegexTesterCheatSheet = lazy(() => import('./RegexTesterCheatSheet'));
+const JwtDecoderClientSide = lazy(() => import('./JwtDecoderClientSide'));
+const CssMinifierStats = lazy(() => import('./CssMinifierStats'));
+const HtmlMinifier = lazy(() => import('./HtmlMinifier'));
+const ColorContrastCheckerWcag = lazy(() => import('./ColorContrastCheckerWcag'));
+const HexToRgbConverter = lazy(() => import('./HexToRgbConverter'));
+const PasswordStrengthMeter = lazy(() => import('./PasswordStrengthMeter'));
+const QrCodeGeneratorCanvas = lazy(() => import('./QrCodeGeneratorCanvas'));
+const UuidGeneratorBulk = lazy(() => import('./UuidGeneratorBulk'));
+const TimestampConverterIst = lazy(() => import('./TimestampConverterIst'));
+const JsMinifierSafe = lazy(() => import('./JsMinifierSafe'));
+const OpenGraphPreview = lazy(() => import('./OpenGraphPreview'));
+const RobotsTxtGenerator = lazy(() => import('./RobotsTxtGenerator'));
+
+// Lazy-loaded 20 Precision Utilities
+const PercentageCalculatorSteps = lazy(() => import('./PercentageCalculatorSteps'));
+const DiscountCalculatorGst = lazy(() => import('./DiscountCalculatorGst'));
+const NumberToWordsIndian = lazy(() => import('./NumberToWordsIndian'));
+const DateDifferenceCalculator = lazy(() => import('./DateDifferenceCalculator'));
+const WorkingDaysCounterIndia = lazy(() => import('./WorkingDaysCounterIndia'));
+const UnitConverterMulti = lazy(() => import('./UnitConverterMulti'));
+const RandomPasswordGenerator = lazy(() => import('./RandomPasswordGenerator'));
+const StopwatchWithLaps = lazy(() => import('./StopwatchWithLaps'));
+const WorldClockIstUtc = lazy(() => import('./WorldClockIstUtc'));
+const TipCalculatorIndia = lazy(() => import('./TipCalculatorIndia'));
+const FuelCostPerKmIndia = lazy(() => import('./FuelCostPerKmIndia'));
+const ElectricityBillCalculatorIndia = lazy(() => import('./ElectricityBillCalculatorIndia'));
+const AgeDaysHoursMinutes = lazy(() => import('./AgeDaysHoursMinutes'));
+const SiVsCiComparison = lazy(() => import('./SiVsCiComparison'));
+const MeanMedianModeCalculator = lazy(() => import('./MeanMedianModeCalculator'));
+const CaseConverterTool = lazy(() => import('./CaseConverterTool'));
+const InvoiceGeneratorGst = lazy(() => import('./InvoiceGeneratorGst'));
+const EmiInAdvanceCalculator = lazy(() => import('./EmiInAdvanceCalculator'));
+const LoanPrepaymentSavings = lazy(() => import('./LoanPrepaymentSavings'));
+const DailyExpenseSplitter = lazy(() => import('./DailyExpenseSplitter'));
 import {
   Sparkles,
   Calculator,
@@ -376,21 +373,21 @@ function makeAltTool(id: string): React.FC<ToolComponentProps> {
 // ---------------------------------------------------------------------------
 // MASTER TOOL REGISTRY: ALL 170 TOOLS EXPLICITLY MAPPED
 // ---------------------------------------------------------------------------
-export const toolRegistry: Record<string, React.FC<ToolComponentProps>> = {
+export const toolRegistry: Record<string, React.ComponentType<ToolComponentProps>> = {
   'tool_plagiarism_checker': makeTextTool('tool_plagiarism_checker'),
   'tool_word_character_counter': makeTextTool('tool_word_character_counter'),
   'tool_case_converter': CaseConverterTool,
   'tool_article_rewriter_paraphraser': makeTextTool('tool_article_rewriter_paraphraser'),
-  'tool_sip_calculator': makeFinanceTool('tool_sip_calculator'),
-  'tool_emi_loan_calculator': makeFinanceTool('tool_emi_loan_calculator'),
+  'tool_sip_calculator': SipStepUpInflation,
+  'tool_emi_loan_calculator': HomeLoanEmiPrepayment,
   'tool_gst_tax_calculator': GstCalculatorIndia,
   'tool_compound_interest_calculator': CompoundInterestChart,
   'tool_pdf_merger_combiner': makePdfTool('tool_pdf_merger_combiner'),
   'tool_pdf_file_compressor': makePdfTool('tool_pdf_file_compressor'),
   'tool_image_to_pdf_converter': makePdfTool('tool_image_to_pdf_converter'),
-  'tool_json_formatter_validator': makeDevTool('tool_json_formatter_validator'),
-  'tool_base64_encoder_decoder': makeDevTool('tool_base64_encoder_decoder'),
-  'tool_css_js_code_minifier': makeDevTool('tool_css_js_code_minifier'),
+  'tool_json_formatter_validator': JsonFormatterValidatorTreeView,
+  'tool_base64_encoder_decoder': Base64EncodeDecode,
+  'tool_css_js_code_minifier': CssMinifierStats,
   'tool_image_compressor_resizer': makeImageTool('tool_image_compressor_resizer'),
   'tool_jpg_to_png_converter': makeImageTool('tool_jpg_to_png_converter'),
   'tool_png_to_jpg_converter': makeImageTool('tool_png_to_jpg_converter'),
@@ -472,13 +469,13 @@ export const toolRegistry: Record<string, React.FC<ToolComponentProps>> = {
   'pdf-23': makePdfTool('pdf-23'),
   'pdf-24': makePdfTool('pdf-24'),
   'pdf-25': makePdfTool('pdf-25'),
-  'fin-1': makeFinanceTool('fin-1'),
-  'fin-2': makeFinanceTool('fin-2'),
+  'fin-1': SipStepUpInflation,
+  'fin-2': HomeLoanEmiPrepayment,
   'fin-3': makeFinanceTool('fin-3'),
   'fin-4': makeFinanceTool('fin-4'),
   'fin-5': makeFinanceTool('fin-5'),
-  'finance-sip': makeFinanceTool('finance-sip'),
-  'finance-emi': makeFinanceTool('finance-emi'),
+  'finance-sip': SipStepUpInflation,
+  'finance-emi': HomeLoanEmiPrepayment,
   'finance-compound': CompoundInterestChart,
   'finance-retirement': makeFinanceTool('finance-retirement'),
   'finance-gst-tax': GstCalculatorIndia,
@@ -495,14 +492,14 @@ export const toolRegistry: Record<string, React.FC<ToolComponentProps>> = {
   'txt-1': makeTextTool('txt-1'),
   'txt-2': makeTextTool('txt-2'),
   'txt-3': makeTextTool('txt-3'),
-  'txt-4': makeTextTool('txt-4'),
+  'txt-4': CaseConverterTool,
   'txt-5': makeTextTool('txt-5'),
-  'dev-1': makeDevTool('dev-1'),
-  'dev-2': makeDevTool('dev-2'),
-  'dev-3': makeDevTool('dev-3'),
-  'dev-4': makeDevTool('dev-4'),
-  'dev-5': makeDevTool('dev-5'),
-  'dev-6': makeDevTool('dev-6'),
+  'dev-1': JsonFormatterValidatorTreeView,
+  'dev-2': RegexTesterCheatSheet,
+  'dev-3': PasswordStrengthMeter,
+  'dev-4': QrCodeGeneratorCanvas,
+  'dev-5': ColorContrastCheckerWcag,
+  'dev-6': Base64EncodeDecode,
   'tool_unit_length': makeUnitConverterTool('tool_unit_length'),
   'tool_unit_mass': makeUnitConverterTool('tool_unit_mass'),
   'tool_unit_area': makeUnitConverterTool('tool_unit_area'),
@@ -518,9 +515,9 @@ export const toolRegistry: Record<string, React.FC<ToolComponentProps>> = {
   'tool_unit_density': makeUnitConverterTool('tool_unit_density'),
   'tool_unit_angle': makeUnitConverterTool('tool_unit_angle'),
   'tool_unit_frequency': makeUnitConverterTool('tool_unit_frequency'),
-  'hf-1': makeHealthTool('hf-1'),
-  'hf-2': makeHealthTool('hf-2'),
-  'hf-3': makeHealthTool('hf-3'),
+  'hf-1': BmrCalculator,
+  'hf-2': CalorieBurned,
+  'hf-3': IdealWeightIndianChart,
   'hf-4': DailyWaterIntake,
   'seo-1': makeSeoTool('seo-1'),
   'seo-2': makeSeoTool('seo-2'),
@@ -963,37 +960,13 @@ export const toolRegistry: Record<string, React.FC<ToolComponentProps>> = {
   'expense-splitter': DailyExpenseSplitter,
   'bill-splitter-group': DailyExpenseSplitter,
   'flatmate-expense-splitter': DailyExpenseSplitter,
-
-  // 61. Veo 3 Video from Text
-  'veo-text-to-video': VeoTextToVideo as any,
-  'veo-3-video-generator': VeoTextToVideo as any,
-  'ai-video-generator': VeoTextToVideo as any,
-
-  // 62. Audio Transcriber
-  'gemini-audio-transcribe': AudioTranscriber as any,
-  'audio-transcriber': AudioTranscriber as any,
-  'speech-to-text': AudioTranscriber as any,
-
-  // 63. Create & Edit Images
-  'gemini-image-studio': ImageStudio as any,
-  'ai-image-generator': ImageStudio as any,
-  'image-editor-ai': ImageStudio as any,
-
-  // 64. Animate Photos to Video
-  'veo-image-to-video': VeoImageToVideo as any,
-  'photo-to-video-animator': VeoImageToVideo as any,
-  'animate-photo': VeoImageToVideo as any,
-
-  // 65. Gemini Real-Time Voice Conversation
-  'gemini-live-voice': LiveVoiceAssistant as any,
-  'gemini-voice-assistant': LiveVoiceAssistant as any,
-  'live-voice-conversation': LiveVoiceAssistant as any,
 };
+
 
 /**
  * Resolve tool component by ID with guaranteed fallback
  */
-export function getToolComponent(id: string): React.FC<ToolComponentProps> {
+export function getToolComponent(id: string): React.ComponentType<ToolComponentProps> {
   if (toolRegistry[id]) return toolRegistry[id];
   const normalizedId = id.toLowerCase().replace(/_/g, '-');
   if (toolRegistry[normalizedId]) return toolRegistry[normalizedId];

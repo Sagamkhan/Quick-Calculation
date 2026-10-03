@@ -1,0 +1,25 @@
+# Quick Calculator
+> 250+ Free Online Calculators, Financial Engines & Precision Web Utilities
+
+Quick Calculator (https://quickcalculator.app) is a high-speed, 100% free web utility platform with zero user accounts or login required. All mathematical calculations, financial matrix compounding, unit conversions, and text analyses execute client-side inside the user's web browser for total privacy and zero server latency.
+
+## Flagship Calculator Engines & Direct Links
+
+- [SIP Step-Up Calculator](https://quickcalculator.app/tools/sip-step-up-inflation): Calculate systematic investment plans with annual top-up percentages, inflation adjustments, and 30-year month-by-month wealth accumulation charts.
+- [Home Loan EMI & Prepayment Calculator](https://quickcalculator.app/tools/home-loan-emi-prepayment): Compute equated monthly installments, extra principal prepayments, interest savings, and complete loan amortization tables.
+- [PPF Calculator 2026](https://quickcalculator.app/tools/ppf-calculator-india-2026): Public Provident Fund 15-year maturity balance, annual interest compounding at official government rates, and 5-year block extensions.
+- [GST Calculator India](https://quickcalculator.app/tools/gst-calculator-india): Exact Goods & Services Tax (CGST + SGST / IGST) calculations across 5%, 12%, 18%, and 28% slabs with inclusive and exclusive modes.
+- [Income Tax Calculator FY 2025-26](https://quickcalculator.app/tools/income-tax-calculator-2026): Side-by-side comparison between New Tax Regime (Section 115BAC) and Old Tax Regime with standard deductions and rebate under Section 87A.
+- [Scientific Calculator Pro](https://quickcalculator.app/tools/calc_scientific_pro): Full trigonometric (sin, cos, tan), logarithmic (ln, log), exponential, and combinatorial scientific calculation engine.
+- [Compound Interest Calculator](https://quickcalculator.app/tools/compound-interest-chart): Daily, monthly, quarterly, and annual compound interest modeling with regular monthly deposits.
+- [Percentage Calculator](https://quickcalculator.app/tools/percentage-calculator-steps): Step-by-step percentage increase, percentage decrease, and fraction-to-percentage breakdowns.
+- [Age Calculator from DOB](https://quickcalculator.app/tools/age-calculator-dob): Exact age calculation in years, months, days, hours, and minutes with upcoming birthday countdown.
+- [BMI & Body Fat Calculator](https://quickcalculator.app/tools/body-fat-percentage): Body Mass Index and U.S. Navy Body Fat percentage formula with health classification targets.
+- [Word & Character Counter](https://quickcalculator.app/tools/tool_word_character_counter): Real-time word, character, sentence, paragraph, syllable count, and reading time estimation.
+- [Universal Unit Converter](https://quickcalculator.app/tools/tool_unit_converter_pro): Multi-unit conversions for length, mass, temperature, area, volume, pressure, speed, energy, and digital storage.
+- [JSON Formatter & Validator](https://quickcalculator.app/tools/tool_json_formatter): Client-side JSON tree viewer, syntax validator, and beautifier with 100% privacy.
+
+## API & Embed Usage
+Webmasters and bloggers can embed any calculator using standard responsive iframes:
+`<iframe src="https://quickcalculator.app/embed/[tool-slug]" width="100%" height="520" frameborder="0"></iframe>`
+`<p>Powered by <a href="https://quickcalculator.app">Quick Calculator</a></p>`

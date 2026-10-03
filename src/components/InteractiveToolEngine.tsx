@@ -36,6 +36,8 @@ import { recordToolUsage } from '../utils/usageTracker';
 import { analyzeTextMetrics } from '../utils/outputFormatters';
 import { UNIT_CONVERSION_SPECS, convertUnitValue } from '../data/unitConverters';
 import VoiceInputButton from './VoiceInputButton';
+import { useDebounce } from '../hooks/useDebounce';
+import ToolInputArea from './ToolInputArea';
 
 export type ToolCategoryType = 'text' | 'math' | 'converter';
 
@@ -152,6 +154,8 @@ export function useToolEngine(tool: ToolItem) {
     return 'Transform your everyday productivity with fast, client-side calculations and real-time utilities designed for precision.';
   });
   const [textTransform, setTextTransform] = useState<string>('none');
+  const debouncedTextInput = useDebounce(textInput, 300);
+  const isCalculating = textInput !== debouncedTextInput;
 
   // --- MATH STATE ---
   const [mathCurrency, setMathCurrency] = useState<'₹' | '$' | '€' | '£'>('₹');
@@ -475,19 +479,19 @@ export function useToolEngine(tool: ToolItem) {
     // ---------------------------------------------------------
     // 3. TEXT CATEGORY CALCULATION (DEFAULT)
     // ---------------------------------------------------------
-    const metricsData = analyzeTextMetrics(textInput);
-    let processedText = textInput;
+    const metricsData = analyzeTextMetrics(debouncedTextInput);
+    let processedText = debouncedTextInput;
 
     if (textTransform === 'uppercase') {
-      processedText = textInput.toUpperCase();
+      processedText = debouncedTextInput.toUpperCase();
     } else if (textTransform === 'lowercase') {
-      processedText = textInput.toLowerCase();
+      processedText = debouncedTextInput.toLowerCase();
     } else if (textTransform === 'titlecase') {
-      processedText = textInput.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase());
+      processedText = debouncedTextInput.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase());
     } else if (textTransform === 'slugify') {
-      processedText = textInput.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
+      processedText = debouncedTextInput.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
     } else if (textTransform === 'clean-whitespace') {
-      processedText = textInput.replace(/\s+/g, ' ').trim();
+      processedText = debouncedTextInput.replace(/\s+/g, ' ').trim();
     }
 
     const copyable = [
@@ -594,6 +598,7 @@ export function useToolEngine(tool: ToolItem) {
     setToUnit,
     // Unified Output
     output,
+    isCalculating,
     // Actions
     handleSwapUnits,
     handleResetDefaults
@@ -1110,7 +1115,7 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-full box-border p-3 sm:p-4 mx-auto overflow-y-auto overflow-x-hidden min-h-auto space-y-4">
       {/* Top Action Bar */}
       <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-slate-900/80 border border-slate-700 flex-wrap">
         <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
@@ -1146,15 +1151,15 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
       </div>
 
       {/* Hero Metric Banner */}
-      <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-cyan-950/30 border border-emerald-500/30 space-y-2 shadow-xl">
-        <div className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4" />
-          <span>{output.heroTitle}</span>
+      <div className="w-full max-w-full shrink-0 box-border p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-cyan-950/30 border border-emerald-500/30 space-y-1.5 shadow-xl overflow-visible">
+        <div className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1.5">
+          <Sparkles className="w-4 h-4 shrink-0" />
+          <span className="truncate">{output.heroTitle}</span>
         </div>
-        <div className="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">
+        <div className="text-xl sm:text-3xl md:text-4xl font-extrabold font-mono text-white tracking-tight break-all sm:break-normal">
           {output.heroValue}
         </div>
-        <p className="text-xs text-slate-400 font-mono">
+        <p className="text-[11px] sm:text-xs text-slate-400 font-mono">
           {output.heroSubtitle}
         </p>
       </div>
@@ -1188,22 +1193,22 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
       )}
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-full box-border">
         {output.metrics.map((m) => {
           const accent = m.accentColor || 'emerald';
           return (
             <div
               key={m.id}
-              className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-1 shadow-sm"
+              className="w-full max-w-full shrink-0 box-border p-3 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-1 shadow-sm overflow-visible"
             >
-              <span className="text-[11px] font-mono text-slate-400 font-semibold block uppercase tracking-wider">
+              <span className="text-[11px] font-mono text-slate-400 font-semibold block uppercase tracking-wider truncate">
                 {m.label}
               </span>
-              <div className={`text-xl font-mono font-bold ${accentBorderColor[accent]}`}>
+              <div className={`text-lg sm:text-xl font-mono font-bold truncate ${accentBorderColor[accent]}`}>
                 {m.value}
               </div>
               {m.subtext && (
-                <span className="text-[11px] font-mono text-slate-500 block">
+                <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 block truncate">
                   {m.subtext}
                 </span>
               )}
@@ -1214,7 +1219,7 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
 
       {/* Ratio Breakdown Bar (if present) */}
       {output.ratioBreakdown && (
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-2.5 shadow-sm">
+        <div className="w-full max-w-full shrink-0 box-border p-3 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-2.5 shadow-sm overflow-visible">
           <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-300">
             <span>{output.ratioBreakdown.labelA}</span>
             <span>{output.ratioBreakdown.labelB}</span>
@@ -1241,31 +1246,20 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
 
       {/* Breakdown / Schedule / Matrix Table (if present) */}
       {output.tableHeaders && output.tableRows && output.tableRows.length > 0 && (
-        <div className="space-y-2 pt-1">
+        <div className="space-y-2 pt-1 w-full max-w-full box-border overflow-visible">
           <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-slate-400">
             <div className="flex items-center gap-1.5">
-              {canScrollLeft || canScrollRight ? (
-                <span className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 font-semibold text-[10px] uppercase tracking-wider animate-pulse">
-                  <MoveHorizontal className="w-3 h-3" />
-                  <span>Scroll horizontally for all columns</span>
-                </span>
-              ) : (
-                <span className="text-[10px] uppercase tracking-wider text-slate-500 font-medium">
-                  Detailed Itemized Matrix
-                </span>
-              )}
+              <span className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 font-semibold text-[10px] uppercase tracking-wider animate-pulse">
+                <MoveHorizontal className="w-3 h-3" />
+                <span>Scroll horizontally for all columns</span>
+              </span>
             </div>
-            <button
-              type="button"
-              onClick={() => setShowAllColumnsMobile(!showAllColumnsMobile)}
-              className="sm:hidden text-[11px] font-semibold text-cyan-400 hover:underline cursor-pointer flex items-center gap-1"
-            >
-              <SlidersHorizontal className="w-3 h-3" />
-              <span>{showAllColumnsMobile ? 'Compact' : 'Show All'}</span>
-            </button>
+            <span className="text-[10px] font-mono text-slate-500 hidden sm:inline">
+              {output.tableRows.length} Records • Swipe for details
+            </span>
           </div>
 
-          <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-x-auto overflow-y-visible">
+          <div className="relative rounded-xl border border-slate-700/80 bg-slate-950 shadow-sm overflow-hidden w-full max-w-full">
             {/* Scroll indicators */}
             <div
               className={`pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-slate-950 to-transparent z-20 transition-opacity ${
@@ -1281,19 +1275,16 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
             <div
               ref={scrollRef}
               onScroll={checkScroll}
-              className="max-h-72 overflow-y-auto overflow-x-auto touch-pan-x scrollbar-thin scrollbar-thumb-slate-700"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="w-full max-w-full block max-h-[380px] sm:max-h-[500px] overflow-y-auto overflow-x-auto touch-pan-x touch-pan-y cyan-scrollbar"
             >
-              <table className="w-full text-left text-xs font-mono whitespace-nowrap">
-                <thead className="bg-slate-900 text-slate-200 sticky top-0 z-10 border-b border-slate-800">
+              <table className="w-full text-left text-xs font-mono whitespace-nowrap min-w-[800px] border-collapse breakdown-table">
+                <thead className="bg-slate-900 text-slate-200 sticky top-0 z-20 border-b border-slate-800 shadow-sm">
                   <tr>
                     {output.tableHeaders.map((h, i) => (
                       <th
                         key={i}
-                        className={`p-3 font-bold tracking-tight ${
-                          !showAllColumnsMobile && i > 1 && i < output.tableHeaders!.length - 1
-                            ? 'hidden sm:table-cell'
-                            : 'table-cell'
-                        }`}
+                        className="p-3 font-bold tracking-tight bg-slate-900 whitespace-nowrap text-slate-200"
                       >
                         {h}
                       </th>
@@ -1311,16 +1302,12 @@ function OutputDashboard({ output, tool, onReset }: OutputDashboardProps) {
                       {row.map((cell, cIdx) => (
                         <td
                           key={cIdx}
-                          className={`p-3 ${
+                          className={`p-3 whitespace-nowrap ${
                             cIdx === 0
                               ? 'font-bold text-slate-100'
                               : cIdx === row.length - 1
                               ? 'font-semibold text-emerald-400'
                               : 'text-slate-300'
-                          } ${
-                            !showAllColumnsMobile && cIdx > 1 && cIdx < row.length - 1
-                              ? 'hidden sm:table-cell'
-                              : 'table-cell'
                           }`}
                         >
                           {cell}
@@ -1352,38 +1339,47 @@ export default function InteractiveToolEngine({
   const engineState = useToolEngine(tool);
   const { categoryType, output, handleResetDefaults } = engineState;
 
-  // Switch-case pattern dynamically renders Input Section based on tool category
-  const renderInputSection = () => {
-    switch (categoryType) {
-      case 'text':
-        return <TextInputSection tool={tool} state={engineState} />;
-      case 'math':
-        return <MathInputSection tool={tool} state={engineState} />;
-      case 'converter':
-        return <ConverterInputSection tool={tool} state={engineState} />;
-      default:
-        return <TextInputSection tool={tool} state={engineState} />;
-    }
-  };
-
   return (
     <div className="w-full space-y-6">
-      {/* 2-Part Synchronized Workspace Layout: Input Section + Unified Output Dashboard */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left / Top: Dynamically Switched Input Section */}
-        <div className="lg:col-span-5">
-          {renderInputSection()}
-        </div>
+      {/* 1. Universal Tool Input Area: Full-width at TOP directly above results */}
+      <ToolInputArea
+        tool={tool}
+        mode={categoryType}
+        isCalculating={engineState.isCalculating}
+        textValue={engineState.textInput}
+        onTextChange={engineState.setTextInput}
+        activeTransform={engineState.textTransform}
+        onApplyTransform={engineState.setTextTransform}
+        amount={engineState.amount}
+        onAmountChange={engineState.setAmount}
+        rate={engineState.rate}
+        onRateChange={engineState.setRate}
+        tenure={engineState.tenure}
+        onTenureChange={engineState.setTenure}
+        currency={engineState.mathCurrency}
+        onCurrencyChange={engineState.setMathCurrency}
+        converterValue={engineState.converterValue}
+        onConverterValueChange={engineState.setConverterValue}
+        fromUnit={engineState.fromUnit}
+        onFromUnitChange={engineState.setFromUnit}
+        toUnit={engineState.toUnit}
+        onToUnitChange={engineState.setToUnit}
+        unitsList={engineState.currentSpec?.units || []}
+        onSwapUnits={engineState.handleSwapUnits}
+        onCopyRawText={() => {
+          navigator.clipboard.writeText(output.copyableSummary || engineState.textInput);
+          triggerConfetti(0.2);
+        }}
+        onExportPdf={onDownloadPdf}
+        onReset={handleResetDefaults}
+      />
 
-        {/* Right / Bottom: Unified Reactive Output Dashboard */}
-        <div className="lg:col-span-7">
-          <OutputDashboard
-            output={output}
-            tool={tool}
-            onReset={handleResetDefaults}
-          />
-        </div>
-      </div>
+      {/* 2. Unified Reactive Output Dashboard directly below input area */}
+      <OutputDashboard
+        output={output}
+        tool={tool}
+        onReset={handleResetDefaults}
+      />
     </div>
   );
 }

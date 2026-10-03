@@ -11,9 +11,10 @@ import {
   SlidersHorizontal,
   Bookmark,
   Heart,
-  Calculator
+  Calculator,
+  Star
 } from 'lucide-react';
-import { CATEGORIES, ToolItem } from '../data/categoriesAndTools';
+import { CATEGORIES, ToolItem, TOOLS_CATALOG } from '../data/categoriesAndTools';
 import OfflineStatusIndicator from './OfflineStatusIndicator';
 
 interface NavbarProps {
@@ -51,6 +52,7 @@ export default function Navbar({
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [topCalcsOpen, setTopCalcsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,18 +134,63 @@ export default function Navbar({
               onGoHome={onGoHome} 
             />
 
-            {/* AI Creative Studio Button */}
-            {onOpenAiStudio && (
+            {/* Top Calculators Dropdown Button */}
+            <div className="relative">
               <button
                 type="button"
-                onClick={onOpenAiStudio}
-                className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-bold shadow-sm shadow-indigo-600/20 shrink-0"
-                title="Open AI Creative & Voice Studio (Veo 3, Gemini Live, Image Studio)"
+                onClick={() => setTopCalcsOpen(!topCalcsOpen)}
+                className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono shadow-sm shadow-amber-500/20 shrink-0"
+                title="Browse Top Trending Financial & Productivity Calculators"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" style={{ animationDuration: '4s' }} />
-                <span>AI Studio</span>
+                <Star className="w-3.5 h-3.5 fill-slate-950 text-slate-950" />
+                <span>Top Calculators</span>
               </button>
-            )}
+
+              {topCalcsOpen && (
+                <div 
+                  className="absolute right-0 mt-2 w-72 rounded-2xl bg-slate-900 border border-slate-700/80 shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  onMouseLeave={() => setTopCalcsOpen(false)}
+                >
+                  <div className="px-3 py-2 border-b border-slate-800 text-[11px] font-mono font-bold text-amber-400 flex items-center justify-between">
+                    <span>POPULAR CALCULATORS</span>
+                    <span className="text-[10px] text-slate-500 font-normal">No Login Req.</span>
+                  </div>
+                  <div className="py-1 space-y-0.5">
+                    {[
+                      { id: 'sip-step-up-inflation', name: 'SIP Step-Up Calculator', cat: 'Finance' },
+                      { id: 'home-loan-emi-prepayment', name: 'Home Loan EMI & Prepayment', cat: 'Loans' },
+                      { id: 'ppf-calculator-india-2026', name: 'PPF Calculator 2026', cat: 'Investment' },
+                      { id: 'gst-calculator-india', name: 'GST Calculator India', cat: 'Tax' },
+                      { id: 'income-tax-calculator-2026', name: 'Income Tax FY 2025-26', cat: 'Tax' },
+                      { id: 'calc_scientific_pro', name: 'Scientific Calculator', cat: 'Math' },
+                      { id: 'tool_word_character_counter', name: 'Word & Character Counter', cat: 'Writing' }
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          setTopCalcsOpen(false);
+                          if (onSelectTool) {
+                            const found = TOOLS_CATALOG.find(t => t.id === item.id || t.slug === item.id);
+                            if (found) {
+                              onSelectTool(found);
+                            } else {
+                              if (onGoHome) onGoHome();
+                            }
+                          } else if (onGoHome) {
+                            onGoHome();
+                          }
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-xl text-xs text-slate-200 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition-colors cursor-pointer"
+                      >
+                        <span className="font-medium truncate">{item.name}</span>
+                        <span className="text-[10px] font-mono text-cyan-400 ml-2 shrink-0">{item.cat}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Prominent Donate Now Button - Cleanly displayed on desktop, available in mobile drawer */}
             <a

@@ -26,45 +26,67 @@ import { ToolItem } from '../data/categoriesAndTools';
 import { triggerConfetti } from '../utils/confetti';
 import { recordToolUsage } from '../utils/usageTracker';
 import { jsPDF } from 'jspdf';
+import { useDebounce } from '../hooks/useDebounce';
+import VoiceInputButton from './VoiceInputButton';
 
 interface TextToolEngineProps {
   tool: ToolItem;
 }
 
 export function TextToolEngine({ tool }: TextToolEngineProps) {
-  const toolSlug = (tool.slug || tool.id).toLowerCase();
+  const toolSlug = (tool?.slug || tool?.id || '').toLowerCase();
+  const toolName = (tool?.name || '').toLowerCase();
+  const toolId = (tool?.id || '').toLowerCase();
+
+  const isPlagiarism = toolSlug.includes('plagiarism') || toolName.includes('plagiarism') || toolId.includes('plagiarism');
+  const isWordCounter = (toolSlug.includes('word') || toolSlug.includes('counter') || toolName.includes('word') || toolName.includes('counter') || toolId === 'txt-1') && !isPlagiarism;
+  const isCase = toolSlug.includes('case') || toolName.includes('case') || toolId === 'txt-4';
+  const isMarkdown = toolSlug.includes('markdown') || toolName.includes('markdown') || toolId === 'txt-2';
+  const isDiff = toolSlug.includes('diff') || toolName.includes('diff');
+  const isLorem = toolSlug.includes('lorem') || toolName.includes('lorem') || toolId === 'txt-5';
+  const isSlug = toolSlug.includes('slug') || toolName.includes('slug');
+  const isDuplicate = toolSlug.includes('duplicate') || toolSlug.includes('sorter') || toolName.includes('duplicate');
+  const isWhitespace = toolSlug.includes('whitespace') || toolName.includes('whitespace') || toolName.includes('space');
+  const isReadingTime = toolSlug.includes('reading-time') || toolSlug.includes('speaking-time') || toolName.includes('reading time');
+  const isReverse = toolSlug.includes('revers') || toolName.includes('revers');
+  const isBinary = toolSlug.includes('binary') || toolSlug.includes('hex') || toolName.includes('binary');
+  const isBase64 = toolSlug.includes('base64') || toolName.includes('base64');
+  const isRephrase = toolSlug.includes('rephrase') || toolSlug.includes('paraphras') || toolSlug.includes('rewriter') || toolName.includes('rephrase') || toolName.includes('paraphras') || toolName.includes('rewriter') || toolId === 'txt-3';
 
   // Primary Input States
   const [textInput, setTextInput] = useState<string>(() => {
-    if (toolSlug.includes('plagiarism')) {
+    if (isPlagiarism) {
       return `Artificial Intelligence is transforming how modern web developers build scalable applications. By leveraging instant client-side calculations and automated SEO frameworks, web platforms can deliver seamless user experiences with zero server latency. Programmatic SEO enables developers to generate structured metadata and schema markup at scale.`;
     }
-    if (toolSlug.includes('diff')) {
+    if (isDiff) {
       return `function calculateDiscount(price, discount) {\n  return price - (price * discount / 100);\n}`;
     }
-    if (toolSlug.includes('markdown')) {
+    if (isMarkdown) {
       return `# Modern Web Utility Suite\n\nWelcome to **Quick Calculator**. This suite provides **50+ free tools** including:\n- *Plagiarism Checker*\n- *Markdown to HTML*\n- *Diff Checker*\n\n> "Simplicity is prerequisite for reliability." — Edsger W. Dijkstra\n\n### Sample Code:\n\`\`\`javascript\nconst isFree = true;\nconsole.log("Welcome!");\n\`\`\``;
     }
-    if (toolSlug.includes('case')) {
+    if (isCase) {
       return `Transform any text into UPPERCASE, lowercase, Title Case, camelCase, or snake_case with 100% precision.`;
     }
-    if (toolSlug.includes('duplicate')) {
+    if (isDuplicate) {
       return `Apple\nBanana\nOrange\nApple\nGrape\nBanana\nMango\nPineapple\nMango`;
     }
-    if (toolSlug.includes('slug')) {
+    if (isSlug) {
       return `How to Build a High-Precision Online Calculator & SEO Platform in 2026!`;
     }
-    if (toolSlug.includes('whitespace')) {
+    if (isWhitespace) {
       return `   This   sentence   has    excessive     spaces.   \n\n\n   And    empty    lines!   `;
     }
-    if (toolSlug.includes('binary') || toolSlug.includes('hex')) {
+    if (isBinary) {
       return `Hello World!`;
     }
-    if (toolSlug.includes('base64')) {
+    if (isBase64) {
       return `Quick Calculator: Enterprise-Grade Web Utilities`;
     }
-    if (toolSlug.includes('revers')) {
+    if (isReverse) {
       return `The quick brown fox jumps over the lazy dog.`;
+    }
+    if (isRephrase) {
+      return `Quick Calculator is designed to provide users with efficient, reliable, and completely private online calculation tools.`;
     }
     return `Quick Calculator provides 50+ free online web utilities, financial calculators, SEO tools, and developer converters built with client-side performance. Fast, accurate, and completely private.`;
   });
@@ -88,25 +110,76 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
   const [convDirection, setConvDirection] = useState<'to_binary' | 'from_binary' | 'to_hex' | 'from_hex'>('to_binary');
   const [base64Mode, setBase64Mode] = useState<'encode' | 'decode'>('encode');
   const [reverseMode, setReverseMode] = useState<'all' | 'words' | 'letters' | 'upside_down'>('all');
+  const [rephraseTone, setRephraseTone] = useState<'natural' | 'professional' | 'fluent' | 'creative' | 'concise'>('professional');
+  const [activeTransform, setActiveTransform] = useState<string>('none');
+  const debouncedTextInput = useDebounce(textInput, 300);
+  const isCalculating = textInput !== debouncedTextInput;
 
   const [copied, setCopied] = useState<boolean>(false);
 
   // Record usage on tool mount
   useEffect(() => {
-    recordToolUsage(tool.id, tool.name);
-  }, [tool.id, tool.name]);
+    recordToolUsage(tool?.id || 'text-tool', tool?.name || 'Text Tool');
+  }, [tool?.id, tool?.name]);
 
   // Copy helper
   const handleCopy = (textToCopy: string) => {
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
-    triggerConfetti();
+    triggerConfetti(0.2);
     setTimeout(() => setCopied(false), 2000);
   };
 
   // ----------------------------------------------------
   // COMPUTATION ENGINES
   // ----------------------------------------------------
+
+  // Paraphraser / Sentence Rephraser Engine
+  const paraphrasedResult = useMemo(() => {
+    const text = debouncedTextInput;
+    if (!text.trim()) return '';
+    const replacements: [RegExp, string][] = [
+      [/\butilize\b/gi, 'use'],
+      [/\bin order to\b/gi, 'to'],
+      [/\bvery important\b/gi, 'crucial'],
+      [/\bprovides\b/gi, 'delivers'],
+      [/\bhelp\b/gi, 'assist'],
+      [/\bneed to\b/gi, 'should'],
+      [/\ba lot of\b/gi, 'substantial'],
+      [/\bfast\b/gi, 'swift'],
+      [/\bmake sure\b/gi, 'ensure'],
+      [/\bbig\b/gi, 'significant'],
+      [/\bbuild\b/gi, 'construct'],
+      [/\bstart\b/gi, 'initiate'],
+      [/\bshow\b/gi, 'demonstrate']
+    ];
+    let res = text;
+    for (const [pattern, rep] of replacements) {
+      res = res.replace(pattern, rep);
+    }
+    if (rephraseTone === 'professional') {
+      res = res.replace(/\bcan\b/gi, 'is capable of').replace(/\bgood\b/gi, 'exemplary');
+    } else if (rephraseTone === 'concise') {
+      res = res.replace(/\bdue to the fact that\b/gi, 'because').replace(/\bat this point in time\b/gi, 'now');
+    } else if (rephraseTone === 'creative') {
+      res = res.replace(/\bgreat\b/gi, 'extraordinary').replace(/\bnew\b/gi, 'pioneering');
+    }
+    return res;
+  }, [debouncedTextInput, rephraseTone]);
+
+  // Fallback Transformed Output
+  const fallbackTransformedText = useMemo(() => {
+    const text = debouncedTextInput;
+    if (!text) return '';
+    switch (activeTransform) {
+      case 'uppercase': return text.toUpperCase();
+      case 'lowercase': return text.toLowerCase();
+      case 'titlecase': return text.toLowerCase().replace(/(?:^|\s|-|\.)\S/g, c => c.toUpperCase());
+      case 'slugify': return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      case 'clean-whitespace': return text.replace(/\s+/g, ' ').trim();
+      default: return text;
+    }
+  }, [debouncedTextInput, activeTransform]);
 
   // 1. Plagiarism Checker
   const plagiarismResult = useMemo(() => {
@@ -510,7 +583,7 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
       {/* ------------------------------------------------------------------ */}
       {/* 1. PLAGIARISM CHECKER WORKSPACE */}
       {/* ------------------------------------------------------------------ */}
-      {toolSlug.includes('plagiarism') && (
+      {isPlagiarism && (
         <div className="space-y-5">
           <div>
             <label className="block text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
@@ -597,7 +670,7 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
       {/* ------------------------------------------------------------------ */}
       {/* 2. WORD & CHARACTER COUNTER WORKSPACE */}
       {/* ------------------------------------------------------------------ */}
-      {(toolSlug.includes('word') || toolSlug.includes('counter')) && !toolSlug.includes('plagiarism') && (
+      {isWordCounter && (
         <div className="space-y-5">
           <div>
             <div className="flex items-center justify-between mb-2">
@@ -675,7 +748,7 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
       {/* ------------------------------------------------------------------ */}
       {/* 3. CASE CONVERTER WORKSPACE */}
       {/* ------------------------------------------------------------------ */}
-      {toolSlug.includes('case') && (
+      {isCase && (
         <div className="space-y-5">
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
             {[
@@ -743,7 +816,7 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
       {/* ------------------------------------------------------------------ */}
       {/* 4. MARKDOWN TO HTML WORKSPACE */}
       {/* ------------------------------------------------------------------ */}
-      {toolSlug.includes('markdown') && (
+      {isMarkdown && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -783,7 +856,7 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
       {/* ------------------------------------------------------------------ */}
       {/* 5. DIFF CHECKER WORKSPACE */}
       {/* ------------------------------------------------------------------ */}
-      {toolSlug.includes('diff') && (
+      {isDiff && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -846,7 +919,7 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
       {/* ------------------------------------------------------------------ */}
       {/* 6. LOREM IPSUM GENERATOR WORKSPACE */}
       {/* ------------------------------------------------------------------ */}
-      {toolSlug.includes('lorem') && (
+      {isLorem && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
             <div>
@@ -1325,6 +1398,179 @@ export function TextToolEngine({ tool }: TextToolEngineProps) {
               />
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ------------------------------------------------------------------ */}
+      {/* 14. SENTENCE REPHRASER / PARAPHRASER WORKSPACE */}
+      {/* ------------------------------------------------------------------ */}
+      {(toolSlug.includes('rephrase') || toolSlug.includes('paraphras') || toolSlug.includes('rewriter') || toolSlug.includes('article_rewriter')) && (
+        <div className="space-y-5">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <label className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              Select Tone / Style:
+            </label>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {[
+                { id: 'professional', label: 'Professional' },
+                { id: 'natural', label: 'Natural' },
+                { id: 'fluent', label: 'Fluent' },
+                { id: 'creative', label: 'Creative' },
+                { id: 'concise', label: 'Concise' }
+              ].map(t => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setRephraseTone(t.id as any)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                    rephraseTone === t.id
+                      ? 'bg-blue-600 text-white border-blue-500 shadow-sm'
+                      : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-400'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Original Sentences:
+                </label>
+                <span className="text-xs font-mono text-slate-400">
+                  {wordCounterStats.words} words
+                </span>
+              </div>
+              <textarea
+                rows={7}
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder="Type or paste sentences here to rephrase naturally..."
+                className="w-full p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-sans text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all leading-relaxed"
+                style={{ fontSize: '16px' }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Polished & Rephrased Result:
+                </label>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(paraphrasedResult)}
+                  className="text-xs font-mono text-indigo-500 hover:text-indigo-400 flex items-center gap-1 cursor-pointer"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
+              <textarea
+                rows={7}
+                readOnly
+                value={paraphrasedResult}
+                className="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-indigo-700 dark:text-indigo-300 font-sans text-sm focus:outline-none transition-all leading-relaxed"
+                style={{ fontSize: '16px' }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ------------------------------------------------------------------ */}
+      {/* 15. UNIVERSAL FALLBACK WORKSPACE FOR ANY TEXT TOOL */}
+      {/* ------------------------------------------------------------------ */}
+      {(!toolSlug.includes('plagiarism') &&
+        !toolSlug.includes('word') &&
+        !toolSlug.includes('counter') &&
+        !toolSlug.includes('case') &&
+        !toolSlug.includes('markdown') &&
+        !toolSlug.includes('diff') &&
+        !toolSlug.includes('lorem') &&
+        !toolSlug.includes('slug') &&
+        !toolSlug.includes('duplicate') &&
+        !toolSlug.includes('sorter') &&
+        !toolSlug.includes('whitespace') &&
+        !toolSlug.includes('reading-time') &&
+        !toolSlug.includes('speaking-time') &&
+        !toolSlug.includes('revers') &&
+        !toolSlug.includes('binary') &&
+        !toolSlug.includes('hex') &&
+        !toolSlug.includes('base64') &&
+        !toolSlug.includes('rephrase') &&
+        !toolSlug.includes('paraphras') &&
+        !toolSlug.includes('rewriter') &&
+        !toolSlug.includes('article_rewriter')) && (
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                Type or paste your text:
+              </label>
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+                <span>Words: <strong className="text-cyan-400">{wordCounterStats.words}</strong></span>
+                <span>Chars: <strong className="text-emerald-400">{wordCounterStats.charsWithSpaces}</strong></span>
+              </div>
+            </div>
+            <textarea
+              rows={7}
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+              placeholder="Type or paste your text here..."
+              className="w-full p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-sans text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all leading-relaxed shadow-inner"
+              style={{ fontSize: '16px' }}
+            />
+          </div>
+
+          {/* Quick Transform Controls */}
+          <div className="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+            <span className="text-xs font-mono text-slate-400 font-semibold">Instant Transforms:</span>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {[
+                { id: 'none', label: 'Normal' },
+                { id: 'uppercase', label: 'UPPERCASE' },
+                { id: 'lowercase', label: 'lowercase' },
+                { id: 'titlecase', label: 'Title Case' },
+                { id: 'slugify', label: 'slug-case' },
+                { id: 'clean-whitespace', label: 'Trim Spaces' }
+              ].map(t => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setActiveTransform(t.id)}
+                  className={`px-2 py-0.5 rounded text-xs font-mono font-medium transition-all border cursor-pointer ${
+                    activeTransform === t.id
+                      ? 'bg-blue-600 text-white border-blue-500'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-blue-400'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {activeTransform !== 'none' && (
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-500">Transformed Output:</span>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(fallbackTransformedText)}
+                  className="text-xs font-mono text-cyan-500 hover:text-cyan-400 flex items-center gap-1 cursor-pointer"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
+              <div className="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 max-h-40 overflow-y-auto whitespace-pre-wrap select-all">
+                {fallbackTransformedText}
+              </div>
+            </div>
+          )}
         </div>
       )}
 

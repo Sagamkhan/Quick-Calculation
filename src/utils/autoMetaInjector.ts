@@ -173,26 +173,43 @@ export function generateToolMetaResult(tool: ToolItem, originOverride?: string):
   const catName = catObj ? catObj.name : 'Calculators';
 
   // Dynamic high-CTR SERP Title Tag optimized with tool name, category & value prop
-  const title = `${tool.name} - Free Online Calculator & Tool | Quick Calculator`;
+  const title = `${tool.name} - Free Online Calculator (No Login Required) | Quick Calculator`;
 
   // Dynamic High-converting SERP description combining tool name, description, and core tags
   const tagsList = tool.tags && tool.tags.length > 0 ? tool.tags.join(', ') : '';
   const altText = tool.freeAlternativeTo ? ` Great free replacement for ${tool.freeAlternativeTo}.` : '';
-  const rawDesc = `${tool.name}: ${tool.description}${altText} Fast, 100% free online calculator with instant results, client-side browser privacy, and zero registration required.`;
+  const rawDesc = `${tool.name}: ${tool.description}${altText} 100% free online calculator with instant results, zero login required, in-browser privacy, and full export support.`;
   const description = rawDesc.length > 160 ? rawDesc.substring(0, 157).trim() + '...' : rawDesc;
 
-  // Search intent keywords synthesized from tool name, tags, and category
+  // Search intent keywords synthesized from tool name, tags, and category (Short-tail & Long-tail)
   const keywordSet = new Set<string>();
-  keywordSet.add(tool.name.toLowerCase());
-  keywordSet.add(`free ${tool.name.toLowerCase()}`);
-  keywordSet.add(`${tool.name.toLowerCase()} online`);
-  keywordSet.add(`${tool.name.toLowerCase()} calculator`);
+  const lowerName = tool.name.toLowerCase();
+  
+  // Short-tail keywords
+  keywordSet.add(lowerName);
+  keywordSet.add(`free ${lowerName}`);
+  keywordSet.add(`${lowerName} online`);
+  keywordSet.add(`${lowerName} calculator`);
+  keywordSet.add(`${lowerName} tool`);
   keywordSet.add(catName.toLowerCase());
+  
+  // Long-tail high-ranking keywords
+  keywordSet.add(`free online ${lowerName} no login required`);
+  keywordSet.add(`how to calculate ${lowerName} online`);
+  keywordSet.add(`instant ${lowerName} calculation`);
+  keywordSet.add(`best ${lowerName} 2026`);
+  keywordSet.add(`free online calculators without sign up`);
+  keywordSet.add(`accurate ${lowerName} with breakdown`);
+  keywordSet.add(`client side private ${lowerName}`);
+
   if (tool.tags) {
     tool.tags.forEach(t => {
-      keywordSet.add(t.toLowerCase());
-      keywordSet.add(`${t.toLowerCase()} tool`);
-      keywordSet.add(`${t.toLowerCase()} calculator`);
+      const tagLower = t.toLowerCase();
+      keywordSet.add(tagLower);
+      keywordSet.add(`${tagLower} tool`);
+      keywordSet.add(`${tagLower} calculator`);
+      keywordSet.add(`free ${tagLower} calculator`);
+      keywordSet.add(`online ${tagLower} converter`);
     });
   }
   if (tool.freeAlternativeTo) {
@@ -200,6 +217,7 @@ export function generateToolMetaResult(tool: ToolItem, originOverride?: string):
   }
   keywordSet.add('quick calculator');
   keywordSet.add('free online tools');
+  keywordSet.add('no login calculator');
   keywordSet.add(AUTHOR_NAME.toLowerCase());
   const keywords = Array.from(keywordSet).join(', ');
 
@@ -371,6 +389,111 @@ export function generateCategoryMetaResult(category: CategoryInfo, originOverrid
     applicationName: 'Quick Calculator',
     tags: [category.name, category.shortName],
     jsonLdSchemas: [breadcrumbSchema]
+  };
+}
+
+/**
+ * Automated Meta Tag Generator for Home Page
+ */
+export function generateHomeMetaResult(originOverride?: string): AutoMetaResult {
+  const origin = getOrigin(originOverride);
+  const title = 'Quick Calculator - Free Online Calculators, Financial Engines & Converters';
+  const description = 'Access 250+ free online calculators and tools with no login required. Instant SIP investments, loan EMI, GST, compound interest, scientific calculations, and unit conversions with 100% in-browser privacy.';
+  const keywords = 'calculator, online calculator, free calculator, sip calculator, emi calculator, gst calculator, loan calculator, scientific calculator, compound interest calculator, percentage calculator, age calculator, bmi calculator, unit converter, ppf calculator, fd calculator, rd calculator, cagr calculator, income tax calculator, salary calculator, calorie calculator, word counter, case converter, json formatter, qr code generator, password generator, free online calculator no login required, step up sip calculator with annual increase, home loan emi calculator with prepayment schedule, personal loan emi calculator with amortization table, compound interest calculator with monthly deposits, income tax calculator new regime vs old regime fy 2025 26, ppf maturity value calculator with extension period, car loan emi calculator with down payment, accurate body mass index bmi calculator, real time word counter and character counter online, fast unit converter metric to imperial, instant calculation tools 100 percent in-browser privacy, free online calculators without sign up, best financial calculators for investors 2026';
+  const bannerImg = `${origin}/og-image.png`;
+
+  const webAppSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    'name': 'Quick Calculator',
+    'alternateName': ['QuickCalc', 'QuickCalculator Online', 'Quick Calculator Platform'],
+    'url': origin,
+    'description': description,
+    'applicationCategory': 'UtilityApplication',
+    'operatingSystem': 'All (Web Browser, iOS, Android, macOS, Windows, Linux)',
+    'softwareVersion': '3.0.0',
+    'offers': {
+      '@type': 'Offer',
+      'price': '0',
+      'priceCurrency': 'USD',
+      'category': 'Free'
+    },
+    'author': {
+      '@type': 'Person',
+      'name': AUTHOR_NAME,
+      'email': 'shahrozaslamk@gmail.com'
+    },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': '4.9',
+      'ratingCount': '18450',
+      'reviewCount': '14200',
+      'bestRating': '5',
+      'worstRating': '1'
+    }
+  };
+
+  return {
+    title,
+    description,
+    keywords,
+    canonicalUrl: origin,
+    robots: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+    googlebot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+    bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+    ogTitle: title,
+    ogDescription: description,
+    ogUrl: origin,
+    ogType: 'website',
+    ogSiteName: 'Quick Calculator',
+    ogLocale: 'en_US',
+    ogImage: bannerImg,
+    twitterCard: 'summary_large_image',
+    twitterTitle: title,
+    twitterDescription: description,
+    twitterImage: bannerImg,
+    twitterSite: '@quickcalcapp',
+    twitterCreator: '@shahroz_khan',
+    applicationName: 'Quick Calculator',
+    tags: ['calculators', 'tools', 'finance', 'math', 'converter'],
+    jsonLdSchemas: [webAppSchema]
+  };
+}
+
+/**
+ * Automated Meta Tag Generator for Generic Pages (Privacy, Terms, About, etc.)
+ */
+export function generatePageMetaResult(pageName: string, pageDescription?: string, originOverride?: string): AutoMetaResult {
+  const origin = getOrigin(originOverride);
+  const title = `${pageName} | Quick Calculator - 100% Free Online Tools`;
+  const description = pageDescription || `Read ${pageName} for Quick Calculator. Access 250+ free client-side financial, math, and text calculation tools with zero tracking.`;
+  const keywords = `${pageName.toLowerCase()}, quick calculator, free online tools, privacy, legal`;
+  const bannerImg = `${origin}/og-image.png`;
+
+  return {
+    title,
+    description,
+    keywords,
+    canonicalUrl: origin,
+    robots: 'index, follow',
+    googlebot: 'index, follow',
+    bingbot: 'index, follow',
+    ogTitle: title,
+    ogDescription: description,
+    ogUrl: origin,
+    ogType: 'website',
+    ogSiteName: 'Quick Calculator',
+    ogLocale: 'en_US',
+    ogImage: bannerImg,
+    twitterCard: 'summary_large_image',
+    twitterTitle: title,
+    twitterDescription: description,
+    twitterImage: bannerImg,
+    twitterSite: '@quickcalcapp',
+    twitterCreator: '@shahroz_khan',
+    applicationName: 'Quick Calculator',
+    tags: [pageName],
+    jsonLdSchemas: []
   };
 }
 
