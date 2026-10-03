@@ -72,15 +72,16 @@ export default function Navbar({
         ? 'bg-white/80 dark:bg-[#121824]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/10 shadow-sm' 
         : 'bg-white dark:bg-[#121824] border-b border-slate-200/50 dark:border-white/10'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
+        <div className="flex items-center justify-between h-16 gap-3 sm:gap-4">
           
           {/* Logo & Sidebar toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={onToggleSidebar}
-              className="p-2 rounded-xl text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-all cursor-pointer"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-all cursor-pointer"
               title="Toggle Menu Sidebar"
+              aria-label="Toggle Menu Sidebar"
             >
               <SlidersHorizontal className="w-5 h-5" />
             </button>
@@ -210,8 +211,9 @@ export default function Navbar({
             {/* Bookmarks Counter Button */}
             <button
               onClick={onOpenBookmarks}
-              className="relative p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:border-amber-500/30 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-semibold"
+              className="min-h-[44px] min-w-[44px] relative p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:border-amber-500/30 transition-all cursor-pointer flex items-center justify-center gap-1.5 text-xs font-mono font-semibold"
               title="View Bookmarked Tools"
+              aria-label="View Bookmarked Tools"
             >
               <Bookmark className={`w-4 h-4 ${bookmarkedCount > 0 ? 'text-amber-500 fill-amber-500' : ''}`} />
               <span className="hidden sm:inline">Saved</span>
@@ -225,8 +227,9 @@ export default function Navbar({
             {/* Dark Mode Circular Wipe Toggle */}
             <button
               onClick={onToggleDarkMode}
-              className="relative p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center relative p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer"
               title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              aria-label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {darkMode ? (
                 <Sun className="w-4 h-4 text-amber-400" />
@@ -235,10 +238,22 @@ export default function Navbar({
               )}
             </button>
 
+            {/* Mobile Search Toggle Button (<768px) */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer"
+              title="Search Tools"
+              aria-label="Search Tools"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 sm:p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer"
+              className="md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer"
+              title="Open Navigation Menu"
+              aria-label="Open Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

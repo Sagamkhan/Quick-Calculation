@@ -63,6 +63,7 @@ const TimestampConverterIst = lazy(() => import('./TimestampConverterIst'));
 const JsMinifierSafe = lazy(() => import('./JsMinifierSafe'));
 const OpenGraphPreview = lazy(() => import('./OpenGraphPreview'));
 const RobotsTxtGenerator = lazy(() => import('./RobotsTxtGenerator'));
+const ObsBitrateStorageCalculator = lazy(() => import('./ObsBitrateStorageCalculator'));
 
 // Lazy-loaded 20 Precision Utilities
 const PercentageCalculatorSteps = lazy(() => import('./PercentageCalculatorSteps'));
@@ -441,7 +442,14 @@ export const toolRegistry: Record<string, React.ComponentType<ToolComponentProps
   'alt-1': makeAltTool('alt-1'),
   'alt-2': makeAltTool('alt-2'),
   'alt-3': makeAltTool('alt-3'),
-  'alt-4': makeAltTool('alt-4'),
+  'alt-4': ObsBitrateStorageCalculator,
+  'obs': ObsBitrateStorageCalculator,
+  'obs-studio': ObsBitrateStorageCalculator,
+  'obs-studio-recorder': ObsBitrateStorageCalculator,
+  'obs-recorder': ObsBitrateStorageCalculator,
+  'obs-bitrate-calculator': ObsBitrateStorageCalculator,
+  'obs-storage-calculator': ObsBitrateStorageCalculator,
+  'tool_obs_studio': ObsBitrateStorageCalculator,
   'alt-5': makeAltTool('alt-5'),
   'alt-6': makeAltTool('alt-6'),
   'pdf-1': makePdfTool('pdf-1'),
@@ -970,6 +978,51 @@ export function getToolComponent(id: string): React.ComponentType<ToolComponentP
   if (toolRegistry[id]) return toolRegistry[id];
   const normalizedId = id.toLowerCase().replace(/_/g, '-');
   if (toolRegistry[normalizedId]) return toolRegistry[normalizedId];
+
+  // Smart Context-Aware Calculator Dispatching (Ensure exact matching logic)
+  if (normalizedId.includes('obs')) {
+    return ObsBitrateStorageCalculator;
+  }
+  if (normalizedId.includes('word-counter') || normalizedId.includes('character-counter') || (normalizedId.includes('word') && normalizedId.includes('count'))) {
+    return makeTextTool(id);
+  }
+  if (normalizedId.includes('webp') || normalizedId.includes('image-converter') || normalizedId.includes('jpg-to-png') || normalizedId.includes('png-to-jpg')) {
+    return makeImageTool(id);
+  }
+  if (normalizedId.includes('sip')) {
+    return SipStepUpInflation;
+  }
+  if (normalizedId.includes('emi') || normalizedId.includes('loan-calculator') || normalizedId.includes('home-loan')) {
+    return HomeLoanEmiPrepayment;
+  }
+  if (normalizedId.includes('json')) {
+    return JsonFormatterValidatorTreeView;
+  }
+  if (normalizedId.includes('base64')) {
+    return Base64EncodeDecode;
+  }
+  if (normalizedId.includes('minifi') || normalizedId.includes('minifier')) {
+    return CssMinifierStats;
+  }
+  if (normalizedId.includes('qr') || normalizedId.includes('barcode')) {
+    return QrCodeGeneratorCanvas;
+  }
+  if (normalizedId.includes('password')) {
+    return PasswordStrengthMeter;
+  }
+  if (normalizedId.includes('bmi') || normalizedId.includes('calorie')) {
+    return makeHealthTool(id);
+  }
+  if (normalizedId.includes('gst') || normalizedId.includes('vat')) {
+    return GstCalculatorIndia;
+  }
+  if (normalizedId.includes('compound') || normalizedId.includes('interest')) {
+    return CompoundInterestChart;
+  }
+  if (normalizedId.includes('age')) {
+    return AgeDaysHoursMinutes;
+  }
+
   return FallbackToolComponent;
 }
 

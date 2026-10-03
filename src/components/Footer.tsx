@@ -43,7 +43,7 @@ export default function Footer({ onSelectCategory, onNavigatePage, onSearchQuery
       {/* Ambient background soft glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[650px] h-[180px] bg-cyan-500/5 blur-[120px] pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 space-y-12">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10 py-16 relative z-10 space-y-12">
         {/* Main 4-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           

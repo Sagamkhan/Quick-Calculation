@@ -470,18 +470,19 @@ export function ImageToolEngine({ tool }: ImageToolEngineProps) {
                   <span className="text-slate-500">Target KB Goal</span>
                   <span className="font-bold text-cyan-500">{targetKb} KB</span>
                 </div>
-                <div className="grid grid-cols-4 gap-1.5">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[50, 100, 200, 500].map((kb) => (
                     <button
                       key={kb}
+                      type="button"
                       onClick={() => {
                         setTargetKb(kb);
                         setTargetQuality(Math.min(95, Math.max(15, Math.round((kb / originalSizeKb) * 90))));
                       }}
-                      className={`py-1.5 text-xs font-mono rounded-lg border transition-all ${
+                      className={`min-h-[44px] py-2 text-xs font-mono rounded-xl border transition-all cursor-pointer ${
                         targetKb === kb
-                          ? 'bg-amber-500 text-white border-amber-500 font-bold'
-                          : 'bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300'
+                          ? 'bg-amber-500 text-white border-amber-500 font-bold shadow-sm'
+                          : 'bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10'
                       }`}
                     >
                       {kb} KB
@@ -886,7 +887,7 @@ export function ImageToolEngine({ tool }: ImageToolEngineProps) {
           )}
 
           {/* Standard Dimensions Controller */}
-          <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100 dark:border-white/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-slate-100 dark:border-white/10">
             <div>
               <label className="block text-xs font-mono text-slate-500 mb-1">Width (px)</label>
               <input
@@ -899,7 +900,8 @@ export function ImageToolEngine({ tool }: ImageToolEngineProps) {
                 }}
                 min={16}
                 max={4096}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10"
+                style={{ fontSize: '16px' }}
+                className="w-full px-3 py-2 min-h-[44px] text-sm font-mono rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10"
               />
             </div>
             <div>
@@ -914,8 +916,35 @@ export function ImageToolEngine({ tool }: ImageToolEngineProps) {
                 }}
                 min={16}
                 max={4096}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10"
+                style={{ fontSize: '16px' }}
+                className="w-full px-3 py-2 min-h-[44px] text-sm font-mono rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10"
               />
+            </div>
+            <div className="flex flex-col justify-end">
+              <button
+                type="button"
+                onClick={() => setMaintainAspect(!maintainAspect)}
+                className={`w-full py-2 min-h-[44px] text-xs font-mono rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                  maintainAspect
+                    ? 'bg-cyan-500/15 text-cyan-400 border-cyan-500/40 font-bold'
+                    : 'bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500'
+                }`}
+              >
+                <span>{maintainAspect ? '🔒 Aspect Locked' : '🔓 Free Aspect'}</span>
+              </button>
+            </div>
+            <div className="flex flex-col justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setWidthPx(1200);
+                  setHeightPx(800);
+                }}
+                className="w-full py-2 min-h-[44px] text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-all cursor-pointer flex items-center justify-center gap-1"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Reset (1200×800)</span>
+              </button>
             </div>
           </div>
 

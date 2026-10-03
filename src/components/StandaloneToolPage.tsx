@@ -393,9 +393,9 @@ export default function StandaloneToolPage({
   const isAiTool = tool.category === 'ai-tools' || tool.id.startsWith('ai-') || tool.name.toLowerCase().includes('prompt') || tool.name.toLowerCase().includes('headline') || tool.name.toLowerCase().includes('social media thread') || tool.name.toLowerCase().includes('script') || tool.name.toLowerCase().includes('bullet point');
 
   return (
-    <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans pb-24">
-      {/* Container Grid - Streamlined spacing for prominent above-the-fold workspace */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3.5 space-y-3 sm:space-y-4">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans pb-24">
+      {/* Container Grid - 1440px Responsive Full-Width Calculation Workspace */}
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10 pt-2 sm:pt-4 space-y-4 sm:space-y-6">
         
         {/* 1. Breadcrumb Navigation */}
         <Breadcrumbs
@@ -403,10 +403,10 @@ export default function StandaloneToolPage({
           onNavigate={(href) => onNavigate(href)}
         />
 
-        {/* 2. Standalone Tool Header - Clean & Compact */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-slate-800/80 dark:bg-[#1A2130] border border-slate-700/60 dark:border-white/10 shadow-xl space-y-3">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-2 max-w-3xl">
+        {/* 2. Standalone Tool Header - Clean & Responsive */}
+        <div className="p-4 sm:p-6 rounded-2xl bg-slate-800/80 dark:bg-[#1A2130] border border-slate-700/60 dark:border-white/10 shadow-xl space-y-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="space-y-2 max-w-4xl">
               <div className="flex items-center gap-2 flex-wrap">
                 {/* Category Badge */}
                 {categoryInfo && (
@@ -441,7 +441,7 @@ export default function StandaloneToolPage({
               </h1>
 
               {/* Tool Subtitle */}
-              <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed max-w-4xl">
                 {tool.description}
               </p>
 
@@ -465,14 +465,15 @@ export default function StandaloneToolPage({
               </div>
             </div>
 
-            {/* Header Action Buttons */}
-            <div className="flex items-center gap-2 shrink-0 flex-wrap">
+            {/* Header Action Buttons: Scrollable on mobile, flex-wrap on desktop */}
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 max-w-full md:flex-wrap shrink-0">
               {/* Back to Tools Button */}
               <button
                 type="button"
                 onClick={onBack || (() => onNavigate('home'))}
-                className="p-2.5 px-3.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold font-mono shadow-sm"
+                className="min-h-[44px] p-2.5 px-3.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold font-mono shadow-sm shrink-0 whitespace-nowrap"
                 title="Return to Tools Directory"
+                aria-label="Back to Tools"
               >
                 <ArrowLeft className="w-3.5 h-3.5 text-cyan-400" />
                 <span>Back to Tools</span>
@@ -482,15 +483,16 @@ export default function StandaloneToolPage({
               <button
                 type="button"
                 onClick={() => onToggleBookmark(tool)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                className={`min-h-[44px] p-2.5 px-3 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap ${
                   isBookmarked
                     ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
                     : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:bg-slate-700/60'
                 }`}
                 title={isBookmarked ? 'Bookmarked' : 'Bookmark Tool'}
+                aria-label="Bookmark Tool"
               >
                 <Star className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-amber-400 text-amber-400' : ''}`} />
-                <span className="hidden sm:inline">{isBookmarked ? 'Saved' : 'Bookmark'}</span>
+                <span>{isBookmarked ? 'Saved' : 'Bookmark'}</span>
               </button>
 
               {/* Compare Button */}
@@ -498,11 +500,12 @@ export default function StandaloneToolPage({
                 <button
                   type="button"
                   onClick={() => onOpenCompare(tool)}
-                  className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                  className="min-h-[44px] p-2.5 px-3 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap"
                   title="Compare with another tool"
+                  aria-label="Compare with another tool"
                 >
                   <ArrowLeftRight className="w-3.5 h-3.5 text-indigo-400" />
-                  <span className="hidden sm:inline">Compare</span>
+                  <span>Compare</span>
                 </button>
               )}
 
@@ -510,93 +513,100 @@ export default function StandaloneToolPage({
               <button
                 type="button"
                 onClick={handleShare}
-                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                className="min-h-[44px] p-2.5 px-3 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap"
                 title="Share Tool"
+                aria-label="Share Tool"
               >
                 <Share2 className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="hidden sm:inline">{shareSuccess ? 'Copied Link!' : 'Share'}</span>
+                <span>{shareSuccess ? 'Copied Link!' : 'Share'}</span>
               </button>
 
               {/* Copy as Markdown Button */}
               <button
                 type="button"
                 onClick={handleCopyMarkdown}
-                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                className="min-h-[44px] p-2.5 px-3 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap"
                 title="Copy result formatted as Markdown"
+                aria-label="Copy Markdown"
               >
                 <FileCode className="w-3.5 h-3.5 text-amber-400" />
-                <span className="hidden sm:inline">{copiedMd ? 'Copied MD!' : 'Copy Markdown'}</span>
+                <span>{copiedMd ? 'Copied MD!' : 'Copy Markdown'}</span>
               </button>
 
               {/* Download PDF Button */}
               <button
                 type="button"
                 onClick={handleDownloadPDF}
-                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                className="min-h-[44px] p-2.5 px-3 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap"
                 title="Export report as PDF"
+                aria-label="Download PDF"
               >
                 <Download className="w-3.5 h-3.5 text-blue-400" />
-                <span className="hidden sm:inline">Download PDF</span>
+                <span>Download PDF</span>
               </button>
 
               {/* How to Use Jump Button */}
               <a
                 href="#how-to-use-section"
-                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                className="min-h-[44px] p-2.5 px-3 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap"
                 title="Jump to How to Use instructions"
               >
                 <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="hidden sm:inline">How to Use</span>
+                <span>How to Use</span>
               </a>
 
               {/* Print Button */}
               <button
                 type="button"
                 onClick={handlePrint}
-                className="p-2.5 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                className="min-h-[44px] p-2.5 px-3 rounded-xl bg-slate-900/60 text-slate-300 border border-slate-700 hover:bg-slate-700/60 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 whitespace-nowrap"
                 title="Print Report Page"
+                aria-label="Print Report"
               >
                 <Printer className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="hidden sm:inline">Print</span>
+                <span>Print</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* 3. CORE INTERACTIVE TOOL WORKING AREA */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start w-full max-w-full">
-          
-          {/* Main Working Engine Area */}
-          <div className="lg:col-span-8 space-y-6 sm:space-y-8 min-w-0 w-full max-w-full">
-            <div className="w-full max-w-full box-border p-4 sm:p-6 rounded-2xl bg-slate-800/90 dark:bg-[#1A2130] border border-cyan-500/20 shadow-xl space-y-4 overflow-visible">
-              
-              <div className="flex items-center justify-between pb-3 border-b border-slate-700/60">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
-                  <Calculator className="w-4 h-4" />
-                  <span>Interactive Tool Engine</span>
-                </div>
-                <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[11px] font-mono font-bold">
-                  Client-Side Active
-                </span>
+        {/* 3. CORE INTERACTIVE TOOL WORKING AREA (Full Width 1440px Workspace) */}
+        <div className="w-full max-w-full space-y-4">
+          <div className="w-full max-w-full box-border p-4 sm:p-6 lg:p-8 rounded-2xl bg-slate-800/90 dark:bg-[#1A2130] border border-cyan-500/20 shadow-xl space-y-4">
+            
+            <div className="flex items-center justify-between pb-3 border-b border-slate-700/60">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
+                <Calculator className="w-4 h-4" />
+                <span>Interactive Tool Engine</span>
               </div>
-
-              {/* Mount Registered Tool Engine with ToolErrorBoundary and Suspense protection */}
-              <ToolErrorBoundary tool={tool} onGoHome={onBack}>
-                <div className="w-full max-w-full box-border mx-auto overflow-y-auto overflow-x-hidden min-h-auto">
-                  <Suspense fallback={<div className="p-8 text-center text-cyan-400 font-mono text-xs animate-pulse">Loading {tool.name}...</div>}>
-                    {React.createElement(getToolComponent(tool.id), {
-                      key: tool.id,
-                      tool,
-                      onBack,
-                      onCopyMarkdown: handleCopyMarkdown,
-                      onDownloadPdf: handleDownloadPDF
-                    })}
-                  </Suspense>
-                </div>
-              </ToolErrorBoundary>
-
+              <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold">
+                Client-Side Active • Zero Server Latency
+              </span>
             </div>
 
+            {/* Mount Registered Tool Engine with ToolErrorBoundary and Suspense protection */}
+            <ToolErrorBoundary tool={tool} onGoHome={onBack}>
+              <div className="w-full max-w-full box-border mx-auto overflow-y-auto overflow-x-hidden min-h-auto">
+                <Suspense fallback={<div className="p-8 text-center text-cyan-400 font-mono text-xs animate-pulse">Loading {tool.name}...</div>}>
+                  {React.createElement(getToolComponent(tool.id), {
+                    key: tool.id,
+                    tool,
+                    onBack,
+                    onCopyMarkdown: handleCopyMarkdown,
+                    onDownloadPdf: handleDownloadPDF
+                  })}
+                </Suspense>
+              </div>
+            </ToolErrorBoundary>
+
+          </div>
+        </div>
+
+        {/* 4. EDITORIAL CONTENT, STANDARDS & EMBED UTILITY (Grid below full-width workspace) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start w-full max-w-full">
+          
+          {/* Main Editorial & Reference Area */}
+          <div className="lg:col-span-8 space-y-6 sm:space-y-8 min-w-0 w-full max-w-full">
             {/* Clean 3-Step Guide and Max 2 FAQs */}
             <ToolEditorialContent tool={tool} onNavigate={onNavigate} />
 

@@ -136,7 +136,7 @@ export default function PerformanceHud({ currentRoutePath, currentRouteParam }: 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 font-sans pointer-events-none">
+    <div className="fixed bottom-20 md:bottom-4 left-4 z-40 font-sans pointer-events-none">
       <AnimatePresence mode="wait">
         {isCollapsed ? (
           <motion.button

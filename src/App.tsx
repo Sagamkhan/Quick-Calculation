@@ -8,6 +8,7 @@ import BentoCatalog from './components/BentoCatalog';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
 import PerformanceHud from './components/PerformanceHud';
+import FloatingChatWidget from './components/FloatingChatWidget';
 import MobileBottomNav from './components/MobileBottomNav';
 import MobileCategoryDrawer from './components/MobileCategoryDrawer';
 import Helmet from './components/Helmet';
@@ -288,7 +289,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
 
         
         {/* Dynamic SEO Head Management (Title Tag & Meta Description in document.head) */}
@@ -323,7 +324,7 @@ export default function App() {
 
         {/* Redirect / Notice Banner for retired AI Studio */}
         {redirectNotice && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+          <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10 pt-4">
             <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between gap-3 shadow-lg">
               <div className="flex items-center gap-2">
                 <span className="font-bold font-mono">⚡</span>
@@ -366,7 +367,7 @@ export default function App() {
         />
 
         {/* Main Page Content */}
-        <main className="w-full pb-20 md:pb-6">
+        <main className="w-full pb-24 md:pb-8">
           {activeToolId && activeTool ? (
             /* Standalone Dedicated Tool Page Route View with Single-Page State Navigation */
             <ToolErrorBoundary
@@ -409,7 +410,7 @@ export default function App() {
               </Suspense>
             </ToolErrorBoundary>
           ) : activePage === 'sitemap' ? (
-            <div className="max-w-7xl mx-auto px-4 py-12 space-y-6">
+            <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10 py-12 space-y-6">
               <h1 className="text-2xl font-bold font-display text-white">Dynamic XML Sitemap</h1>
               <pre className="p-6 rounded-2xl bg-slate-950 text-cyan-300 font-mono text-xs overflow-x-auto whitespace-pre-wrap border border-slate-800">
                 {generateSitemapXml()}
@@ -464,7 +465,7 @@ export default function App() {
               />
 
               {/* Category Grid Section */}
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
                 <CategoryGrid
                   activeCategory={activeCategory}
                   onSelectCategory={handleSelectCategory}
@@ -472,7 +473,7 @@ export default function App() {
               </div>
 
               {/* Main Tools Catalog Grid */}
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="w-full max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-xl font-bold font-display text-white flex items-center gap-2">
@@ -517,9 +518,18 @@ export default function App() {
           }}
         />
 
-        {/* Cookie Consent & Performance HUD */}
+        {/* Cookie Consent, Performance HUD & Floating Quick Support Assistant */}
         <CookieConsent />
         <PerformanceHud currentRoutePath={activePage} />
+        <FloatingChatWidget
+          onSelectCategory={(catId) => handleSelectCategory(catId)}
+          onSearchQuery={(q) => {
+            setSearchQuery(q);
+            setActiveToolId(null);
+            setActiveCategory(null);
+            setActivePage('home');
+          }}
+        />
 
         {/* Side-by-Side Tool Compare Modal */}
         {isCompareOpen && (
