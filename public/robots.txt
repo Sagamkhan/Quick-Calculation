@@ -52,4 +52,4 @@ Allow: /
 User-agent: WhatsApp
 Allow: /
 
-Sitemap: https://quickcalculator.app/sitemap.xml
+Sitemap: https://www.quickcalc.in/sitemap.xml
