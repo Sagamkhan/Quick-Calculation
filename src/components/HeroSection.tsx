@@ -215,7 +215,8 @@ export default function HeroSection({
                   }
                 }}
                 placeholder="Type to search (e.g., SIP Calculator, JSON Formatter, PDF Compress)..."
-                className="w-full px-3 py-3 text-sm sm:text-base bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 focus:outline-none font-sans"
+                style={{ fontSize: '16px' }}
+                className="w-full px-3 py-3 text-[16px] sm:text-base bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 focus:outline-none font-sans"
               />
               <VoiceInputButton
                 onTranscript={(text) => {

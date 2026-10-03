@@ -142,8 +142,9 @@ export default function Navbar({
                 className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono shadow-sm shadow-amber-500/20 shrink-0"
                 title="Browse Top Trending Financial & Productivity Calculators"
               >
-                <Star className="w-3.5 h-3.5 fill-slate-950 text-slate-950" />
-                <span>Top Calculators</span>
+                <Star className="w-3.5 h-3.5 fill-slate-950 text-slate-950 shrink-0" />
+                <span className="hidden sm:inline">Top Calculators</span>
+                <span className="sm:hidden text-[11px]">Top</span>
               </button>
 
               {topCalcsOpen && (
@@ -262,7 +263,8 @@ export default function Navbar({
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="Search tools..."
-                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none"
+                style={{ fontSize: '16px' }}
+                className="w-full pl-10 pr-4 py-2.5 text-[16px] sm:text-sm rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none"
               />
             </div>
 

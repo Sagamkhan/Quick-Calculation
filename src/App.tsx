@@ -8,6 +8,8 @@ import BentoCatalog from './components/BentoCatalog';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
 import PerformanceHud from './components/PerformanceHud';
+import MobileBottomNav from './components/MobileBottomNav';
+import MobileCategoryDrawer from './components/MobileCategoryDrawer';
 import Helmet from './components/Helmet';
 import ToolLoadingSkeleton from './components/ToolLoadingSkeleton';
 import ToolErrorBoundary from './components/ToolErrorBoundary';
@@ -136,6 +138,10 @@ export default function App() {
   const [isFavoritesOpen, setIsFavoritesOpen] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
+  // Mobile Bottom Navigation & Category Drawer State
+  const [isMobileCategoryDrawerOpen, setIsMobileCategoryDrawerOpen] = useState<boolean>(false);
+  const [mobileActiveTab, setMobileActiveTab] = useState<'home' | 'categories' | 'search' | 'saved' | 'compare'>('home');
+
   // Compare Modal state
   const [isCompareOpen, setIsCompareOpen] = useState<boolean>(false);
   const [compareTool1, setCompareTool1] = useState<ToolItem | null>(null);
@@ -253,6 +259,34 @@ export default function App() {
     }
   };
 
+  // Sync mobile bottom nav tab with active state
+  useEffect(() => {
+    if (activeToolId) {
+      setMobileActiveTab('home');
+    } else if (activeCategory) {
+      setMobileActiveTab('categories');
+    } else if (searchQuery.trim()) {
+      setMobileActiveTab('search');
+    } else {
+      setMobileActiveTab('home');
+    }
+  }, [activeToolId, activeCategory, searchQuery]);
+
+  const handleOpenMobileSearch = () => {
+    setActiveToolId(null);
+    setActiveCategory(null);
+    setActivePage('home');
+    setMobileActiveTab('search');
+    setTimeout(() => {
+      const searchInputs = document.querySelectorAll('input[data-search-input="true"], input[type="text"]');
+      const targetInput = searchInputs[0] as HTMLInputElement;
+      if (targetInput) {
+        targetInput.focus();
+        targetInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 150);
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 dark:bg-[#121824] text-slate-100 font-sans selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
 
@@ -332,7 +366,7 @@ export default function App() {
         />
 
         {/* Main Page Content */}
-        <main className="w-full">
+        <main className="w-full pb-20 md:pb-6">
           {activeToolId && activeTool ? (
             /* Standalone Dedicated Tool Page Route View with Single-Page State Navigation */
             <ToolErrorBoundary
@@ -499,6 +533,29 @@ export default function App() {
             />
           </Suspense>
         )}
+
+        {/* Mobile Bottom Navigation Bar & Category Drawer */}
+        <MobileBottomNav
+          activeTab={mobileActiveTab}
+          onSelectTab={setMobileActiveTab}
+          bookmarkedCount={bookmarkedIds.length}
+          isToolActive={Boolean(activeToolId)}
+          onGoHome={handleBackToTools}
+          onOpenCategoryDrawer={() => setIsMobileCategoryDrawerOpen(true)}
+          onOpenSearch={handleOpenMobileSearch}
+          onOpenBookmarks={() => setIsFavoritesOpen(true)}
+          onOpenCompare={() => setIsCompareOpen(true)}
+        />
+
+        <MobileCategoryDrawer
+          isOpen={isMobileCategoryDrawerOpen}
+          onClose={() => setIsMobileCategoryDrawerOpen(false)}
+          activeCategory={activeCategory}
+          onSelectCategory={(catId) => {
+            handleSelectCategory(catId);
+            setIsMobileCategoryDrawerOpen(false);
+          }}
+        />
 
       </div>
   );

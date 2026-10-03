@@ -510,7 +510,7 @@ function BentoCategoryCard({
                       e.stopPropagation();
                       onSelectTool(tool);
                     }}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-all cursor-pointer"
+                    className="min-h-[40px] min-w-[40px] flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-all cursor-pointer"
                     title="Launch Tool"
                   >
                     <ExternalLink className="w-4 h-4" />
@@ -531,7 +531,7 @@ function BentoCategoryCard({
                           onOpenCompare(tool);
                         }
                       }}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-all cursor-pointer"
+                      className="min-h-[40px] min-w-[40px] flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-all cursor-pointer"
                       title="Compare side-by-side with another tool"
                     >
                       <ArrowLeftRight className="w-4 h-4" />
@@ -552,7 +552,7 @@ function BentoCategoryCard({
                         onToggleBookmark(tool);
                       }
                     }}
-                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                    className={`min-h-[40px] min-w-[40px] flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer ${
                       isBookmarked
                         ? 'bg-amber-500/20 text-amber-400'
                         : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700'
