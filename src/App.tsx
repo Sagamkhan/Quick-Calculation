@@ -56,7 +56,19 @@ function synthesizeToolFromSlug(slug: string): ToolItem {
 }
 
 export default function App() {
-  // Theme state
+    // --- Permanent Link / Hash Routing Handler ---
+  useEffect(() => {
+    const handleHashRouting = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        setActiveToolId(hash);
+      }
+    };
+    handleHashRouting();
+    window.addEventListener('hashchange', handleHashRouting);
+    return () => window.removeEventListener('hashchange', handleHashRouting);
+  }, []);
+  / Theme stat
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('quickcalc-theme');
